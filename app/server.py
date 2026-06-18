@@ -6,6 +6,7 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 
+from .home_page import render_home_page
 from .index_api import get_index_payload
 
 
@@ -14,6 +15,9 @@ class ApiHandler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         path = urlparse(self.path).path
+        if path in {"/", "/index.html"}:
+            self._send_html(render_home_page(get_index_payload()))
+            return
         if path == "/health":
             self._send_json({"ok": True})
             return
@@ -34,6 +38,15 @@ class ApiHandler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
+    def _send_html(self, html: str, status: HTTPStatus = HTTPStatus.OK) -> None:
+        data = html.encode("utf-8")
+        self.send_response(status.value)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Serve MyInvestPosition read-only API.")
@@ -42,7 +55,7 @@ def main() -> int:
     args = parser.parse_args()
 
     server = ThreadingHTTPServer((args.host, args.port), ApiHandler)
-    print(f"Serving http://{args.host}:{args.port}/api/index")
+    print(f"Serving http://{args.host}:{args.port}/")
     try:
         server.serve_forever()
     except KeyboardInterrupt:

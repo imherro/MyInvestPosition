@@ -28,9 +28,11 @@ py -3.11 -m app.server --host 127.0.0.1 --port 8018
 ```
 
 - `GET /api/index`：返回主页主要内容，包括净值对照、仓位差异、影子目标、实盘前十大持仓和操作建议。
+- `GET /`：返回可直接浏览的首页。
 - `GET /health`：健康检查。
 
 `/api/index` 只读取 `data/public/latest_comparison.json`，不会读取 `data/private/`，也不会连接 QMT。
+首页 `/` 和 `/api/index` 使用同一份公开摘要数据。
 如端口被占用，替换 `--port` 后重新启动即可。
 
 如 QMT 安装路径或账号不同，在本地 `.env` 或当前 PowerShell 会话里设置：

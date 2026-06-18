@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from app.home_page import render_home_page
 from app.index_api import build_index_payload, get_index_payload
 
 
@@ -70,6 +71,17 @@ class IndexApiTests(unittest.TestCase):
 
         self.assertEqual(payload["comparison"]["defensive"]["gap_pp"], -7.32)
         self.assertEqual(payload["shadow_allocations"][0]["code"], "588170.SH")
+
+    def test_render_home_page_returns_html_dashboard(self) -> None:
+        payload = build_index_payload(self.sample_summary())
+
+        html = render_home_page(payload)
+
+        self.assertIn("<!doctype html>", html)
+        self.assertIn("影子账户与 QMT 实盘净值对照", html)
+        self.assertIn("仓位对照", html)
+        self.assertIn("实盘前十大持仓", html)
+        self.assertIn("511360.SH", html)
 
 
 if __name__ == "__main__":
