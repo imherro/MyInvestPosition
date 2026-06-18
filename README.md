@@ -21,6 +21,18 @@ py -3.11 scripts\position_compare.py
 3. 在 `reports/latest_position_compare.md` 写入本次对照报告。
 4. 在 `data/public/latest_comparison.json` 写入可公开同步的比例化摘要。
 
+## 只读 API
+
+```powershell
+py -3.11 -m app.server --host 127.0.0.1 --port 8011
+```
+
+- `GET /api/index`：返回主页主要内容，包括净值对照、仓位差异、影子目标、实盘前十大持仓和操作建议。
+- `GET /health`：健康检查。
+
+`/api/index` 只读取 `data/public/latest_comparison.json`，不会读取 `data/private/`，也不会连接 QMT。
+如端口被占用，替换 `--port` 后重新启动即可。
+
 如 QMT 安装路径或账号不同，在本地 `.env` 或当前 PowerShell 会话里设置：
 
 ```powershell
