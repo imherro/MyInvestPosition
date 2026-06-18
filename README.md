@@ -24,7 +24,7 @@ py -3.11 scripts\position_compare.py
 ## 只读 API
 
 ```powershell
-py -3.11 -m app.server --host 127.0.0.1 --port 8011
+py -3.11 -m app.server --host 127.0.0.1 --port 8018
 ```
 
 - `GET /api/index`：返回主页主要内容，包括净值对照、仓位差异、影子目标、实盘前十大持仓和操作建议。

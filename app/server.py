@@ -38,7 +38,7 @@ class ApiHandler(BaseHTTPRequestHandler):
 def main() -> int:
     parser = argparse.ArgumentParser(description="Serve MyInvestPosition read-only API.")
     parser.add_argument("--host", default="127.0.0.1")
-    parser.add_argument("--port", type=int, default=8011)
+    parser.add_argument("--port", type=int, default=8018)
     args = parser.parse_args()
 
     server = ThreadingHTTPServer((args.host, args.port), ApiHandler)
