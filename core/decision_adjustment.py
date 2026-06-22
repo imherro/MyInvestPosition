@@ -4,7 +4,11 @@ from typing import Any
 
 from core.action_feedback import build_action_outcomes
 from core.drift_detector import compute_drift, compute_drift_breakdown
+from core.dynamic_signal_weight import compute_dynamic_signal_weights
 from core.independent_calibrator import calibrate_per_signal
+from core.market_state import infer_market_state
+from core.signal_explainer import explain_signal_interactions
+from core.signal_graph import default_signal_graph, graph_to_dict
 from core.signal_isolation import isolate_all_signals
 from core.signal_ledger import build_signal_ledger
 from core.signal_registry import default_signal_registry
@@ -17,12 +21,20 @@ def build_decision_adjustment(
     shadow = summary.get("shadow") or {}
     real = summary.get("real") or {}
     decision_log = summary.get("decision_log") or {}
+    market_state = infer_market_state(summary)
     drift_breakdown = compute_drift_breakdown(shadow, real)
     outcomes = build_action_outcomes(decision_log, realized_returns)
     registry = default_signal_registry()
     signal_ledger = build_signal_ledger(decision_log, drift_breakdown, realized_returns)
     per_signal_calibration = calibrate_per_signal(outcomes, registry)
     signal_isolation = isolate_all_signals(signal_ledger)
+    base_weights = {
+        source: float(item["confidence_weight"])
+        for source, item in per_signal_calibration.items()
+    }
+    signal_graph = default_signal_graph()
+    dynamic_weights = compute_dynamic_signal_weights(base_weights, market_state, signal_graph)
+    signal_explanations = explain_signal_interactions(dynamic_weights, signal_graph)
     return {
         "loop": [
             "decision",
@@ -46,12 +58,15 @@ def build_decision_adjustment(
         "signal_isolation": signal_isolation,
         "outcomes": [outcome.to_dict() for outcome in outcomes],
         "per_signal_calibration": per_signal_calibration,
+        "signal_graph": graph_to_dict(signal_graph),
+        "dynamic_signal_weights": dynamic_weights,
+        "signal_explanations": signal_explanations,
         "self_correction": {
             "confidence_weights": {
-                source: item["confidence_weight"]
-                for source, item in per_signal_calibration.items()
+                source: item["final_weight"]
+                for source, item in dynamic_weights.items()
             },
             "active": any(item["outcomes_count"] > 0 for item in per_signal_calibration.values()),
-            "reason": "按 signal_source 独立校准，避免单一信号污染全局 confidence。",
+            "reason": "按 signal_source 独立校准，并通过 signal graph 做动态竞争权重。",
         },
     }

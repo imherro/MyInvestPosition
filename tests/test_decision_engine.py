@@ -14,6 +14,9 @@ from core.drift_detector import compute_drift, compute_drift_breakdown
 from core.score_calibration import calibrate_confidence_weight
 from core.independent_calibrator import calibrate_per_signal
 from core.signal_ledger import build_signal_ledger
+from core.dynamic_signal_weight import compute_dynamic_signal_weights
+from core.signal_graph import default_signal_graph
+from core.signal_explainer import explain_signal_interactions
 
 
 class DecisionEngineTests(unittest.TestCase):
@@ -211,6 +214,8 @@ class DecisionEngineTests(unittest.TestCase):
         self.assertEqual(result["loop"][0], "decision")
         self.assertEqual(len(result["outcomes"]), 1)
         self.assertIn("risk_engine", result["per_signal_calibration"])
+        self.assertIn("dynamic_signal_weights", result)
+        self.assertIn("signal_graph", result)
         self.assertFalse(result["self_correction"]["active"])
 
     def test_independent_calibrator_does_not_global_collapse(self) -> None:
@@ -253,6 +258,44 @@ class DecisionEngineTests(unittest.TestCase):
         self.assertEqual(ledger[0]["signal_source"], "risk_engine")
         self.assertEqual(ledger[1]["signal_source"], "shadow_gap")
         self.assertEqual(ledger[1]["drift_contribution"], 0.3)
+
+    def test_dynamic_signal_weights_reflect_bear_market(self) -> None:
+        market = MarketState(
+            volatility=0.7,
+            liquidity_regime="normal",
+            trend_regime="bear",
+            risk_sentiment=0.3,
+            timestamp="2026-06-23T00:10:00+08:00",
+        )
+        weights = compute_dynamic_signal_weights(
+            {
+                "risk_engine": 1.0,
+                "shadow_gap": 1.0,
+                "market_alignment": 1.0,
+                "defensive_filter": 1.0,
+            },
+            market,
+            default_signal_graph(),
+        )
+
+        self.assertGreater(weights["risk_engine"]["final_weight"], 1.0)
+        self.assertLess(weights["shadow_gap"]["final_weight"], 1.0)
+
+    def test_signal_explainer_returns_dependency_chain(self) -> None:
+        graph = default_signal_graph()
+        explanations = explain_signal_interactions(
+            {
+                "risk_engine": {
+                    "base_weight": 1.0,
+                    "final_weight": 1.1,
+                    "reasons": ["test"],
+                }
+            },
+            graph,
+        )
+
+        self.assertEqual(explanations[0]["direction"], "amplified")
+        self.assertTrue(explanations[0]["dependency_chain"])
 
 
 if __name__ == "__main__":
