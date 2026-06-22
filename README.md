@@ -41,6 +41,10 @@
 - `core/normalized_scoring.py` 对每条 `DecisionAction` 做归一化加权评分，不再使用纯乘法模型。
 - `core/decision_engine.py` 负责把不同规则输出的 action 送入评分系统，按最终 `score` 排序并取 Top N。
 - `core/decision_logger.py` 记录 action、评分拆解、market state 快照和 constraint 快照，用于未来回放和漂移分析。
+- `core/drift_detector.py` 计算 shadow vs real 的风险、权重、结构和防御/流动性漂移。
+- `core/action_feedback.py` 定义 `ActionOutcome`，用于把 action 的预期分数和未来实际结果对齐。
+- `core/score_calibration.py` 根据已实现结果校准 confidence 权重；没有真实结果时保持中性，不伪造调整。
+- `core/decision_adjustment.py` 汇总 `decision -> shadow_simulation -> outcome -> calibration` 的调整回路。
 - 同一 `symbol` 的多条 action 不再直接抵消；不同来源的 `BUY`、`SELL`、`REBALANCE` 会各自保留评分和解释。
 - 报告和首页使用评分后的 action 渲染自然语言，不在展示层做硬优先级覆盖。
 
@@ -111,7 +115,7 @@
 `app.server` 是本地只读服务，默认端口使用 `8018`。
 
 - `GET /`：HTML 首页，展示净值对照、仓位偏差、影子目标、实盘主要持仓和建议。
-- `GET /api/index`：首页同源 JSON 数据，字段包括 `timestamp`、`actions`、`decision_set`、`market_state`、`trade_constraints`、`decision_log`、`hero`、`cards`、`sleeve_deviations`、`comparison`、`recommendations`、`shadow_allocations`、`real_top_positions`。
+- `GET /api/index`：首页同源 JSON 数据，字段包括 `timestamp`、`actions`、`decision_set`、`market_state`、`trade_constraints`、`decision_log`、`decision_adjustment`、`hero`、`cards`、`sleeve_deviations`、`comparison`、`recommendations`、`shadow_allocations`、`real_top_positions`。
 - `GET /health`：健康检查。
 
 `/api/index` 和 `/` 只读取 `data/public/latest_comparison.json`，不会读取 `data/private/`，也不会连接 QMT。
@@ -160,5 +164,8 @@ $env:QMT_ACCOUNT_ID='你的资金账号'
 - 检查 `core/market_state.py`、`core/adaptive_constraints.py`、`core/normalized_scoring.py` 是否进入决策链。
 - 检查 `core/trade_constraints.py` 是否带时序字段，并且 stale constraint 会被降权。
 - 检查 `core/decision_logger.py` 是否记录 action、score breakdown、market_state 和 constraint snapshot。
+- 检查 `core/drift_detector.py` 是否能计算 shadow vs real drift。
+- 检查 `core/action_feedback.py` 和 `core/score_calibration.py` 是否支持用真实 outcome 校准 score。
+- 检查 `core/decision_adjustment.py` 是否把 decision_log 转成可回放的反馈调整结构。
 - 检查 `core/decision_engine.py` 是否只输出评分后的 `DecisionAction`，以及同标的多信号是否没有被直接抵消。
 - 检查报告和首页建议是否来自 `DecisionAction`，而不是直接拼接动作字符串。

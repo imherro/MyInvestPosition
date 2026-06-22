@@ -8,6 +8,10 @@ from core.market_state import MarketState
 from core.signal_scoring import score_action, score_breakdown
 from core.trade_constraints import TradeConstraint
 from core.adaptive_constraints import adapt_constraints
+from core.action_feedback import ActionOutcome
+from core.decision_adjustment import build_decision_adjustment
+from core.drift_detector import compute_drift, compute_drift_breakdown
+from core.score_calibration import calibrate_confidence_weight
 
 
 class DecisionEngineTests(unittest.TestCase):
@@ -135,6 +139,76 @@ class DecisionEngineTests(unittest.TestCase):
         self.assertIn("score_breakdown", result["actions"][0])
         self.assertIn("liquidity", result["actions"][0])
         self.assertIn("market_state_factor", result["actions"][0]["score_breakdown"])
+
+    def test_drift_detector_returns_weighted_score(self) -> None:
+        shadow = {
+            "risk_weight_pct": 35.0,
+            "defensive_weight_pct": 65.0,
+            "sleeve_summary": {"core": 25.0},
+            "allocations": [{"sleeve": "mainline", "target_weight_pct": 10.0}],
+        }
+        real = {
+            "risk_weight_pct": 40.0,
+            "defensive_proxy_weight_pct": 60.0,
+            "core_proxy_weight_pct": 10.0,
+            "shadow_exact_codes_weight_pct": 1.0,
+        }
+
+        breakdown = compute_drift_breakdown(shadow, real)
+        drift = compute_drift(shadow, real)
+
+        self.assertGreater(drift, 0)
+        self.assertIn("risk_drift", breakdown)
+        self.assertIn("liquidity_drift", breakdown)
+
+    def test_score_calibration_reduces_confidence_weight_on_underperformance(self) -> None:
+        result = calibrate_confidence_weight(
+            [
+                ActionOutcome(
+                    action_id="A",
+                    expected_score=0.8,
+                    realized_return=0.1,
+                    error=-0.7,
+                    status="realized",
+                )
+            ]
+        )
+
+        self.assertLess(result.confidence_weight, 1.0)
+        self.assertEqual(result.high_score_underperform_count, 1)
+
+    def test_decision_adjustment_loop_uses_decision_log(self) -> None:
+        summary = {
+            "shadow": {
+                "risk_weight_pct": 35.0,
+                "defensive_weight_pct": 65.0,
+                "sleeve_summary": {"core": 25.0},
+                "allocations": [{"sleeve": "mainline", "target_weight_pct": 10.0}],
+            },
+            "real": {
+                "risk_weight_pct": 40.0,
+                "defensive_proxy_weight_pct": 60.0,
+                "core_proxy_weight_pct": 10.0,
+                "shadow_exact_codes_weight_pct": 1.0,
+            },
+            "decision_log": {
+                "actions": [
+                    {
+                        "symbol": "PORTFOLIO",
+                        "action": "REDUCE_RISK",
+                        "source": "risk_budget_rule",
+                        "score": 0.8,
+                    }
+                ]
+            },
+        }
+
+        result = build_decision_adjustment(summary)
+
+        self.assertGreater(result["drift_score"], 0)
+        self.assertEqual(result["loop"][0], "decision")
+        self.assertEqual(len(result["outcomes"]), 1)
+        self.assertFalse(result["self_correction"]["active"])
 
 
 if __name__ == "__main__":

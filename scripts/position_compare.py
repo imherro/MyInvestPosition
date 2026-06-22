@@ -18,6 +18,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from core.decision_engine import build_decision_artifacts, build_decision_set, recommendations_from_decision_set
+from core.decision_adjustment import build_decision_adjustment
 from core.decision_logger import build_decision_log
 
 DEFAULT_SHADOW_URL = "https://shadow.okbbc.com/api/latest"
@@ -333,6 +334,7 @@ def build_public_summary(shadow: dict[str, Any], shadow_url: str, qmt: dict[str,
     summary["trade_constraints"] = decision_log["constraints"]
     summary["decision_set"] = decision_set.to_dict()
     summary["decision_log"] = decision_log
+    summary["decision_adjustment"] = build_decision_adjustment(summary)
     return summary
 
 

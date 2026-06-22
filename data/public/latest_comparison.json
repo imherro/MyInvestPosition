@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T23:48:53+08:00",
+  "generated_at": "2026-06-22T23:57:05+08:00",
   "shadow_url_used": "https://shadow.okbbc.com/api/latest",
   "shadow": {
     "run_at": "2026-06-22T23:10:49+08:00",
@@ -76,7 +76,7 @@
   },
   "real": {
     "account_mask": "masked",
-    "collected_at": "2026-06-22T23:48:53+08:00",
+    "collected_at": "2026-06-22T23:57:05+08:00",
     "nav_index": 1.010105,
     "nav_baseline_created": false,
     "nav_baseline_time": "2026-06-18T12:14:06+08:00",
@@ -287,7 +287,7 @@
     "liquidity_regime": "normal",
     "trend_regime": "bear",
     "risk_sentiment": 0.35,
-    "timestamp": "2026-06-22T23:48:53+08:00"
+    "timestamp": "2026-06-22T23:57:05+08:00"
   },
   "trade_constraints": {
     "159326.SZ": {
@@ -297,8 +297,8 @@
       "liquidity_score": 0.765,
       "tradable": true,
       "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-22T23:48:53+08:00",
-      "valid_until": "2026-06-23T23:48:53+08:00"
+      "timestamp": "2026-06-22T23:57:05+08:00",
+      "valid_until": "2026-06-23T23:57:05+08:00"
     },
     "515880.SH": {
       "symbol": "515880.SH",
@@ -307,8 +307,8 @@
       "liquidity_score": 0.765,
       "tradable": true,
       "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-22T23:48:53+08:00",
-      "valid_until": "2026-06-23T23:48:53+08:00"
+      "timestamp": "2026-06-22T23:57:05+08:00",
+      "valid_until": "2026-06-23T23:57:05+08:00"
     },
     "588170.SH": {
       "symbol": "588170.SH",
@@ -317,8 +317,8 @@
       "liquidity_score": 0.765,
       "tradable": true,
       "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-22T23:48:53+08:00",
-      "valid_until": "2026-06-23T23:48:53+08:00"
+      "timestamp": "2026-06-22T23:57:05+08:00",
+      "valid_until": "2026-06-23T23:57:05+08:00"
     },
     "CORE_PROXY": {
       "symbol": "CORE_PROXY",
@@ -327,8 +327,8 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-22T23:48:53+08:00",
-      "valid_until": "2026-06-23T23:48:53+08:00"
+      "timestamp": "2026-06-22T23:57:05+08:00",
+      "valid_until": "2026-06-23T23:57:05+08:00"
     },
     "DEFENSIVE_CASH": {
       "symbol": "DEFENSIVE_CASH",
@@ -337,8 +337,8 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-22T23:48:53+08:00",
-      "valid_until": "2026-06-23T23:48:53+08:00"
+      "timestamp": "2026-06-22T23:57:05+08:00",
+      "valid_until": "2026-06-23T23:57:05+08:00"
     },
     "NON_MODEL_SATELLITE": {
       "symbol": "NON_MODEL_SATELLITE",
@@ -347,8 +347,8 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-22T23:48:53+08:00",
-      "valid_until": "2026-06-23T23:48:53+08:00"
+      "timestamp": "2026-06-22T23:57:05+08:00",
+      "valid_until": "2026-06-23T23:57:05+08:00"
     },
     "PORTFOLIO": {
       "symbol": "PORTFOLIO",
@@ -357,12 +357,12 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-22T23:48:53+08:00",
-      "valid_until": "2026-06-23T23:48:53+08:00"
+      "timestamp": "2026-06-22T23:57:05+08:00",
+      "valid_until": "2026-06-23T23:57:05+08:00"
     }
   },
   "decision_set": {
-    "timestamp": "2026-06-22T23:48:53+08:00",
+    "timestamp": "2026-06-22T23:57:05+08:00",
     "account_id": "masked",
     "actions": [
       {
@@ -550,14 +550,14 @@
     ]
   },
   "decision_log": {
-    "timestamp": "2026-06-22T23:48:53+08:00",
+    "timestamp": "2026-06-22T23:57:05+08:00",
     "account_id": "masked",
     "market_state": {
       "volatility": 0.65,
       "liquidity_regime": "normal",
       "trend_regime": "bear",
       "risk_sentiment": 0.35,
-      "timestamp": "2026-06-22T23:48:53+08:00"
+      "timestamp": "2026-06-22T23:57:05+08:00"
     },
     "actions": [
       {
@@ -751,8 +751,8 @@
         "liquidity_score": 0.765,
         "tradable": true,
         "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-22T23:48:53+08:00",
-        "valid_until": "2026-06-23T23:48:53+08:00"
+        "timestamp": "2026-06-22T23:57:05+08:00",
+        "valid_until": "2026-06-23T23:57:05+08:00"
       },
       "515880.SH": {
         "symbol": "515880.SH",
@@ -761,8 +761,8 @@
         "liquidity_score": 0.765,
         "tradable": true,
         "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-22T23:48:53+08:00",
-        "valid_until": "2026-06-23T23:48:53+08:00"
+        "timestamp": "2026-06-22T23:57:05+08:00",
+        "valid_until": "2026-06-23T23:57:05+08:00"
       },
       "588170.SH": {
         "symbol": "588170.SH",
@@ -771,8 +771,8 @@
         "liquidity_score": 0.765,
         "tradable": true,
         "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-22T23:48:53+08:00",
-        "valid_until": "2026-06-23T23:48:53+08:00"
+        "timestamp": "2026-06-22T23:57:05+08:00",
+        "valid_until": "2026-06-23T23:57:05+08:00"
       },
       "CORE_PROXY": {
         "symbol": "CORE_PROXY",
@@ -781,8 +781,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-22T23:48:53+08:00",
-        "valid_until": "2026-06-23T23:48:53+08:00"
+        "timestamp": "2026-06-22T23:57:05+08:00",
+        "valid_until": "2026-06-23T23:57:05+08:00"
       },
       "DEFENSIVE_CASH": {
         "symbol": "DEFENSIVE_CASH",
@@ -791,8 +791,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-22T23:48:53+08:00",
-        "valid_until": "2026-06-23T23:48:53+08:00"
+        "timestamp": "2026-06-22T23:57:05+08:00",
+        "valid_until": "2026-06-23T23:57:05+08:00"
       },
       "NON_MODEL_SATELLITE": {
         "symbol": "NON_MODEL_SATELLITE",
@@ -801,8 +801,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-22T23:48:53+08:00",
-        "valid_until": "2026-06-23T23:48:53+08:00"
+        "timestamp": "2026-06-22T23:57:05+08:00",
+        "valid_until": "2026-06-23T23:57:05+08:00"
       },
       "PORTFOLIO": {
         "symbol": "PORTFOLIO",
@@ -811,9 +811,90 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-22T23:48:53+08:00",
-        "valid_until": "2026-06-23T23:48:53+08:00"
+        "timestamp": "2026-06-22T23:57:05+08:00",
+        "valid_until": "2026-06-23T23:57:05+08:00"
       }
+    }
+  },
+  "decision_adjustment": {
+    "loop": [
+      "decision",
+      "shadow_simulation",
+      "outcome",
+      "calibration"
+    ],
+    "drift_score": 0.056934,
+    "drift_breakdown": {
+      "risk_drift": 0.018439,
+      "weight_drift": 0.073431,
+      "sector_drift": 0.128424,
+      "liquidity_drift": 0.018439,
+      "defensive_drift": 0.018439,
+      "core_drift": 0.167676,
+      "shadow_exact_drift": 0.089172
+    },
+    "outcomes": [
+      {
+        "action_id": "PORTFOLIO|REDUCE_RISK|risk_budget_rule",
+        "expected_score": 0.874425,
+        "realized_return": 0.0,
+        "error": 0.0,
+        "status": "pending"
+      },
+      {
+        "action_id": "NON_MODEL_SATELLITE|REDUCE_RISK|satellite_reduction_rule",
+        "expected_score": 0.820994,
+        "realized_return": 0.0,
+        "error": 0.0,
+        "status": "pending"
+      },
+      {
+        "action_id": "DEFENSIVE_CASH|REBALANCE|defensive_gap_rule",
+        "expected_score": 0.676312,
+        "realized_return": 0.0,
+        "error": 0.0,
+        "status": "pending"
+      },
+      {
+        "action_id": "CORE_PROXY|REBALANCE|core_gap_rule",
+        "expected_score": 0.647398,
+        "realized_return": 0.0,
+        "error": 0.0,
+        "status": "pending"
+      },
+      {
+        "action_id": "588170.SH|REBALANCE|shadow_exact_gap_rule",
+        "expected_score": 0.543056,
+        "realized_return": 0.0,
+        "error": 0.0,
+        "status": "pending"
+      },
+      {
+        "action_id": "515880.SH|REBALANCE|shadow_exact_gap_rule",
+        "expected_score": 0.542562,
+        "realized_return": 0.0,
+        "error": 0.0,
+        "status": "pending"
+      },
+      {
+        "action_id": "159326.SZ|REBALANCE|shadow_exact_gap_rule",
+        "expected_score": 0.540585,
+        "realized_return": 0.0,
+        "error": 0.0,
+        "status": "pending"
+      }
+    ],
+    "calibration": {
+      "confidence_weight": 1.0,
+      "mean_error": 0.0,
+      "outcomes_count": 0,
+      "high_score_underperform_count": 0,
+      "reason": "尚无已实现结果，保持中性 confidence 权重。"
+    },
+    "self_correction": {
+      "confidence_weight": 1.0,
+      "active": false,
+      "reason": "尚无已实现结果，保持中性 confidence 权重。"
     }
   }
 }
