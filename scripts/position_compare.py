@@ -19,7 +19,6 @@ CN_TZ = timezone(timedelta(hours=8))
 
 DEFENSIVE_CODES = {"CASH", "511360.SH"}
 CORE_PROXY_CODES = {"159201.SZ", "510500.SH"}
-SHADOW_EXACT_CODES = {"588170.SH", "588850.SH", "159745.SZ", "515050.SH"}
 RELATED_MAINLINE_CODES = {"159558.SZ", "588200.SH", "515880.SH", "562500.SH", "159667.SZ"}
 
 REDUCTION_BUCKETS = {
@@ -222,12 +221,29 @@ def bucket_weight(positions: list[PublicPosition], codes: set[str]) -> float:
     return sum_weights(positions, codes)
 
 
+def allocation_codes_by_sleeve(allocations: list[dict[str, Any]]) -> dict[str, set[str]]:
+    by_sleeve: dict[str, set[str]] = {}
+    for allocation in allocations:
+        sleeve = allocation.get("sleeve")
+        code = allocation.get("code")
+        if not sleeve or not code:
+            continue
+        by_sleeve.setdefault(str(sleeve), set()).add(str(code))
+    return by_sleeve
+
+
 def build_public_summary(shadow: dict[str, Any], shadow_url: str, qmt: dict[str, Any]) -> dict[str, Any]:
     positions = qmt["public_positions"]
     run = shadow.get("run") or {}
     sleeve = shadow.get("sleeve_summary") or {}
+    raw_allocations = list(shadow.get("allocations") or [])
+    codes_by_sleeve = allocation_codes_by_sleeve(raw_allocations)
+    core_codes = CORE_PROXY_CODES | codes_by_sleeve.get("core", set())
+    defensive_codes = DEFENSIVE_CODES | codes_by_sleeve.get("defensive", set())
+    exact_active_codes = codes_by_sleeve.get("mainline", set()) | codes_by_sleeve.get("thematic", set())
+    related_mainline_codes = RELATED_MAINLINE_CODES - exact_active_codes
 
-    defensive_weight = sum_weights(positions, DEFENSIVE_CODES)
+    defensive_weight = sum_weights(positions, defensive_codes)
     real_risk_weight = round(100 - defensive_weight, 4)
     shadow_defensive = float(sleeve.get("defensive", run.get("cash_ratio", 0)) or 0)
     shadow_risk = float(run.get("risk_budget_ratio", 100 - shadow_defensive) or 0)
@@ -235,9 +251,14 @@ def build_public_summary(shadow: dict[str, Any], shadow_url: str, qmt: dict[str,
     baseline, created, base_time = load_or_create_baseline(qmt["total_asset"])
     real_nav = qmt["total_asset"] / baseline if baseline else 1.0
 
-    exact_shadow_weight = sum_weights(positions, SHADOW_EXACT_CODES)
-    related_mainline_weight = sum_weights(positions, RELATED_MAINLINE_CODES)
-    core_proxy_weight = sum_weights(positions, CORE_PROXY_CODES)
+    exact_shadow_weight = sum_weights(positions, exact_active_codes)
+    related_mainline_weight = sum_weights(positions, related_mainline_codes)
+    core_proxy_weight = sum_weights(positions, core_codes)
+    exact_shadow_target = sum(
+        float(a.get("target_weight_ratio", 0) or 0)
+        for a in raw_allocations
+        if a.get("code") in exact_active_codes
+    )
 
     reduction_buckets = [
         {
@@ -270,7 +291,7 @@ def build_public_summary(shadow: dict[str, Any], shadow_url: str, qmt: dict[str,
                     "target_weight_pct": round(float(a.get("target_weight_ratio", 0) or 0), 4),
                     "pct_chg": a.get("pct_chg"),
                 }
-                for a in (shadow.get("allocations") or [])
+                for a in raw_allocations
             ],
         },
         "real": {
@@ -295,11 +316,7 @@ def build_public_summary(shadow: dict[str, Any], shadow_url: str, qmt: dict[str,
             "risk_over_shadow_pp": round(real_risk_weight - shadow_risk, 4),
             "defensive_vs_shadow_pp": round(defensive_weight - shadow_defensive, 4),
             "core_proxy_vs_shadow_core_pp": round(core_proxy_weight - float(sleeve.get("core", 0) or 0), 4),
-            "shadow_exact_codes_gap_pp": round(
-                exact_shadow_weight
-                - sum(float(a.get("target_weight_ratio", 0) or 0) for a in (shadow.get("allocations") or []) if a.get("code") in SHADOW_EXACT_CODES),
-                4,
-            ),
+            "shadow_exact_codes_gap_pp": round(exact_shadow_weight - exact_shadow_target, 4),
         },
         "reduction_buckets": reduction_buckets,
         "tiny_positions_weight_pct": tiny_weight,
@@ -335,7 +352,7 @@ def recommendation_text(summary: dict[str, Any]) -> list[str]:
 
     if defensive_gap < -1:
         lines.append(
-            f"防御仓不足约 {abs(defensive_gap):.2f} 个百分点；若继续把短融 ETF 视作现金替代，仍建议补到 64% 左右，降低主题仓挤在一起的波动。"
+            f"防御仓不足约 {abs(defensive_gap):.2f} 个百分点；若继续把短融或货币 ETF 视作现金替代，仍建议补到影子账户的 {fmt_pct(shadow['defensive_weight_pct'])} 附近。"
         )
 
     if core_gap < -3:
@@ -343,9 +360,9 @@ def recommendation_text(summary: dict[str, Any]) -> list[str]:
             f"核心宽基/质量代理仓低于影子核心仓约 {abs(core_gap):.2f} 个百分点；后续结构调整应优先从非模型卫星仓轮入核心代理，而不是新增净风险。"
         )
 
-    if exact_gap < -5:
+    if exact_gap < -1:
         lines.append(
-            f"影子账户的精确主线标的合计缺口约 {abs(exact_gap):.2f} 个百分点；半导体材料设备当日涨幅较大，适合分段观察，不适合用一次性追高完成对齐。"
+            f"影子账户的精确主线/主题标的合计缺口约 {abs(exact_gap):.2f} 个百分点；先用减风险腾出的比例分段对齐，不用新增净风险追高。"
         )
 
     lines.append(
@@ -420,9 +437,10 @@ def render_report(summary: dict[str, Any]) -> str:
     lines.append("| 结构 | 影子目标 | 实盘当前 | 差异 |")
     lines.append("| --- | ---: | ---: | ---: |")
     core_target = float(shadow["sleeve_summary"].get("core", 0) or 0)
-    target_exact = sum(
-        a["target_weight_pct"] for a in shadow["allocations"] if a["code"] in SHADOW_EXACT_CODES
-    )
+    active_allocations = [
+        a for a in shadow["allocations"] if a.get("sleeve") in {"mainline", "thematic"}
+    ]
+    target_exact = sum(a["target_weight_pct"] for a in active_allocations)
     lines.append(
         f"| 防御/现金 | {fmt_pct(shadow['defensive_weight_pct'])} | {fmt_pct(real['defensive_proxy_weight_pct'])} | {diff['defensive_vs_shadow_pp']:+.2f} pp |"
     )
@@ -430,7 +448,7 @@ def render_report(summary: dict[str, Any]) -> str:
         f"| 核心宽基/质量代理 | {fmt_pct(core_target)} | {fmt_pct(real['core_proxy_weight_pct'])} | {diff['core_proxy_vs_shadow_core_pp']:+.2f} pp |"
     )
     lines.append(
-        f"| 影子精确主线标的 | {fmt_pct(target_exact)} | {fmt_pct(real['shadow_exact_codes_weight_pct'])} | {diff['shadow_exact_codes_gap_pp']:+.2f} pp |"
+        f"| 影子精确主线/主题标的 | {fmt_pct(target_exact)} | {fmt_pct(real['shadow_exact_codes_weight_pct'])} | {diff['shadow_exact_codes_gap_pp']:+.2f} pp |"
     )
     lines.append(
         f"| 相关主线代理 | - | {fmt_pct(real['related_mainline_weight_pct'])} | 不是精确影子持仓 |"
@@ -452,10 +470,21 @@ def render_report(summary: dict[str, Any]) -> str:
 
     lines.append("## 操作建议")
     lines.append("")
-    lines.append("1. 第一优先级是仓位预算：把风险仓净降约 7-8 个百分点，防御仓补到 64% 左右。")
-    lines.append("2. 第二优先级是结构简化：不要新增净风险，用模型未覆盖的券商、医药、稀土有色和零散个股，轮入核心宽基/质量代理。")
-    lines.append("3. 第三优先级才是影子主线：588170、159745、515050 等缺口只用腾挪资金分段补，不用现金仓一次性追。")
-    lines.append("4. 588850 对应的高端制造/机器人方向，实盘已有多个相关代理，先合并重复暴露，再决定是否换成影子精确标的。")
+    if diff["risk_over_shadow_pp"] > 1:
+        lines.append(
+            f"1. 第一优先级是仓位预算：把风险仓净降约 {diff['risk_over_shadow_pp']:.2f} 个百分点，防御/现金仓补到 {fmt_pct(shadow['defensive_weight_pct'])} 附近。"
+        )
+    else:
+        lines.append("1. 第一优先级是结构核对：风险仓总量已经接近影子账户时，再处理内部袖套偏差。")
+    lines.append("2. 第二优先级是结构简化：不要新增净风险，优先用模型未覆盖的券商、医药、稀土有色和零散个股腾挪。")
+    if active_allocations:
+        active_text = "、".join(
+            f"{a['code']}({fmt_pct(a['target_weight_pct'])})" for a in active_allocations[:4]
+        )
+        lines.append(f"3. 第三优先级才是影子主线/主题：当前精确标的是 {active_text}，只用腾挪资金分段对齐。")
+    else:
+        lines.append("3. 第三优先级才是影子主线/主题：当前影子账户没有需要对齐的精确主线/主题标的。")
+    lines.append("4. 已有相关代理仓只作为参考，不直接抵扣影子精确标的缺口；是否替换要看方向、门禁和流动性是否一致。")
     lines.append("5. 个股不在本次影子账户模型内，除非已有单独研究结论，否则不做加仓建议；需要降复杂度时优先处理低权重个股。")
     lines.append("")
     lines.append("## 数据与隐私")

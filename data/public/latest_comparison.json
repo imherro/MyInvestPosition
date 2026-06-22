@@ -1,282 +1,260 @@
 {
-  "generated_at": "2026-06-18T12:14:56+08:00",
+  "generated_at": "2026-06-22T22:58:10+08:00",
   "shadow_url_used": "https://shadow.okbbc.com/api/latest",
   "shadow": {
-    "run_at": "2026-06-18T12:09:53+08:00",
-    "basis_date": "2026-06-17",
-    "market_regime": "结构性偏强但分歧较大",
-    "nav": 1.0,
-    "daily_return_pct": 0.0,
-    "risk_weight_pct": 36.0,
-    "defensive_weight_pct": 64.0,
+    "run_at": "2026-06-22T22:55:47+08:00",
+    "basis_date": "2026-06-22",
+    "market_regime": "防守或弱修复",
+    "nav": 1.011386,
+    "daily_return_pct": 0.0079,
+    "risk_weight_pct": 15.0,
+    "defensive_weight_pct": 85.0,
     "sleeve_summary": {
-      "core": 18.0,
-      "mainline": 15.0012,
-      "thematic": 2.9988,
-      "defensive": 64.0
+      "core": 9.0,
+      "mainline": 5.999999999999999,
+      "thematic": 0.0,
+      "defensive": 85.0
     },
     "allocations": [
       {
-        "code": "CORE.ASHARE",
-        "name": "A股核心宽基组合",
+        "code": "510300.SH",
+        "name": "华泰柏瑞沪深300ETF",
         "sleeve": "core",
-        "theme": "核心仓位",
-        "target_weight_pct": 18.0,
-        "pct_chg": 1.07809
+        "theme": "核心-沪深300",
+        "target_weight_pct": 5.4,
+        "pct_chg": 2.15
+      },
+      {
+        "code": "510500.SH",
+        "name": "南方中证500ETF",
+        "sleeve": "core",
+        "theme": "核心-中证500",
+        "target_weight_pct": 2.7,
+        "pct_chg": 2.03
+      },
+      {
+        "code": "159915.SZ",
+        "name": "易方达创业板ETF",
+        "sleeve": "core",
+        "theme": "核心-创业板",
+        "target_weight_pct": 0.9,
+        "pct_chg": 2.58
+      },
+      {
+        "code": "159326.SZ",
+        "name": "华夏中证电网设备主题ETF",
+        "sleeve": "mainline",
+        "theme": "新能源/电力设备",
+        "target_weight_pct": 2.0446,
+        "pct_chg": 5.02
       },
       {
         "code": "588170.SH",
         "name": "华夏上证科创板半导体材料设备主题ETF",
         "sleeve": "mainline",
         "theme": "硬科技电子/半导体",
-        "target_weight_pct": 6.5426,
-        "pct_chg": 8.71
+        "target_weight_pct": 1.9884,
+        "pct_chg": 3.05
       },
       {
-        "code": "588850.SH",
-        "name": "嘉实上证科创板工业机械ETF",
+        "code": "515880.SH",
+        "name": "国泰中证全指通信设备ETF",
         "sleeve": "mainline",
-        "theme": "高端制造/机器人/军工",
-        "target_weight_pct": 4.2577,
-        "pct_chg": 3.06
-      },
-      {
-        "code": "159745.SZ",
-        "name": "国泰中证全指建筑材料ETF",
-        "sleeve": "mainline",
-        "theme": "建材/稳增长修复",
-        "target_weight_pct": 4.2008,
-        "pct_chg": 1.2
-      },
-      {
-        "code": "515050.SH",
-        "name": "华夏中证5G通信主题ETF",
-        "sleeve": "thematic",
         "theme": "AI算力/通信",
-        "target_weight_pct": 2.9988,
-        "pct_chg": 2.93
+        "target_weight_pct": 1.967,
+        "pct_chg": 2.03
       },
       {
-        "code": "DEFENSIVE.CASH",
-        "name": "防御现金仓",
+        "code": "511880.SH",
+        "name": "银华货币ETF-A",
         "sleeve": "defensive",
         "theme": "防御仓位",
-        "target_weight_pct": 64.0,
-        "pct_chg": 0.0
+        "target_weight_pct": 85.0,
+        "pct_chg": 0.01
       }
     ]
   },
   "real": {
     "account_mask": "masked",
-    "collected_at": "2026-06-18T12:14:56+08:00",
-    "nav_index": 1.0,
+    "collected_at": "2026-06-22T22:58:10+08:00",
+    "nav_index": 1.010105,
     "nav_baseline_created": false,
     "nav_baseline_time": "2026-06-18T12:14:06+08:00",
-    "positions_count": 36,
-    "defensive_proxy_weight_pct": 56.6824,
-    "risk_weight_pct": 43.3176,
-    "cash_weight_pct": 0.7561,
-    "core_proxy_weight_pct": 5.6805,
-    "shadow_exact_codes_weight_pct": 0,
-    "related_mainline_weight_pct": 1.8462,
+    "positions_count": 37,
+    "defensive_proxy_weight_pct": 61.8694,
+    "risk_weight_pct": 38.1306,
+    "cash_weight_pct": 0.0,
+    "core_proxy_weight_pct": 8.2324,
+    "shadow_exact_codes_weight_pct": 1.0827,
+    "related_mainline_weight_pct": 1.6985,
     "positions": [
       {
         "code": "511360.SH",
         "name": "短融ETF海富通",
-        "weight_pct": 55.9263
+        "weight_pct": 55.3746
+      },
+      {
+        "code": "511880.SH",
+        "name": "银华日利ETF",
+        "weight_pct": 6.4948
       },
       {
         "code": "159201.SZ",
         "name": "自由现金流ETF华夏",
-        "weight_pct": 4.2632
+        "weight_pct": 4.2693
       },
       {
         "code": "159992.SZ",
         "name": "创新药ETF银华",
-        "weight_pct": 4.1144
-      },
-      {
-        "code": "512070.SH",
-        "name": "证券保险ETF易方达",
-        "weight_pct": 3.3898
-      },
-      {
-        "code": "516150.SH",
-        "name": "稀土ETF嘉实",
-        "weight_pct": 2.694
-      },
-      {
-        "code": "002920.SZ",
-        "name": "德赛西威",
-        "weight_pct": 2.1371
-      },
-      {
-        "code": "002352.SZ",
-        "name": "顺丰控股",
-        "weight_pct": 1.8204
-      },
-      {
-        "code": "159842.SZ",
-        "name": "券商ETF银华",
-        "weight_pct": 1.8133
-      },
-      {
-        "code": "159378.SZ",
-        "name": "通用航空ETF永赢",
-        "weight_pct": 1.7389
-      },
-      {
-        "code": "512400.SH",
-        "name": "有色金属ETF南方",
-        "weight_pct": 1.6613
-      },
-      {
-        "code": "603596.SH",
-        "name": "伯特利",
-        "weight_pct": 1.6118
-      },
-      {
-        "code": "513180.SH",
-        "name": "恒生科技ETF华夏",
-        "weight_pct": 1.5212
-      },
-      {
-        "code": "512710.SH",
-        "name": "军工龙头ETF富国",
-        "weight_pct": 1.4941
+        "weight_pct": 4.0843
       },
       {
         "code": "510500.SH",
         "name": "中证500ETF南方",
-        "weight_pct": 1.4173
+        "weight_pct": 3.9631
       },
       {
-        "code": "512880.SH",
-        "name": "证券ETF国泰",
-        "weight_pct": 1.2989
+        "code": "512070.SH",
+        "name": "证券保险ETF易方达",
+        "weight_pct": 3.5719
       },
       {
-        "code": "562500.SH",
-        "name": "机器人ETF华夏",
-        "weight_pct": 1.259
+        "code": "159842.SZ",
+        "name": "券商ETF银华",
+        "weight_pct": 1.9204
       },
       {
-        "code": "513120.SH",
-        "name": "港股创新药ETF广发",
-        "weight_pct": 1.2386
+        "code": "516150.SH",
+        "name": "稀土ETF嘉实",
+        "weight_pct": 1.8905
+      },
+      {
+        "code": "002352.SZ",
+        "name": "顺丰控股",
+        "weight_pct": 1.8251
+      },
+      {
+        "code": "159378.SZ",
+        "name": "通用航空ETF永赢",
+        "weight_pct": 1.7084
+      },
+      {
+        "code": "513180.SH",
+        "name": "恒生科技ETF华夏",
+        "weight_pct": 1.506
+      },
+      {
+        "code": "512710.SH",
+        "name": "军工龙头ETF富国",
+        "weight_pct": 1.4965
       },
       {
         "code": "002258.SZ",
         "name": "利尔化学",
-        "weight_pct": 1.2059
+        "weight_pct": 1.3008
+      },
+      {
+        "code": "562500.SH",
+        "name": "机器人ETF华夏",
+        "weight_pct": 1.2335
+      },
+      {
+        "code": "513120.SH",
+        "name": "港股创新药ETF广发",
+        "weight_pct": 1.2213
       },
       {
         "code": "603087.SH",
         "name": "甘李药业",
-        "weight_pct": 1.1268
-      },
-      {
-        "code": "688439.SH",
-        "name": "振华风光",
-        "weight_pct": 1.111
+        "weight_pct": 1.1112
       },
       {
         "code": "159869.SZ",
         "name": "游戏ETF华夏",
-        "weight_pct": 1.0364
+        "weight_pct": 1.0632
       },
       {
         "code": "562800.SH",
         "name": "稀有金属ETF嘉实",
-        "weight_pct": 0.9211
+        "weight_pct": 0.9892
       },
       {
         "code": "159326.SZ",
         "name": "电网设备ETF华夏",
-        "weight_pct": 0.9127
+        "weight_pct": 0.9467
       },
       {
-        "code": "CASH",
-        "name": "现金",
-        "weight_pct": 0.7561
+        "code": "512400.SH",
+        "name": "有色金属ETF南方",
+        "weight_pct": 0.8773
       },
       {
         "code": "688333.SH",
         "name": "铂力特",
-        "weight_pct": 0.7423
-      },
-      {
-        "code": "300627.SZ",
-        "name": "华测导航",
-        "weight_pct": 0.6135
-      },
-      {
-        "code": "002041.SZ",
-        "name": "登海种业",
-        "weight_pct": 0.6127
-      },
-      {
-        "code": "603903.SH",
-        "name": "中持股份",
-        "weight_pct": 0.4299
+        "weight_pct": 0.7261
       },
       {
         "code": "300760.SZ",
         "name": "迈瑞医疗",
-        "weight_pct": 0.3484
+        "weight_pct": 0.3458
       },
       {
         "code": "159558.SZ",
         "name": "半导体设备ETF易方达",
-        "weight_pct": 0.2188
+        "weight_pct": 0.2252
       },
       {
         "code": "588200.SH",
         "name": "科创芯片ETF嘉实",
-        "weight_pct": 0.2017
+        "weight_pct": 0.2062
       },
       {
         "code": "515880.SH",
         "name": "通信ETF国泰",
-        "weight_pct": 0.1336
+        "weight_pct": 0.136
       },
       {
         "code": "159206.SZ",
         "name": "卫星ETF永赢",
-        "weight_pct": 0.1049
+        "weight_pct": 0.1009
       },
       {
         "code": "001399.SZ",
         "name": "惠科股份",
-        "weight_pct": 0.0623
+        "weight_pct": 0.0617
       },
       {
         "code": "159667.SZ",
         "name": "工业母机ETF国泰",
-        "weight_pct": 0.0331
+        "weight_pct": 0.0336
       },
       {
         "code": "159819.SZ",
         "name": "人工智能ETF易方达",
-        "weight_pct": 0.0257
+        "weight_pct": 0.0259
       },
       {
         "code": "159301.SZ",
         "name": "公用事业ETF华夏",
-        "weight_pct": 0.0037
+        "weight_pct": 0.0036
+      },
+      {
+        "code": "CASH",
+        "name": "现金",
+        "weight_pct": 0.0
       }
     ]
   },
   "diff": {
-    "risk_over_shadow_pp": 7.3176,
-    "defensive_vs_shadow_pp": -7.3176,
-    "core_proxy_vs_shadow_core_pp": -12.3195,
-    "shadow_exact_codes_gap_pp": -18.0
+    "risk_over_shadow_pp": 23.1306,
+    "defensive_vs_shadow_pp": -23.1306,
+    "core_proxy_vs_shadow_core_pp": -0.7676,
+    "shadow_exact_codes_gap_pp": -4.9173
   },
   "reduction_buckets": [
     {
       "bucket": "券商/证券保险",
-      "weight_pct": 6.502,
+      "weight_pct": 5.4923,
       "codes": [
         "159842.SZ",
         "512070.SH",
@@ -285,7 +263,7 @@
     },
     {
       "bucket": "医药/医疗",
-      "weight_pct": 6.8282,
+      "weight_pct": 6.7626,
       "codes": [
         "159992.SZ",
         "300760.SZ",
@@ -295,7 +273,7 @@
     },
     {
       "bucket": "稀土/有色",
-      "weight_pct": 5.2764,
+      "weight_pct": 3.757,
       "codes": [
         "512400.SH",
         "516150.SH",
@@ -303,5 +281,5 @@
       ]
     }
   ],
-  "tiny_positions_weight_pct": 0.7838
+  "tiny_positions_weight_pct": 0.7931
 }
