@@ -15,8 +15,10 @@ from core.score_calibration import calibrate_confidence_weight
 from core.independent_calibrator import calibrate_per_signal
 from core.signal_ledger import build_signal_ledger
 from core.dynamic_signal_weight import compute_dynamic_signal_weights
-from core.signal_graph import default_signal_graph
+from core.signal_graph import SignalEdge, default_signal_graph
 from core.signal_explainer import explain_signal_interactions
+from core.signal_graph_learner import learn_signal_edges
+from core.graph_evolution import evolve_graph
 
 
 class DecisionEngineTests(unittest.TestCase):
@@ -216,6 +218,8 @@ class DecisionEngineTests(unittest.TestCase):
         self.assertIn("risk_engine", result["per_signal_calibration"])
         self.assertIn("dynamic_signal_weights", result)
         self.assertIn("signal_graph", result)
+        self.assertIn("learned_signal_graph", result)
+        self.assertIn("graph_feedback_loop", result)
         self.assertFalse(result["self_correction"]["active"])
 
     def test_independent_calibrator_does_not_global_collapse(self) -> None:
@@ -296,6 +300,34 @@ class DecisionEngineTests(unittest.TestCase):
 
         self.assertEqual(explanations[0]["direction"], "amplified")
         self.assertTrue(explanations[0]["dependency_chain"])
+
+    def test_signal_graph_learner_creates_edges_from_ledger(self) -> None:
+        ledger = [
+            {"signal_source": "risk_engine", "expected_score": 0.8, "drift_contribution": 0.1, "status": "pending"},
+            {"signal_source": "shadow_gap", "expected_score": 0.6, "drift_contribution": 0.2, "status": "pending"},
+        ]
+
+        learned = learn_signal_edges(ledger)
+
+        self.assertEqual(len(learned), 1)
+        self.assertGreater(learned[0].dependency_weight, 0)
+
+    def test_graph_evolution_updates_or_decays_edges(self) -> None:
+        static = default_signal_graph()
+        learned = [
+            SignalEdge(
+                source=static[0].source,
+                target=static[0].target,
+                dependency_weight=1.0,
+                influence_direction=static[0].influence_direction,
+                reason="learned",
+            )
+        ]
+
+        evolved = evolve_graph(static, learned)
+
+        self.assertGreater(evolved[0].dependency_weight, static[0].dependency_weight)
+        self.assertLess(evolved[1].dependency_weight, static[1].dependency_weight)
 
 
 if __name__ == "__main__":
