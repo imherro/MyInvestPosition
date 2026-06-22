@@ -56,6 +56,10 @@
 - `core/graph_evolution.py` 按新数据强化依赖边，缺少新证据的边会衰减。
 - `core/adaptive_signal_graph.py` 输出由 static graph 和 learned graph 演化得到的 active graph。
 - `core/graph_feedback_loop.py` 汇总 `signal -> outcome -> graph_update -> graph -> decision -> outcome_feedback`。
+- `core/causal_validation.py` 对图谱边输出 true positive、false positive 和 stability 评分。
+- `core/counterfactual_graph.py` 做 remove-edge 反事实校验，估算 performance change。
+- `core/graph_truth_score.py` 汇总 edge accuracy、stability 和 predictive gain。
+- `core/graph_pruning.py` 删除低 truth score 边、重置不确定边，并约束图谱稀疏度。
 - `core/decision_adjustment.py` 汇总 `decision -> shadow_simulation -> outcome -> calibration` 的调整回路。
 - 同一 `symbol` 的多条 action 不再直接抵消；不同来源的 `BUY`、`SELL`、`REBALANCE` 会各自保留评分和解释。
 - 报告和首页使用评分后的 action 渲染自然语言，不在展示层做硬优先级覆盖。
@@ -181,6 +185,7 @@ $env:QMT_ACCOUNT_ID='你的资金账号'
 - 检查 `core/signal_registry.py`、`core/signal_ledger.py`、`core/signal_isolation.py`、`core/independent_calibrator.py` 是否实现 per-signal 学习，避免 global confidence collapse。
 - 检查 `core/signal_graph.py`、`core/signal_interaction.py`、`core/dynamic_signal_weight.py`、`core/signal_explainer.py` 是否输出可解释的 signal interaction 和动态权重。
 - 检查 `core/signal_graph_learner.py`、`core/graph_evolution.py`、`core/adaptive_signal_graph.py`、`core/graph_feedback_loop.py` 是否让 ledger 反向影响 active graph。
+- 检查 `core/causal_validation.py`、`core/counterfactual_graph.py`、`core/graph_truth_score.py`、`core/graph_pruning.py` 是否能验证和修剪 graph，防止图谱无限膨胀。
 - 检查 `core/decision_adjustment.py` 是否把 decision_log 转成可回放的反馈调整结构。
 - 检查 `core/decision_engine.py` 是否只输出评分后的 `DecisionAction`，以及同标的多信号是否没有被直接抵消。
 - 检查报告和首页建议是否来自 `DecisionAction`，而不是直接拼接动作字符串。

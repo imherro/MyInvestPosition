@@ -19,6 +19,8 @@ from core.signal_graph import SignalEdge, default_signal_graph
 from core.signal_explainer import explain_signal_interactions
 from core.signal_graph_learner import learn_signal_edges
 from core.graph_evolution import evolve_graph
+from core.graph_truth_score import graph_truth_score, score_graph_edges
+from core.graph_pruning import prune_graph
 
 
 class DecisionEngineTests(unittest.TestCase):
@@ -220,6 +222,8 @@ class DecisionEngineTests(unittest.TestCase):
         self.assertIn("signal_graph", result)
         self.assertIn("learned_signal_graph", result)
         self.assertIn("graph_feedback_loop", result)
+        self.assertIn("graph_truth_scores", result)
+        self.assertIn("graph_pruning", result)
         self.assertFalse(result["self_correction"]["active"])
 
     def test_independent_calibrator_does_not_global_collapse(self) -> None:
@@ -328,6 +332,33 @@ class DecisionEngineTests(unittest.TestCase):
 
         self.assertGreater(evolved[0].dependency_weight, static[0].dependency_weight)
         self.assertLess(evolved[1].dependency_weight, static[1].dependency_weight)
+
+    def test_graph_truth_score_and_pruning(self) -> None:
+        graph = default_signal_graph()
+        outcomes = [
+            {
+                "action_id": "PORTFOLIO|REDUCE_RISK|risk_budget_rule",
+                "expected_score": 0.8,
+                "realized_return": 0.9,
+                "error": 0.1,
+                "status": "realized",
+            }
+        ]
+        ledger = [
+            {
+                "signal_source": "risk_engine",
+                "expected_score": 0.8,
+                "drift_contribution": 0.1,
+                "status": "realized",
+            }
+        ]
+
+        scores = score_graph_edges(graph, ledger, outcomes)
+        pruned = prune_graph(graph, scores, min_truth_score=0.0, max_edges=3)
+
+        self.assertGreater(graph_truth_score(0.5, 0.5, 0.5), 0)
+        self.assertTrue(scores)
+        self.assertLessEqual(len(pruned["pruned_graph"]), 3)
 
 
 if __name__ == "__main__":
