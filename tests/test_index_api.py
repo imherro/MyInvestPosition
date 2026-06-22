@@ -19,7 +19,12 @@ class IndexApiTests(unittest.TestCase):
                 "nav": 1.0,
                 "risk_weight_pct": 36.0,
                 "defensive_weight_pct": 64.0,
-                "sleeve_summary": {"core": 18.0},
+                "sleeve_summary": {
+                    "core": 18.0,
+                    "mainline": 15.0012,
+                    "thematic": 2.9988,
+                    "defensive": 64.0,
+                },
                 "allocations": [
                     {
                         "code": "588170.SH",
@@ -58,6 +63,9 @@ class IndexApiTests(unittest.TestCase):
         self.assertEqual(payload["page"]["status"], "over_budget")
         self.assertEqual(payload["hero"]["risk_gap_pp"], 7.32)
         self.assertEqual(payload["cards"][1]["id"], "real_risk")
+        self.assertEqual(payload["sleeve_deviations"][0]["id"], "core")
+        self.assertEqual(payload["sleeve_deviations"][1]["gap_pp"], -15.0)
+        self.assertEqual(payload["sleeve_deviations"][4]["id"], "non_model_satellite")
         self.assertEqual(payload["real_top_positions"]["total_count"], 2)
         self.assertFalse(payload["privacy"]["contains_amounts"])
         self.assertFalse(payload["privacy"]["private_data_read"])
@@ -79,7 +87,8 @@ class IndexApiTests(unittest.TestCase):
 
         self.assertIn("<!doctype html>", html)
         self.assertIn("影子账户与 QMT 实盘净值对照", html)
-        self.assertIn("仓位对照", html)
+        self.assertIn("仓位偏差核对", html)
+        self.assertIn("非模型卫星仓", html)
         self.assertIn("实盘前十大持仓", html)
         self.assertIn("511360.SH", html)
 

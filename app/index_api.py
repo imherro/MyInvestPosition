@@ -8,6 +8,14 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PUBLIC_SUMMARY = ROOT / "data" / "public" / "latest_comparison.json"
 
+SLEEVE_LABELS = {
+    "core": "核心仓",
+    "mainline": "主线进攻仓",
+    "thematic": "主题观察仓",
+    "defensive": "防御/现金仓",
+    "non_model_satellite": "非模型卫星仓",
+}
+
 
 def _round(value: Any, digits: int = 2) -> float | None:
     if value is None:
@@ -79,12 +87,122 @@ def load_public_summary(path: Path = DEFAULT_PUBLIC_SUMMARY) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _sum_position_weights(positions: list[dict[str, Any]], codes: set[str]) -> float:
+    return sum(float(item.get("weight_pct") or 0) for item in positions if item.get("code") in codes)
+
+
+def _target_for_sleeve(shadow: dict[str, Any], sleeve: str) -> float:
+    sleeve_summary = shadow.get("sleeve_summary") or {}
+    if sleeve_summary.get(sleeve) is not None:
+        return float(sleeve_summary.get(sleeve) or 0)
+    return sum(
+        float(item.get("target_weight_pct") or 0)
+        for item in shadow.get("allocations", [])
+        if item.get("sleeve") == sleeve
+    )
+
+
+def _gap_status(gap: float) -> str:
+    if gap > 1:
+        return "over"
+    if gap < -1:
+        return "under"
+    return "aligned"
+
+
+def _priority(gap: float) -> str:
+    magnitude = abs(gap)
+    if magnitude >= 10:
+        return "high"
+    if magnitude >= 3:
+        return "medium"
+    return "low"
+
+
+def _deviation_row(
+    row_id: str,
+    shadow_pct: float,
+    real_pct: float,
+    basis: str,
+    related_real_pct: float | None = None,
+) -> dict[str, Any]:
+    gap = real_pct - shadow_pct
+    return {
+        "id": row_id,
+        "label": SLEEVE_LABELS[row_id],
+        "shadow_pct": _round(shadow_pct, 2),
+        "real_pct": _round(real_pct, 2),
+        "gap_pp": _round(gap, 2),
+        "status": _gap_status(gap),
+        "priority": _priority(gap),
+        "basis": basis,
+        "related_real_pct": _round(related_real_pct, 2) if related_real_pct is not None else None,
+    }
+
+
+def build_sleeve_deviations(summary: dict[str, Any]) -> list[dict[str, Any]]:
+    shadow = summary.get("shadow", {})
+    real = summary.get("real", {})
+    positions = list(real.get("positions", []))
+    allocations = shadow.get("allocations", [])
+
+    codes_by_sleeve: dict[str, set[str]] = {}
+    for item in allocations:
+        sleeve = item.get("sleeve")
+        code = item.get("code")
+        if not sleeve or not code or str(code) in {"CORE.ASHARE", "DEFENSIVE.CASH"}:
+            continue
+        codes_by_sleeve.setdefault(str(sleeve), set()).add(str(code))
+
+    core_real = float(real.get("core_proxy_weight_pct") or 0)
+    mainline_real = _sum_position_weights(positions, codes_by_sleeve.get("mainline", set()))
+    thematic_real = _sum_position_weights(positions, codes_by_sleeve.get("thematic", set()))
+    defensive_real = float(real.get("defensive_proxy_weight_pct") or 0)
+    mapped_real = core_real + mainline_real + thematic_real + defensive_real
+    non_model_real = max(0.0, 100 - mapped_real)
+
+    return [
+        _deviation_row(
+            "core",
+            _target_for_sleeve(shadow, "core"),
+            core_real,
+            "影子用 CORE.ASHARE 汇总；实盘用核心宽基/质量代理口径核对。",
+        ),
+        _deviation_row(
+            "mainline",
+            _target_for_sleeve(shadow, "mainline"),
+            mainline_real,
+            "只按影子账户精确主线代码核对，相关主线代理不直接抵扣目标缺口。",
+            float(real.get("related_mainline_weight_pct") or 0),
+        ),
+        _deviation_row(
+            "thematic",
+            _target_for_sleeve(shadow, "thematic"),
+            thematic_real,
+            "只按影子账户精确主题/观察代码核对。",
+        ),
+        _deviation_row(
+            "defensive",
+            _target_for_sleeve(shadow, "defensive") or float(shadow.get("defensive_weight_pct") or 0),
+            defensive_real,
+            "实盘按现金和短融 ETF 等防御代理合并核对。",
+        ),
+        _deviation_row(
+            "non_model_satellite",
+            0,
+            non_model_real,
+            "未映射到影子账户袖套的行业、个股和零散仓位，是主要腾挪来源。",
+        ),
+    ]
+
+
 def build_index_payload(summary: dict[str, Any]) -> dict[str, Any]:
     shadow = summary.get("shadow", {})
     real = summary.get("real", {})
     diff = summary.get("diff", {})
     signal = _risk_signal(diff)
     top_positions = list(real.get("positions", []))[:10]
+    sleeve_deviations = build_sleeve_deviations(summary)
 
     return {
         "page": {
@@ -124,6 +242,7 @@ def build_index_payload(summary: dict[str, Any]) -> dict[str, Any]:
                 "value_pct": _round(real.get("defensive_proxy_weight_pct"), 2),
             },
         ],
+        "sleeve_deviations": sleeve_deviations,
         "comparison": {
             "risk": {
                 "shadow_pct": _round(shadow.get("risk_weight_pct"), 2),

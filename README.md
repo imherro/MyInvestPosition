@@ -27,7 +27,7 @@ py -3.11 scripts\position_compare.py
 py -3.11 -m app.server --host 127.0.0.1 --port 8018
 ```
 
-- `GET /api/index`：返回主页主要内容，包括净值对照、仓位差异、影子目标、实盘前十大持仓和操作建议。
+- `GET /api/index`：返回主页主要内容，包括净值对照、仓位分类偏差、影子目标、实盘前十大持仓和操作建议。
 - `GET /`：返回可直接浏览的首页。
 - `GET /health`：健康检查。
 

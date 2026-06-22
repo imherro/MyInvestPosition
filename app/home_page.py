@@ -79,6 +79,37 @@ def _comparison_rows(comparison: dict[str, dict[str, Any]]) -> str:
     return "\n".join(rows)
 
 
+def _status_label(status: Any) -> str:
+    labels = {
+        "over": "超配",
+        "under": "低配",
+        "aligned": "接近",
+    }
+    return labels.get(str(status), "-")
+
+
+def _sleeve_deviation_rows(items: list[dict[str, Any]]) -> str:
+    rows = []
+    for item in items:
+        basis = _safe(item.get("basis"))
+        related = item.get("related_real_pct")
+        if related is not None:
+            basis = f"{basis}<br><span class=\"muted-line\">相关代理：{_pct(related)}</span>"
+        rows.append(
+            f"""
+            <tr>
+              <th>{_safe(item.get("label"))}</th>
+              <td>{_pct(item.get("shadow_pct"))}</td>
+              <td>{_pct(item.get("real_pct"))}</td>
+              <td class="gap">{_pp(item.get("gap_pp"))}</td>
+              <td><span class="status status-{_safe(item.get("status"))}">{_status_label(item.get("status"))}</span></td>
+              <td>{basis}</td>
+            </tr>
+            """
+        )
+    return "\n".join(rows)
+
+
 def _allocation_rows(items: list[dict[str, Any]]) -> str:
     rows = []
     for item in items:
@@ -271,6 +302,32 @@ def render_home_page(payload: dict[str, Any]) -> str:
       font-weight: 700;
       color: var(--risk);
     }}
+    .status {{
+      display: inline-block;
+      min-width: 42px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-size: 12px;
+      text-align: center;
+      background: #f2f4f7;
+      color: var(--muted);
+    }}
+    .status-over {{
+      background: #fff1f0;
+      color: var(--risk);
+    }}
+    .status-under {{
+      background: #eff8ff;
+      color: var(--accent);
+    }}
+    .status-aligned {{
+      background: #ecfdf3;
+      color: var(--ok);
+    }}
+    .muted-line {{
+      color: var(--muted);
+      font-size: 12px;
+    }}
     ol {{
       margin: 0;
       padding-left: 22px;
@@ -348,13 +405,13 @@ def render_home_page(payload: dict[str, Any]) -> str:
 
     <div class="section-grid">
       <section>
-        <h2>仓位对照</h2>
+        <h2>仓位偏差核对</h2>
         <table>
           <thead>
-            <tr><th>结构</th><th>影子</th><th>实盘</th><th>差异</th></tr>
+            <tr><th>仓位分类</th><th>影子目标</th><th>实盘映射</th><th>偏差</th><th>状态</th><th>核对口径</th></tr>
           </thead>
           <tbody>
-            {_comparison_rows(payload.get("comparison", {}))}
+            {_sleeve_deviation_rows(payload.get("sleeve_deviations", []))}
           </tbody>
         </table>
       </section>
