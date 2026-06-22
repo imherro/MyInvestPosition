@@ -19,11 +19,14 @@ def score_action(action: DecisionAction, constraint: TradeConstraint) -> float:
 
 
 def score_breakdown(action: DecisionAction, constraint: TradeConstraint) -> dict[str, float]:
+    liquidity = safe_factor(constraint.liquidity_score)
+    if constraint.is_stale():
+        liquidity *= 0.7
     return {
-        "priority": action.priority,
-        "confidence": action.confidence,
-        "liquidity_factor": constraint.liquidity_score,
-        "tradability_factor": 1.0 if constraint.tradable else 0.0,
+        "priority": safe_factor(action.priority),
+        "confidence": safe_factor(action.confidence),
+        "liquidity_factor": round(liquidity, 6),
+        "tradability_factor": 1.0 if constraint.tradable else 0.05,
         "risk_adjustment": _risk_adjustment(action),
     }
 
@@ -49,3 +52,7 @@ def _risk_adjustment(action: DecisionAction) -> float:
     if action.risk_level == "medium":
         return 0.9
     return 1.0
+
+
+def safe_factor(value: float) -> float:
+    return round(min(max(float(value), 0.05), 1.0), 6)

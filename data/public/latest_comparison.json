@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T23:32:50+08:00",
+  "generated_at": "2026-06-22T23:48:53+08:00",
   "shadow_url_used": "https://shadow.okbbc.com/api/latest",
   "shadow": {
     "run_at": "2026-06-22T23:10:49+08:00",
@@ -76,7 +76,7 @@
   },
   "real": {
     "account_mask": "masked",
-    "collected_at": "2026-06-22T23:32:50+08:00",
+    "collected_at": "2026-06-22T23:48:53+08:00",
     "nav_index": 1.010105,
     "nav_baseline_created": false,
     "nav_baseline_time": "2026-06-18T12:14:06+08:00",
@@ -282,8 +282,87 @@
     }
   ],
   "tiny_positions_weight_pct": 0.7931,
+  "market_state": {
+    "volatility": 0.65,
+    "liquidity_regime": "normal",
+    "trend_regime": "bear",
+    "risk_sentiment": 0.35,
+    "timestamp": "2026-06-22T23:48:53+08:00"
+  },
+  "trade_constraints": {
+    "159326.SZ": {
+      "symbol": "159326.SZ",
+      "min_trade_unit": 0.1,
+      "max_position": 21.675,
+      "liquidity_score": 0.765,
+      "tradable": true,
+      "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+      "timestamp": "2026-06-22T23:48:53+08:00",
+      "valid_until": "2026-06-23T23:48:53+08:00"
+    },
+    "515880.SH": {
+      "symbol": "515880.SH",
+      "min_trade_unit": 0.1,
+      "max_position": 21.675,
+      "liquidity_score": 0.765,
+      "tradable": true,
+      "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+      "timestamp": "2026-06-22T23:48:53+08:00",
+      "valid_until": "2026-06-23T23:48:53+08:00"
+    },
+    "588170.SH": {
+      "symbol": "588170.SH",
+      "min_trade_unit": 0.1,
+      "max_position": 21.675,
+      "liquidity_score": 0.765,
+      "tradable": true,
+      "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+      "timestamp": "2026-06-22T23:48:53+08:00",
+      "valid_until": "2026-06-23T23:48:53+08:00"
+    },
+    "CORE_PROXY": {
+      "symbol": "CORE_PROXY",
+      "min_trade_unit": 0.0,
+      "max_position": 72.25,
+      "liquidity_score": 0.9,
+      "tradable": true,
+      "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+      "timestamp": "2026-06-22T23:48:53+08:00",
+      "valid_until": "2026-06-23T23:48:53+08:00"
+    },
+    "DEFENSIVE_CASH": {
+      "symbol": "DEFENSIVE_CASH",
+      "min_trade_unit": 0.0,
+      "max_position": 72.25,
+      "liquidity_score": 0.9,
+      "tradable": true,
+      "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+      "timestamp": "2026-06-22T23:48:53+08:00",
+      "valid_until": "2026-06-23T23:48:53+08:00"
+    },
+    "NON_MODEL_SATELLITE": {
+      "symbol": "NON_MODEL_SATELLITE",
+      "min_trade_unit": 0.0,
+      "max_position": 72.25,
+      "liquidity_score": 0.9,
+      "tradable": true,
+      "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+      "timestamp": "2026-06-22T23:48:53+08:00",
+      "valid_until": "2026-06-23T23:48:53+08:00"
+    },
+    "PORTFOLIO": {
+      "symbol": "PORTFOLIO",
+      "min_trade_unit": 0.0,
+      "max_position": 72.25,
+      "liquidity_score": 0.9,
+      "tradable": true,
+      "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+      "timestamp": "2026-06-22T23:48:53+08:00",
+      "valid_until": "2026-06-23T23:48:53+08:00"
+    }
+  },
   "decision_set": {
-    "timestamp": "2026-06-22T23:32:50+08:00",
+    "timestamp": "2026-06-22T23:48:53+08:00",
     "account_id": "masked",
     "actions": [
       {
@@ -295,38 +374,22 @@
         "source": "risk_budget_rule",
         "risk_level": "low",
         "reason": "实盘风险仓 36.84% 高于影子风险预算 35.00%",
-        "score": 0.649792,
-        "liquidity": 1.0,
+        "score": 0.874425,
+        "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority": 0.7384,
-          "confidence": 0.88,
-          "liquidity_factor": 1.0,
+          "priority_norm": 0.7384,
+          "confidence_norm": 0.954349,
+          "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
-          "risk_adjustment": 1.0
+          "risk_adjustment_norm": 1.0,
+          "market_state_factor": 1.00275,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
         },
-        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
-      },
-      {
-        "symbol": "DEFENSIVE_CASH",
-        "action": "REBALANCE",
-        "target_delta": 1.8439,
-        "priority": 0.6984,
-        "confidence": 0.82,
-        "source": "defensive_gap_rule",
-        "risk_level": "low",
-        "reason": "防御/现金仓低于影子目标 1.84 个百分点，目标防御仓 65.00%",
-        "score": 0.572688,
-        "liquidity": 1.0,
-        "tradable": true,
-        "score_breakdown": {
-          "priority": 0.6984,
-          "confidence": 0.82,
-          "liquidity_factor": 1.0,
-          "tradability_factor": 1.0,
-          "risk_adjustment": 1.0
-        },
-        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
       },
       {
         "symbol": "NON_MODEL_SATELLITE",
@@ -337,17 +400,48 @@
         "source": "satellite_reduction_rule",
         "risk_level": "low",
         "reason": "非模型行业、个股和零散仓位是降低风险仓的优先腾挪来源",
-        "score": 0.474048,
-        "liquidity": 1.0,
+        "score": 0.820994,
+        "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority": 0.6584,
-          "confidence": 0.72,
-          "liquidity_factor": 1.0,
+          "priority_norm": 0.6584,
+          "confidence_norm": 0.85321,
+          "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
-          "risk_adjustment": 1.0
+          "risk_adjustment_norm": 1.0,
+          "market_state_factor": 1.00275,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
         },
-        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
+      },
+      {
+        "symbol": "DEFENSIVE_CASH",
+        "action": "REBALANCE",
+        "target_delta": 1.8439,
+        "priority": 0.6984,
+        "confidence": 0.82,
+        "source": "defensive_gap_rule",
+        "risk_level": "low",
+        "reason": "防御/现金仓低于影子目标 1.84 个百分点，目标防御仓 65.00%",
+        "score": 0.676312,
+        "liquidity": 0.9,
+        "tradable": true,
+        "score_breakdown": {
+          "priority_norm": 0.6984,
+          "confidence_norm": 0.928242,
+          "liquidity_norm": 0.9,
+          "tradability_factor": 1.0,
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
       },
       {
         "symbol": "CORE_PROXY",
@@ -358,17 +452,22 @@
         "source": "core_gap_rule",
         "risk_level": "medium",
         "reason": "核心宽基/质量代理低于影子核心目标 16.77 个百分点",
-        "score": 0.420651,
-        "liquidity": 1.0,
+        "score": 0.647398,
+        "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority": 0.6677,
-          "confidence": 0.7,
-          "liquidity_factor": 1.0,
+          "priority_norm": 0.6677,
+          "confidence_norm": 0.832018,
+          "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
-          "risk_adjustment": 0.9
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
         },
-        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
       },
       {
         "symbol": "588170.SH",
@@ -379,17 +478,22 @@
         "source": "shadow_exact_gap_rule",
         "risk_level": "medium",
         "reason": "影子精确主线目标 3.31%，实盘 0.00%",
-        "score": 0.229134,
-        "liquidity": 0.85,
+        "score": 0.543056,
+        "liquidity": 0.765,
         "tradable": true,
         "score_breakdown": {
-          "priority": 0.4831,
-          "confidence": 0.62,
-          "liquidity_factor": 0.85,
+          "priority_norm": 0.4831,
+          "confidence_norm": 0.723122,
+          "liquidity_norm": 0.765,
           "tradability_factor": 1.0,
-          "risk_adjustment": 0.9
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
         },
-        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。"
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
       },
       {
         "symbol": "515880.SH",
@@ -400,17 +504,22 @@
         "source": "shadow_exact_gap_rule",
         "risk_level": "medium",
         "reason": "影子精确主线目标 3.28%，实盘 0.14%",
-        "score": 0.228328,
-        "liquidity": 0.85,
+        "score": 0.542562,
+        "liquidity": 0.765,
         "tradable": true,
         "score_breakdown": {
-          "priority": 0.4814,
-          "confidence": 0.62,
-          "liquidity_factor": 0.85,
+          "priority_norm": 0.4814,
+          "confidence_norm": 0.723122,
+          "liquidity_norm": 0.765,
           "tradability_factor": 1.0,
-          "risk_adjustment": 0.9
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
         },
-        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。"
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
       },
       {
         "symbol": "159326.SZ",
@@ -421,18 +530,290 @@
         "source": "shadow_exact_gap_rule",
         "risk_level": "medium",
         "reason": "影子精确主线目标 3.41%，实盘 0.95%",
-        "score": 0.225103,
-        "liquidity": 0.85,
+        "score": 0.540585,
+        "liquidity": 0.765,
         "tradable": true,
         "score_breakdown": {
-          "priority": 0.4746,
-          "confidence": 0.62,
-          "liquidity_factor": 0.85,
+          "priority_norm": 0.4746,
+          "confidence_norm": 0.723122,
+          "liquidity_norm": 0.765,
           "tradability_factor": 1.0,
-          "risk_adjustment": 0.9
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
         },
-        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。"
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
       }
     ]
+  },
+  "decision_log": {
+    "timestamp": "2026-06-22T23:48:53+08:00",
+    "account_id": "masked",
+    "market_state": {
+      "volatility": 0.65,
+      "liquidity_regime": "normal",
+      "trend_regime": "bear",
+      "risk_sentiment": 0.35,
+      "timestamp": "2026-06-22T23:48:53+08:00"
+    },
+    "actions": [
+      {
+        "symbol": "PORTFOLIO",
+        "action": "REDUCE_RISK",
+        "target_delta": -1.8439,
+        "priority": 0.7384,
+        "confidence": 0.88,
+        "source": "risk_budget_rule",
+        "risk_level": "low",
+        "reason": "实盘风险仓 36.84% 高于影子风险预算 35.00%",
+        "score": 0.874425,
+        "liquidity": 0.9,
+        "tradable": true,
+        "score_breakdown": {
+          "priority_norm": 0.7384,
+          "confidence_norm": 0.954349,
+          "liquidity_norm": 0.9,
+          "tradability_factor": 1.0,
+          "risk_adjustment_norm": 1.0,
+          "market_state_factor": 1.00275,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
+      },
+      {
+        "symbol": "NON_MODEL_SATELLITE",
+        "action": "REDUCE_RISK",
+        "target_delta": -1.8439,
+        "priority": 0.6584,
+        "confidence": 0.72,
+        "source": "satellite_reduction_rule",
+        "risk_level": "low",
+        "reason": "非模型行业、个股和零散仓位是降低风险仓的优先腾挪来源",
+        "score": 0.820994,
+        "liquidity": 0.9,
+        "tradable": true,
+        "score_breakdown": {
+          "priority_norm": 0.6584,
+          "confidence_norm": 0.85321,
+          "liquidity_norm": 0.9,
+          "tradability_factor": 1.0,
+          "risk_adjustment_norm": 1.0,
+          "market_state_factor": 1.00275,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
+      },
+      {
+        "symbol": "DEFENSIVE_CASH",
+        "action": "REBALANCE",
+        "target_delta": 1.8439,
+        "priority": 0.6984,
+        "confidence": 0.82,
+        "source": "defensive_gap_rule",
+        "risk_level": "low",
+        "reason": "防御/现金仓低于影子目标 1.84 个百分点，目标防御仓 65.00%",
+        "score": 0.676312,
+        "liquidity": 0.9,
+        "tradable": true,
+        "score_breakdown": {
+          "priority_norm": 0.6984,
+          "confidence_norm": 0.928242,
+          "liquidity_norm": 0.9,
+          "tradability_factor": 1.0,
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
+      },
+      {
+        "symbol": "CORE_PROXY",
+        "action": "REBALANCE",
+        "target_delta": 16.7676,
+        "priority": 0.6677,
+        "confidence": 0.7,
+        "source": "core_gap_rule",
+        "risk_level": "medium",
+        "reason": "核心宽基/质量代理低于影子核心目标 16.77 个百分点",
+        "score": 0.647398,
+        "liquidity": 0.9,
+        "tradable": true,
+        "score_breakdown": {
+          "priority_norm": 0.6677,
+          "confidence_norm": 0.832018,
+          "liquidity_norm": 0.9,
+          "tradability_factor": 1.0,
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
+      },
+      {
+        "symbol": "588170.SH",
+        "action": "REBALANCE",
+        "target_delta": 3.314,
+        "priority": 0.4831,
+        "confidence": 0.62,
+        "source": "shadow_exact_gap_rule",
+        "risk_level": "medium",
+        "reason": "影子精确主线目标 3.31%，实盘 0.00%",
+        "score": 0.543056,
+        "liquidity": 0.765,
+        "tradable": true,
+        "score_breakdown": {
+          "priority_norm": 0.4831,
+          "confidence_norm": 0.723122,
+          "liquidity_norm": 0.765,
+          "tradability_factor": 1.0,
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
+        },
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
+      },
+      {
+        "symbol": "515880.SH",
+        "action": "REBALANCE",
+        "target_delta": 3.1423,
+        "priority": 0.4814,
+        "confidence": 0.62,
+        "source": "shadow_exact_gap_rule",
+        "risk_level": "medium",
+        "reason": "影子精确主线目标 3.28%，实盘 0.14%",
+        "score": 0.542562,
+        "liquidity": 0.765,
+        "tradable": true,
+        "score_breakdown": {
+          "priority_norm": 0.4814,
+          "confidence_norm": 0.723122,
+          "liquidity_norm": 0.765,
+          "tradability_factor": 1.0,
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
+        },
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
+      },
+      {
+        "symbol": "159326.SZ",
+        "action": "REBALANCE",
+        "target_delta": 2.4609,
+        "priority": 0.4746,
+        "confidence": 0.62,
+        "source": "shadow_exact_gap_rule",
+        "risk_level": "medium",
+        "reason": "影子精确主线目标 3.41%，实盘 0.95%",
+        "score": 0.540585,
+        "liquidity": 0.765,
+        "tradable": true,
+        "score_breakdown": {
+          "priority_norm": 0.4746,
+          "confidence_norm": 0.723122,
+          "liquidity_norm": 0.765,
+          "tradability_factor": 1.0,
+          "risk_adjustment_norm": 0.75,
+          "market_state_factor": 0.83085,
+          "weight_priority": 0.35,
+          "weight_confidence": 0.25,
+          "weight_liquidity": 0.25,
+          "weight_risk_adjustment": 0.15
+        },
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
+      }
+    ],
+    "constraints": {
+      "159326.SZ": {
+        "symbol": "159326.SZ",
+        "min_trade_unit": 0.1,
+        "max_position": 21.675,
+        "liquidity_score": 0.765,
+        "tradable": true,
+        "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+        "timestamp": "2026-06-22T23:48:53+08:00",
+        "valid_until": "2026-06-23T23:48:53+08:00"
+      },
+      "515880.SH": {
+        "symbol": "515880.SH",
+        "min_trade_unit": 0.1,
+        "max_position": 21.675,
+        "liquidity_score": 0.765,
+        "tradable": true,
+        "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+        "timestamp": "2026-06-22T23:48:53+08:00",
+        "valid_until": "2026-06-23T23:48:53+08:00"
+      },
+      "588170.SH": {
+        "symbol": "588170.SH",
+        "min_trade_unit": 0.1,
+        "max_position": 21.675,
+        "liquidity_score": 0.765,
+        "tradable": true,
+        "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+        "timestamp": "2026-06-22T23:48:53+08:00",
+        "valid_until": "2026-06-23T23:48:53+08:00"
+      },
+      "CORE_PROXY": {
+        "symbol": "CORE_PROXY",
+        "min_trade_unit": 0.0,
+        "max_position": 72.25,
+        "liquidity_score": 0.9,
+        "tradable": true,
+        "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+        "timestamp": "2026-06-22T23:48:53+08:00",
+        "valid_until": "2026-06-23T23:48:53+08:00"
+      },
+      "DEFENSIVE_CASH": {
+        "symbol": "DEFENSIVE_CASH",
+        "min_trade_unit": 0.0,
+        "max_position": 72.25,
+        "liquidity_score": 0.9,
+        "tradable": true,
+        "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+        "timestamp": "2026-06-22T23:48:53+08:00",
+        "valid_until": "2026-06-23T23:48:53+08:00"
+      },
+      "NON_MODEL_SATELLITE": {
+        "symbol": "NON_MODEL_SATELLITE",
+        "min_trade_unit": 0.0,
+        "max_position": 72.25,
+        "liquidity_score": 0.9,
+        "tradable": true,
+        "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+        "timestamp": "2026-06-22T23:48:53+08:00",
+        "valid_until": "2026-06-23T23:48:53+08:00"
+      },
+      "PORTFOLIO": {
+        "symbol": "PORTFOLIO",
+        "min_trade_unit": 0.0,
+        "max_position": 72.25,
+        "liquidity_score": 0.9,
+        "tradable": true,
+        "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
+        "timestamp": "2026-06-22T23:48:53+08:00",
+        "valid_until": "2026-06-23T23:48:53+08:00"
+      }
+    }
   }
 }

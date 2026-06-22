@@ -184,6 +184,9 @@ def build_index_payload(summary: dict[str, Any]) -> dict[str, Any]:
     return {
         "timestamp": decision_set["timestamp"],
         "actions": decision_set["actions"],
+        "market_state": summary.get("market_state"),
+        "trade_constraints": summary.get("trade_constraints", {}),
+        "decision_log": summary.get("decision_log", {}),
         "page": {
             "title": "MyInvestPosition",
             "subtitle": "影子账户与 QMT 实盘净值对照",

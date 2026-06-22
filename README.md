@@ -35,8 +35,12 @@
 - `DecisionAction` 字段包括 `symbol`、`action`、`target_delta`、`priority`、`confidence`、`source`、`risk_level`、`reason`。
 - `DecisionSet` 字段包括 `timestamp`、`account_id` 和 `actions`，其中 `account_id` 只允许公开脱敏值 `masked`。
 - `core/trade_constraints.py` 定义 `TradeConstraint`，包括 `min_trade_unit`、`max_position`、`liquidity_score`、`tradable`、`reason`。
-- `core/signal_scoring.py` 对每条 `DecisionAction` 打分，公式为 `priority * confidence * liquidity_factor * tradability_factor * risk_adjustment`。
+- `TradeConstraint` 同时包含 `timestamp` 和 `valid_until`，过期约束会在评分时降低流动性因子。
+- `core/market_state.py` 根据影子账户的市场状态生成 `MarketState`，包括 `volatility`、`liquidity_regime`、`trend_regime`、`risk_sentiment`、`timestamp`。
+- `core/adaptive_constraints.py` 根据市场状态动态调整交易约束：波动升高降低最高仓位，弱势状态降低风险资产约束，低流动性状态降低可交易评分。
+- `core/normalized_scoring.py` 对每条 `DecisionAction` 做归一化加权评分，不再使用纯乘法模型。
 - `core/decision_engine.py` 负责把不同规则输出的 action 送入评分系统，按最终 `score` 排序并取 Top N。
+- `core/decision_logger.py` 记录 action、评分拆解、market state 快照和 constraint 快照，用于未来回放和漂移分析。
 - 同一 `symbol` 的多条 action 不再直接抵消；不同来源的 `BUY`、`SELL`、`REBALANCE` 会各自保留评分和解释。
 - 报告和首页使用评分后的 action 渲染自然语言，不在展示层做硬优先级覆盖。
 
@@ -55,17 +59,22 @@
       "source": "risk_budget_rule",
       "risk_level": "low",
       "reason": "实盘风险仓 36.84% 高于影子风险预算 35.00%",
-      "score": 0.649792,
-      "liquidity": 1.0,
+      "score": 0.874425,
+      "liquidity": 0.9,
       "tradable": true,
       "score_breakdown": {
-        "priority": 0.7384,
-        "confidence": 0.88,
-        "liquidity_factor": 1.0,
+        "priority_norm": 0.7384,
+        "confidence_norm": 0.954349,
+        "liquidity_norm": 0.9,
         "tradability_factor": 1.0,
-        "risk_adjustment": 1.0
+        "risk_adjustment_norm": 1.0,
+        "market_state_factor": 1.00275,
+        "weight_priority": 0.35,
+        "weight_confidence": 0.25,
+        "weight_liquidity": 0.25,
+        "weight_risk_adjustment": 0.15
       },
-      "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
+      "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
     }
   ]
 }
@@ -102,7 +111,7 @@
 `app.server` 是本地只读服务，默认端口使用 `8018`。
 
 - `GET /`：HTML 首页，展示净值对照、仓位偏差、影子目标、实盘主要持仓和建议。
-- `GET /api/index`：首页同源 JSON 数据，字段包括 `timestamp`、`actions`、`decision_set`、`hero`、`cards`、`sleeve_deviations`、`comparison`、`recommendations`、`shadow_allocations`、`real_top_positions`。
+- `GET /api/index`：首页同源 JSON 数据，字段包括 `timestamp`、`actions`、`decision_set`、`market_state`、`trade_constraints`、`decision_log`、`hero`、`cards`、`sleeve_deviations`、`comparison`、`recommendations`、`shadow_allocations`、`real_top_positions`。
 - `GET /health`：健康检查。
 
 `/api/index` 和 `/` 只读取 `data/public/latest_comparison.json`，不会读取 `data/private/`，也不会连接 QMT。
@@ -148,6 +157,8 @@ $env:QMT_ACCOUNT_ID='你的资金账号'
 - 检查 `scripts/check_public_privacy.py` 是否覆盖公开文件中的金额、股数、账号等敏感字段。
 - 检查 `app/index_api.py` 是否只消费 `data/public/latest_comparison.json`，没有读取私有目录。
 - 检查仓位分类是否按影子账户当前 `sleeve` 动态识别，而不是写死过期标的。
-- 检查 `core/trade_constraints.py` 和 `core/signal_scoring.py` 是否给每条 action 输出可解释的约束和评分。
+- 检查 `core/market_state.py`、`core/adaptive_constraints.py`、`core/normalized_scoring.py` 是否进入决策链。
+- 检查 `core/trade_constraints.py` 是否带时序字段，并且 stale constraint 会被降权。
+- 检查 `core/decision_logger.py` 是否记录 action、score breakdown、market_state 和 constraint snapshot。
 - 检查 `core/decision_engine.py` 是否只输出评分后的 `DecisionAction`，以及同标的多信号是否没有被直接抵消。
 - 检查报告和首页建议是否来自 `DecisionAction`，而不是直接拼接动作字符串。

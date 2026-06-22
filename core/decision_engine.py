@@ -4,7 +4,9 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from core.decision_schema import ActionType, DecisionAction, DecisionSet, RiskLevel
-from core.signal_scoring import scored_action
+from core.adaptive_constraints import adapt_constraint_map
+from core.market_state import MarketState, infer_market_state, neutral_market_state
+from core.normalized_scoring import normalized_scored_action
 from core.trade_constraints import TradeConstraint, build_trade_constraints, default_trade_constraint
 
 
@@ -14,16 +16,18 @@ CN_TZ = timezone(timedelta(hours=8))
 def score_and_rank_actions(
     action_lists: list[list[DecisionAction]],
     constraints: dict[str, TradeConstraint] | None = None,
+    market_state: MarketState | None = None,
     timestamp: str | None = None,
     account_id: str = "masked",
     top_n: int = 10,
 ) -> DecisionSet:
     constraints = constraints or {}
+    market_state = market_state or neutral_market_state(timestamp)
     scored: list[DecisionAction] = []
     for actions in action_lists:
         for action in actions:
             constraint = constraints.get(action.symbol) or default_trade_constraint(action.symbol)
-            scored.append(scored_action(action, constraint))
+            scored.append(normalized_scored_action(action, constraint, market_state))
 
     scored.sort(key=lambda x: (x.score or 0, x.priority, x.confidence, abs(x.target_delta)), reverse=True)
     if top_n > 0:
@@ -49,20 +53,31 @@ def merge_actions(
 
 
 def build_decision_set(summary: dict[str, Any]) -> DecisionSet:
-    constraints = build_trade_constraints(summary)
-    return score_and_rank_actions(
-        [
-            risk_budget_actions(summary),
-            defensive_gap_actions(summary),
-            core_gap_actions(summary),
-            shadow_exact_gap_actions(summary),
-            non_model_satellite_actions(summary),
-        ],
+    decision_set, _market_state, _constraints = build_decision_artifacts(summary)
+    return decision_set
+
+
+def build_decision_artifacts(
+    summary: dict[str, Any],
+) -> tuple[DecisionSet, MarketState, dict[str, TradeConstraint]]:
+    market_state = infer_market_state(summary)
+    constraints = adapt_constraint_map(build_trade_constraints(summary), market_state)
+    action_lists = [
+        risk_budget_actions(summary),
+        defensive_gap_actions(summary),
+        core_gap_actions(summary),
+        shadow_exact_gap_actions(summary),
+        non_model_satellite_actions(summary),
+    ]
+    decision_set = score_and_rank_actions(
+        action_lists,
         constraints=constraints,
+        market_state=market_state,
         timestamp=str(summary.get("generated_at") or datetime.now(CN_TZ).isoformat(timespec="seconds")),
         account_id=str((summary.get("real") or {}).get("account_mask") or "masked"),
         top_n=10,
     )
+    return decision_set, market_state, constraints
 
 
 def risk_budget_actions(summary: dict[str, Any]) -> list[DecisionAction]:

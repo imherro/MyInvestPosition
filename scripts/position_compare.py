@@ -17,7 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from core.decision_engine import build_decision_set, recommendations_from_decision_set
+from core.decision_engine import build_decision_artifacts, build_decision_set, recommendations_from_decision_set
+from core.decision_logger import build_decision_log
 
 DEFAULT_SHADOW_URL = "https://shadow.okbbc.com/api/latest"
 CN_TZ = timezone(timedelta(hours=8))
@@ -326,7 +327,12 @@ def build_public_summary(shadow: dict[str, Any], shadow_url: str, qmt: dict[str,
         "reduction_buckets": reduction_buckets,
         "tiny_positions_weight_pct": tiny_weight,
     }
-    summary["decision_set"] = build_decision_set(summary).to_dict()
+    decision_set, market_state, constraints = build_decision_artifacts(summary)
+    decision_log = build_decision_log(decision_set, market_state, constraints)
+    summary["market_state"] = market_state.to_dict()
+    summary["trade_constraints"] = decision_log["constraints"]
+    summary["decision_set"] = decision_set.to_dict()
+    summary["decision_log"] = decision_log
     return summary
 
 
@@ -466,6 +472,13 @@ def save_outputs(summary: dict[str, Any], qmt_private: dict[str, Any]) -> None:
         "positions": qmt_private["private_positions"],
     }
     private_path.write_text(json.dumps(private_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    decision_log_path = ROOT / "data/private/decision_log/latest_decision_log.json"
+    decision_log_path.parent.mkdir(parents=True, exist_ok=True)
+    decision_log_path.write_text(
+        json.dumps(summary.get("decision_log", {}), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
     report = render_report(summary)
     latest_report = ROOT / "reports/latest_position_compare.md"
