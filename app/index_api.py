@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from core.decision_engine import build_decision_set, recommendations_from_decision_set
+
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PUBLIC_SUMMARY = ROOT / "data" / "public" / "latest_comparison.json"
@@ -44,41 +46,15 @@ def _risk_signal(diff: dict[str, Any]) -> dict[str, str]:
     return {"level": "aligned", "text": "实盘总风险仓与影子账户基本对齐。"}
 
 
+def _decision_set_payload(summary: dict[str, Any]) -> dict[str, Any]:
+    existing = summary.get("decision_set")
+    if isinstance(existing, dict) and isinstance(existing.get("actions"), list):
+        return existing
+    return build_decision_set(summary).to_dict()
+
+
 def _recommendations(summary: dict[str, Any]) -> list[str]:
-    real = summary.get("real", {})
-    shadow = summary.get("shadow", {})
-    diff = summary.get("diff", {})
-    risk_gap = float(diff.get("risk_over_shadow_pp") or 0)
-    defensive_gap = float(diff.get("defensive_vs_shadow_pp") or 0)
-    core_gap = float(diff.get("core_proxy_vs_shadow_core_pp") or 0)
-    exact_gap = float(diff.get("shadow_exact_codes_gap_pp") or 0)
-
-    items: list[str] = []
-    if risk_gap > 1:
-        items.append(
-            f"把实盘风险仓从 {_round(real.get('risk_weight_pct')):.2f}% 压回影子账户的 {_round(shadow.get('risk_weight_pct')):.2f}% 附近，优先净降约 {risk_gap:.2f} 个百分点。"
-        )
-    elif risk_gap < -1:
-        items.append(
-            f"实盘风险仓低于影子账户约 {abs(risk_gap):.2f} 个百分点，只在主线确认后分段补齐。"
-        )
-    else:
-        items.append("风险仓总量接近影子账户，主页应重点提示结构差异。")
-
-    if defensive_gap < -1:
-        items.append(
-            f"防御/现金仓低于影子账户约 {abs(defensive_gap):.2f} 个百分点，先补防御仓再考虑追主线。"
-        )
-    if core_gap < -3:
-        items.append(
-            f"核心宽基/质量代理低于影子核心仓约 {abs(core_gap):.2f} 个百分点，适合用非模型卫星仓轮入。"
-        )
-    if exact_gap < -5:
-        items.append(
-            f"影子精确主线标的缺口约 {abs(exact_gap):.2f} 个百分点，适合分段对齐，不适合一次性追高。"
-        )
-    items.append("个股不在影子账户模型内，没有单独研究结论前不做加仓提示。")
-    return items
+    return recommendations_from_decision_set(_decision_set_payload(summary))
 
 
 def load_public_summary(path: Path = DEFAULT_PUBLIC_SUMMARY) -> dict[str, Any]:
@@ -203,8 +179,11 @@ def build_index_payload(summary: dict[str, Any]) -> dict[str, Any]:
     signal = _risk_signal(diff)
     top_positions = list(real.get("positions", []))[:10]
     sleeve_deviations = build_sleeve_deviations(summary)
+    decision_set = _decision_set_payload(summary)
 
     return {
+        "timestamp": decision_set["timestamp"],
+        "actions": decision_set["actions"],
         "page": {
             "title": "MyInvestPosition",
             "subtitle": "影子账户与 QMT 实盘净值对照",
@@ -273,6 +252,7 @@ def build_index_payload(summary: dict[str, Any]) -> dict[str, Any]:
             },
         },
         "recommendations": _recommendations(summary),
+        "decision_set": decision_set,
         "shadow_allocations": shadow.get("allocations", []),
         "real_top_positions": {
             "items": top_positions,

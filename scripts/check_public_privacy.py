@@ -34,6 +34,7 @@ def main() -> int:
         if path.name == "check_public_privacy.py":
             continue
         text = path.read_text(encoding="utf-8", errors="ignore")
+        text = re.sub(r'"account_id"\s*:\s*"masked"', "", text)
         for label, pattern in FORBIDDEN_PATTERNS.items():
             if pattern.search(text):
                 failures.append(f"{path.relative_to(ROOT)} contains {label}")

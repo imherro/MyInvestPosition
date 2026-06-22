@@ -14,6 +14,11 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from core.decision_engine import build_decision_set, recommendations_from_decision_set
+
 DEFAULT_SHADOW_URL = "https://shadow.okbbc.com/api/latest"
 CN_TZ = timezone(timedelta(hours=8))
 
@@ -270,7 +275,7 @@ def build_public_summary(shadow: dict[str, Any], shadow_url: str, qmt: dict[str,
     ]
     tiny_weight = round(sum(p.weight_pct for p in positions if 0 < p.weight_pct < 0.3), 4)
 
-    return {
+    summary = {
         "generated_at": datetime.now(CN_TZ).isoformat(timespec="seconds"),
         "shadow_url_used": shadow_url,
         "shadow": {
@@ -321,6 +326,8 @@ def build_public_summary(shadow: dict[str, Any], shadow_url: str, qmt: dict[str,
         "reduction_buckets": reduction_buckets,
         "tiny_positions_weight_pct": tiny_weight,
     }
+    summary["decision_set"] = build_decision_set(summary).to_dict()
+    return summary
 
 
 def fmt_pct(value: float | int | None) -> str:
@@ -330,45 +337,8 @@ def fmt_pct(value: float | int | None) -> str:
 
 
 def recommendation_text(summary: dict[str, Any]) -> list[str]:
-    diff = summary["diff"]
-    real = summary["real"]
-    shadow = summary["shadow"]
-    risk_gap = diff["risk_over_shadow_pp"]
-    defensive_gap = diff["defensive_vs_shadow_pp"]
-    core_gap = diff["core_proxy_vs_shadow_core_pp"]
-    exact_gap = diff["shadow_exact_codes_gap_pp"]
-
-    lines = []
-    if risk_gap > 1:
-        lines.append(
-            f"先把实盘风险仓从 {fmt_pct(real['risk_weight_pct'])} 压回影子账户的 {fmt_pct(shadow['risk_weight_pct'])} 附近，幅度约 {risk_gap:.2f} 个百分点；资金来源优先选模型未覆盖的行业卫星仓和极小仓位。"
-        )
-    elif risk_gap < -1:
-        lines.append(
-            f"实盘风险仓低于影子账户约 {abs(risk_gap):.2f} 个百分点，可以只在影子主线确认后小步补齐，不需要一次性拉满。"
-        )
-    else:
-        lines.append("实盘总风险预算与影子账户接近，主要矛盾在结构而不是仓位总量。")
-
-    if defensive_gap < -1:
-        lines.append(
-            f"防御仓不足约 {abs(defensive_gap):.2f} 个百分点；若继续把短融或货币 ETF 视作现金替代，仍建议补到影子账户的 {fmt_pct(shadow['defensive_weight_pct'])} 附近。"
-        )
-
-    if core_gap < -3:
-        lines.append(
-            f"核心宽基/质量代理仓低于影子核心仓约 {abs(core_gap):.2f} 个百分点；后续结构调整应优先从非模型卫星仓轮入核心代理，而不是新增净风险。"
-        )
-
-    if exact_gap < -1:
-        lines.append(
-            f"影子账户的精确主线/主题标的合计缺口约 {abs(exact_gap):.2f} 个百分点；先用减风险腾出的比例分段对齐，不用新增净风险追高。"
-        )
-
-    lines.append(
-        "个股仓位在本流程里只作为组合结构来源处理：没有独立研究结论前不加仓，需要降风险或降复杂度时优先从低权重、低协同的个股和行业卫星仓中腾挪。"
-    )
-    return lines
+    decision_set = summary.get("decision_set") or build_decision_set(summary).to_dict()
+    return recommendations_from_decision_set(decision_set)
 
 
 def render_report(summary: dict[str, Any]) -> str:
@@ -470,22 +440,8 @@ def render_report(summary: dict[str, Any]) -> str:
 
     lines.append("## 操作建议")
     lines.append("")
-    if diff["risk_over_shadow_pp"] > 1:
-        lines.append(
-            f"1. 第一优先级是仓位预算：把风险仓净降约 {diff['risk_over_shadow_pp']:.2f} 个百分点，防御/现金仓补到 {fmt_pct(shadow['defensive_weight_pct'])} 附近。"
-        )
-    else:
-        lines.append("1. 第一优先级是结构核对：风险仓总量已经接近影子账户时，再处理内部袖套偏差。")
-    lines.append("2. 第二优先级是结构简化：不要新增净风险，优先用模型未覆盖的券商、医药、稀土有色和零散个股腾挪。")
-    if active_allocations:
-        active_text = "、".join(
-            f"{a['code']}({fmt_pct(a['target_weight_pct'])})" for a in active_allocations[:4]
-        )
-        lines.append(f"3. 第三优先级才是影子主线/主题：当前精确标的是 {active_text}，只用腾挪资金分段对齐。")
-    else:
-        lines.append("3. 第三优先级才是影子主线/主题：当前影子账户没有需要对齐的精确主线/主题标的。")
-    lines.append("4. 已有相关代理仓只作为参考，不直接抵扣影子精确标的缺口；是否替换要看方向、门禁和流动性是否一致。")
-    lines.append("5. 个股不在本次影子账户模型内，除非已有单独研究结论，否则不做加仓建议；需要降复杂度时优先处理低权重个股。")
+    for idx, item in enumerate(recommendation_text(summary)[:8], start=1):
+        lines.append(f"{idx}. {item}")
     lines.append("")
     lines.append("## 数据与隐私")
     lines.append("")

@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-22T22:58:10+08:00",
+  "generated_at": "2026-06-22T23:26:12+08:00",
   "shadow_url_used": "https://shadow.okbbc.com/api/latest",
   "shadow": {
-    "run_at": "2026-06-22T22:55:47+08:00",
+    "run_at": "2026-06-22T23:10:49+08:00",
     "basis_date": "2026-06-22",
     "market_regime": "防守或弱修复",
     "nav": 1.011386,
     "daily_return_pct": 0.0079,
-    "risk_weight_pct": 15.0,
-    "defensive_weight_pct": 85.0,
+    "risk_weight_pct": 35.0,
+    "defensive_weight_pct": 65.0,
     "sleeve_summary": {
-      "core": 9.0,
-      "mainline": 5.999999999999999,
+      "core": 25.0,
+      "mainline": 9.999999999999998,
       "thematic": 0.0,
-      "defensive": 85.0
+      "defensive": 65.0
     },
     "allocations": [
       {
@@ -21,7 +21,7 @@
         "name": "华泰柏瑞沪深300ETF",
         "sleeve": "core",
         "theme": "核心-沪深300",
-        "target_weight_pct": 5.4,
+        "target_weight_pct": 15.0,
         "pct_chg": 2.15
       },
       {
@@ -29,7 +29,7 @@
         "name": "南方中证500ETF",
         "sleeve": "core",
         "theme": "核心-中证500",
-        "target_weight_pct": 2.7,
+        "target_weight_pct": 7.5,
         "pct_chg": 2.03
       },
       {
@@ -37,7 +37,7 @@
         "name": "易方达创业板ETF",
         "sleeve": "core",
         "theme": "核心-创业板",
-        "target_weight_pct": 0.9,
+        "target_weight_pct": 2.5,
         "pct_chg": 2.58
       },
       {
@@ -45,7 +45,7 @@
         "name": "华夏中证电网设备主题ETF",
         "sleeve": "mainline",
         "theme": "新能源/电力设备",
-        "target_weight_pct": 2.0446,
+        "target_weight_pct": 3.4076,
         "pct_chg": 5.02
       },
       {
@@ -53,7 +53,7 @@
         "name": "华夏上证科创板半导体材料设备主题ETF",
         "sleeve": "mainline",
         "theme": "硬科技电子/半导体",
-        "target_weight_pct": 1.9884,
+        "target_weight_pct": 3.314,
         "pct_chg": 3.05
       },
       {
@@ -61,7 +61,7 @@
         "name": "国泰中证全指通信设备ETF",
         "sleeve": "mainline",
         "theme": "AI算力/通信",
-        "target_weight_pct": 1.967,
+        "target_weight_pct": 3.2783,
         "pct_chg": 2.03
       },
       {
@@ -69,21 +69,21 @@
         "name": "银华货币ETF-A",
         "sleeve": "defensive",
         "theme": "防御仓位",
-        "target_weight_pct": 85.0,
+        "target_weight_pct": 65.0,
         "pct_chg": 0.01
       }
     ]
   },
   "real": {
     "account_mask": "masked",
-    "collected_at": "2026-06-22T22:58:10+08:00",
+    "collected_at": "2026-06-22T23:26:12+08:00",
     "nav_index": 1.010105,
     "nav_baseline_created": false,
     "nav_baseline_time": "2026-06-18T12:14:06+08:00",
     "positions_count": 37,
-    "defensive_proxy_weight_pct": 61.8694,
-    "risk_weight_pct": 38.1306,
-    "cash_weight_pct": 0.0,
+    "defensive_proxy_weight_pct": 63.1561,
+    "risk_weight_pct": 36.8439,
+    "cash_weight_pct": 1.2867,
     "core_proxy_weight_pct": 8.2324,
     "shadow_exact_codes_weight_pct": 1.0827,
     "related_mainline_weight_pct": 1.6985,
@@ -152,6 +152,11 @@
         "code": "002258.SZ",
         "name": "利尔化学",
         "weight_pct": 1.3008
+      },
+      {
+        "code": "CASH",
+        "name": "现金",
+        "weight_pct": 1.2867
       },
       {
         "code": "562500.SH",
@@ -237,19 +242,14 @@
         "code": "159301.SZ",
         "name": "公用事业ETF华夏",
         "weight_pct": 0.0036
-      },
-      {
-        "code": "CASH",
-        "name": "现金",
-        "weight_pct": 0.0
       }
     ]
   },
   "diff": {
-    "risk_over_shadow_pp": 23.1306,
-    "defensive_vs_shadow_pp": -23.1306,
-    "core_proxy_vs_shadow_core_pp": -0.7676,
-    "shadow_exact_codes_gap_pp": -4.9173
+    "risk_over_shadow_pp": 1.8439,
+    "defensive_vs_shadow_pp": -1.8439,
+    "core_proxy_vs_shadow_core_pp": -16.7676,
+    "shadow_exact_codes_gap_pp": -8.9173
   },
   "reduction_buckets": [
     {
@@ -281,5 +281,88 @@
       ]
     }
   ],
-  "tiny_positions_weight_pct": 0.7931
+  "tiny_positions_weight_pct": 0.7931,
+  "decision_set": {
+    "timestamp": "2026-06-22T23:26:12+08:00",
+    "account_id": "masked",
+    "actions": [
+      {
+        "symbol": "PORTFOLIO",
+        "action": "REDUCE_RISK",
+        "target_delta": -1.8439,
+        "priority": 0.7384,
+        "confidence": 0.88,
+        "source": "risk_budget_rule",
+        "risk_level": "low",
+        "reason": "实盘风险仓 36.84% 高于影子风险预算 35.00%",
+        "score": 0.649792
+      },
+      {
+        "symbol": "DEFENSIVE_CASH",
+        "action": "REBALANCE",
+        "target_delta": 1.8439,
+        "priority": 0.6984,
+        "confidence": 0.82,
+        "source": "defensive_gap_rule",
+        "risk_level": "low",
+        "reason": "防御/现金仓低于影子目标 1.84 个百分点，目标防御仓 65.00%",
+        "score": 0.572688
+      },
+      {
+        "symbol": "NON_MODEL_SATELLITE",
+        "action": "REDUCE_RISK",
+        "target_delta": -1.8439,
+        "priority": 0.6584,
+        "confidence": 0.72,
+        "source": "satellite_reduction_rule",
+        "risk_level": "low",
+        "reason": "非模型行业、个股和零散仓位是降低风险仓的优先腾挪来源",
+        "score": 0.474048
+      },
+      {
+        "symbol": "CORE_PROXY",
+        "action": "REBALANCE",
+        "target_delta": 16.7676,
+        "priority": 0.6677,
+        "confidence": 0.7,
+        "source": "core_gap_rule",
+        "risk_level": "medium",
+        "reason": "核心宽基/质量代理低于影子核心目标 16.77 个百分点",
+        "score": 0.46739
+      },
+      {
+        "symbol": "588170.SH",
+        "action": "REBALANCE",
+        "target_delta": 3.314,
+        "priority": 0.4831,
+        "confidence": 0.62,
+        "source": "shadow_exact_gap_rule",
+        "risk_level": "medium",
+        "reason": "影子精确主线目标 3.31%，实盘 0.00%",
+        "score": 0.299522
+      },
+      {
+        "symbol": "515880.SH",
+        "action": "REBALANCE",
+        "target_delta": 3.1423,
+        "priority": 0.4814,
+        "confidence": 0.62,
+        "source": "shadow_exact_gap_rule",
+        "risk_level": "medium",
+        "reason": "影子精确主线目标 3.28%，实盘 0.14%",
+        "score": 0.298468
+      },
+      {
+        "symbol": "159326.SZ",
+        "action": "REBALANCE",
+        "target_delta": 2.4609,
+        "priority": 0.4746,
+        "confidence": 0.62,
+        "source": "shadow_exact_gap_rule",
+        "risk_level": "medium",
+        "reason": "影子精确主线目标 3.41%，实盘 0.95%",
+        "score": 0.294252
+      }
+    ]
+  }
 }

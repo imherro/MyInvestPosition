@@ -11,9 +11,10 @@
 1. 上游影子账户系统先生成最新组合，公开接口为 `https://shadow.okbbc.com/api/latest`。
 2. 本项目运行 `scripts/position_compare.py`，只读拉取影子账户接口，并只读连接本机 QMT。
 3. 脚本把 QMT 原始资产、持仓数量、市值等敏感信息写入 `data/private/`，该目录不提交。
-4. 脚本把可公开审计的比例化摘要写入 `data/public/latest_comparison.json`。
-5. 脚本同时生成 `reports/latest_position_compare.md` 和日期归档报告。
-6. 本地只读服务读取公开摘要，提供 `/api/index` 和首页 `/`。
+4. `core/decision_engine.py` 把偏差规则统一转换为 `DecisionAction`，再合并为 `DecisionSet`。
+5. 脚本把可公开审计的比例化摘要和结构化决策写入 `data/public/latest_comparison.json`。
+6. 脚本同时生成 `reports/latest_position_compare.md` 和日期归档报告。
+7. 本地只读服务读取公开摘要，提供 `/api/index` 和首页 `/`。
 
 数据链路是单向的：
 
@@ -21,9 +22,46 @@
 影子账户 latest API + QMT 只读查询
   -> scripts/position_compare.py
   -> data/private/ 原始私有快照
-  -> data/public/latest_comparison.json 公开比例摘要
+  -> core/decision_engine.py 结构化决策
+  -> data/public/latest_comparison.json 公开比例摘要和 actions
   -> reports/*.md / app.server 只读页面
 ```
+
+## 决策中间层
+
+本项目的建议必须先经过统一决策中间层，再渲染为报告或页面文字。
+
+- `core/decision_schema.py` 定义 `DecisionAction` 和 `DecisionSet`。
+- `DecisionAction` 字段包括 `symbol`、`action`、`target_delta`、`priority`、`confidence`、`source`、`risk_level`、`reason`。
+- `DecisionSet` 字段包括 `timestamp`、`account_id` 和 `actions`，其中 `account_id` 只允许公开脱敏值 `masked`。
+- `core/decision_engine.py` 负责把不同规则的输出合并为一个 `DecisionSet`。
+- 同一 `symbol` 的 `BUY` 和 `SELL` 会抵消或按净偏移合并。
+- `HOLD` 可以覆盖低优先级动作。
+- `REDUCE_RISK` 优先级高于普通再平衡动作。
+- 排序使用 `priority * confidence`。
+
+公开 API 会同时提供：
+
+```json
+{
+  "timestamp": "2026-06-22T23:23:44+08:00",
+  "actions": [
+    {
+      "symbol": "PORTFOLIO",
+      "action": "REDUCE_RISK",
+      "target_delta": -1.8439,
+      "priority": 0.7384,
+      "confidence": 0.88,
+      "source": "risk_budget_rule",
+      "risk_level": "low",
+      "reason": "实盘风险仓 36.84% 高于影子风险预算 35.00%",
+      "score": 0.649792
+    }
+  ]
+}
+```
+
+报告和首页里的自然语言建议只负责展示 `DecisionAction`，不再直接作为规则输出。
 
 ## 核对口径
 
@@ -54,7 +92,7 @@
 `app.server` 是本地只读服务，默认端口使用 `8018`。
 
 - `GET /`：HTML 首页，展示净值对照、仓位偏差、影子目标、实盘主要持仓和建议。
-- `GET /api/index`：首页同源 JSON 数据，字段包括 `hero`、`cards`、`sleeve_deviations`、`comparison`、`recommendations`、`shadow_allocations`、`real_top_positions`。
+- `GET /api/index`：首页同源 JSON 数据，字段包括 `timestamp`、`actions`、`decision_set`、`hero`、`cards`、`sleeve_deviations`、`comparison`、`recommendations`、`shadow_allocations`、`real_top_positions`。
 - `GET /health`：健康检查。
 
 `/api/index` 和 `/` 只读取 `data/public/latest_comparison.json`，不会读取 `data/private/`，也不会连接 QMT。
@@ -100,4 +138,5 @@ $env:QMT_ACCOUNT_ID='你的资金账号'
 - 检查 `scripts/check_public_privacy.py` 是否覆盖公开文件中的金额、股数、账号等敏感字段。
 - 检查 `app/index_api.py` 是否只消费 `data/public/latest_comparison.json`，没有读取私有目录。
 - 检查仓位分类是否按影子账户当前 `sleeve` 动态识别，而不是写死过期标的。
-- 检查报告和首页建议是否来自比例偏差，而不是来自原始金额或持仓数量。
+- 检查 `core/decision_engine.py` 是否只输出 `DecisionAction`，以及同标的冲突是否可解释。
+- 检查报告和首页建议是否来自 `DecisionAction`，而不是直接拼接动作字符串。
