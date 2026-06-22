@@ -44,6 +44,10 @@
 - `core/drift_detector.py` 计算 shadow vs real 的风险、权重、结构和防御/流动性漂移。
 - `core/action_feedback.py` 定义 `ActionOutcome`，用于把 action 的预期分数和未来实际结果对齐。
 - `core/score_calibration.py` 根据已实现结果校准 confidence 权重；没有真实结果时保持中性，不伪造调整。
+- `core/signal_registry.py` 把规则来源映射到 `shadow_gap`、`risk_engine`、`market_alignment`、`defensive_filter` 等独立 signal。
+- `core/signal_ledger.py` 记录 signal source、action、realized return 和 drift contribution。
+- `core/signal_isolation.py` 按 signal source 隔离 expected score、realized return 和 drift contribution，避免 cross-contamination。
+- `core/independent_calibrator.py` 对每个 signal 独立校准 confidence weight，不再使用单一全局 confidence 权重。
 - `core/decision_adjustment.py` 汇总 `decision -> shadow_simulation -> outcome -> calibration` 的调整回路。
 - 同一 `symbol` 的多条 action 不再直接抵消；不同来源的 `BUY`、`SELL`、`REBALANCE` 会各自保留评分和解释。
 - 报告和首页使用评分后的 action 渲染自然语言，不在展示层做硬优先级覆盖。
@@ -166,6 +170,7 @@ $env:QMT_ACCOUNT_ID='你的资金账号'
 - 检查 `core/decision_logger.py` 是否记录 action、score breakdown、market_state 和 constraint snapshot。
 - 检查 `core/drift_detector.py` 是否能计算 shadow vs real drift。
 - 检查 `core/action_feedback.py` 和 `core/score_calibration.py` 是否支持用真实 outcome 校准 score。
+- 检查 `core/signal_registry.py`、`core/signal_ledger.py`、`core/signal_isolation.py`、`core/independent_calibrator.py` 是否实现 per-signal 学习，避免 global confidence collapse。
 - 检查 `core/decision_adjustment.py` 是否把 decision_log 转成可回放的反馈调整结构。
 - 检查 `core/decision_engine.py` 是否只输出评分后的 `DecisionAction`，以及同标的多信号是否没有被直接抵消。
 - 检查报告和首页建议是否来自 `DecisionAction`，而不是直接拼接动作字符串。

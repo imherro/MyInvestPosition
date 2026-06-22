@@ -12,6 +12,8 @@ from core.action_feedback import ActionOutcome
 from core.decision_adjustment import build_decision_adjustment
 from core.drift_detector import compute_drift, compute_drift_breakdown
 from core.score_calibration import calibrate_confidence_weight
+from core.independent_calibrator import calibrate_per_signal
+from core.signal_ledger import build_signal_ledger
 
 
 class DecisionEngineTests(unittest.TestCase):
@@ -208,7 +210,49 @@ class DecisionEngineTests(unittest.TestCase):
         self.assertGreater(result["drift_score"], 0)
         self.assertEqual(result["loop"][0], "decision")
         self.assertEqual(len(result["outcomes"]), 1)
+        self.assertIn("risk_engine", result["per_signal_calibration"])
         self.assertFalse(result["self_correction"]["active"])
+
+    def test_independent_calibrator_does_not_global_collapse(self) -> None:
+        results = calibrate_per_signal(
+            [
+                ActionOutcome(
+                    action_id="PORTFOLIO|REDUCE_RISK|risk_budget_rule",
+                    expected_score=0.8,
+                    realized_return=0.1,
+                    error=-0.7,
+                    status="realized",
+                )
+            ]
+        )
+
+        self.assertLess(results["risk_engine"]["confidence_weight"], 1.0)
+        self.assertEqual(results["shadow_gap"]["confidence_weight"], 1.0)
+
+    def test_signal_ledger_attributes_drift_to_signal_source(self) -> None:
+        ledger = build_signal_ledger(
+            {
+                "actions": [
+                    {
+                        "symbol": "PORTFOLIO",
+                        "action": "REDUCE_RISK",
+                        "source": "risk_budget_rule",
+                        "score": 0.8,
+                    },
+                    {
+                        "symbol": "588170.SH",
+                        "action": "REBALANCE",
+                        "source": "shadow_exact_gap_rule",
+                        "score": 0.5,
+                    },
+                ]
+            },
+            {"risk_drift": 0.1, "weight_drift": 0.2, "sector_drift": 0.3, "liquidity_drift": 0.4},
+        )
+
+        self.assertEqual(ledger[0]["signal_source"], "risk_engine")
+        self.assertEqual(ledger[1]["signal_source"], "shadow_gap")
+        self.assertEqual(ledger[1]["drift_contribution"], 0.3)
 
 
 if __name__ == "__main__":
