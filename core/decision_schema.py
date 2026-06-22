@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from typing import Literal
 
 
@@ -25,20 +25,44 @@ class DecisionAction:
     source: str
     risk_level: RiskLevel
     reason: str
+    score: float | None = None
+    liquidity: float | None = None
+    tradable: bool | None = None
+    score_breakdown: dict[str, float] | None = None
+    constraint_reason: str | None = None
 
     def __post_init__(self) -> None:
         self.symbol = str(self.symbol)
         self.target_delta = round(float(self.target_delta), 4)
         self.priority = _clamp_unit(self.priority)
         self.confidence = _clamp_unit(self.confidence)
-
-    @property
-    def score(self) -> float:
-        return round(self.priority * self.confidence, 6)
+        if self.score is None:
+            self.score = round(self.priority * self.confidence, 6)
+        else:
+            self.score = round(float(self.score), 6)
+        if self.liquidity is not None:
+            self.liquidity = _clamp_unit(self.liquidity)
 
     def to_dict(self) -> dict[str, object]:
-        payload = asdict(self)
-        payload["score"] = self.score
+        payload = {
+            "symbol": self.symbol,
+            "action": self.action,
+            "target_delta": self.target_delta,
+            "priority": self.priority,
+            "confidence": self.confidence,
+            "source": self.source,
+            "risk_level": self.risk_level,
+            "reason": self.reason,
+            "score": self.score,
+        }
+        if self.liquidity is not None:
+            payload["liquidity"] = self.liquidity
+        if self.tradable is not None:
+            payload["tradable"] = self.tradable
+        if self.score_breakdown is not None:
+            payload["score_breakdown"] = self.score_breakdown
+        if self.constraint_reason:
+            payload["constraint_reason"] = self.constraint_reason
         return payload
 
 
@@ -49,7 +73,7 @@ class DecisionSet:
     actions: list[DecisionAction]
 
     def sort_by_priority(self) -> DecisionSet:
-        self.actions.sort(key=lambda x: (x.priority * x.confidence), reverse=True)
+        self.actions.sort(key=lambda x: (x.score or 0, x.priority, x.confidence), reverse=True)
         return self
 
     def to_dict(self) -> dict[str, object]:

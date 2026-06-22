@@ -69,6 +69,8 @@ class IndexApiTests(unittest.TestCase):
         self.assertIn("priority", payload["actions"][0])
         self.assertIn("confidence", payload["actions"][0])
         self.assertIn("source", payload["actions"][0])
+        self.assertIn("liquidity", payload["actions"][0])
+        self.assertIn("score_breakdown", payload["actions"][0])
         self.assertEqual(payload["sleeve_deviations"][0]["id"], "core")
         self.assertEqual(payload["sleeve_deviations"][1]["gap_pp"], -15.0)
         self.assertEqual(payload["sleeve_deviations"][4]["id"], "non_model_satellite")

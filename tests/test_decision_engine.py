@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import unittest
 
-from core.decision_engine import build_decision_set, merge_actions
+from core.decision_engine import build_decision_set, score_and_rank_actions
 from core.decision_schema import DecisionAction
+from core.signal_scoring import score_action, score_breakdown
+from core.trade_constraints import TradeConstraint
 
 
 class DecisionEngineTests(unittest.TestCase):
@@ -26,31 +28,59 @@ class DecisionEngineTests(unittest.TestCase):
             reason=f"{action} {symbol}",
         )
 
-    def test_buy_sell_conflict_offsets_to_hold(self) -> None:
-        result = merge_actions(
+    def test_same_symbol_actions_are_scored_without_netting(self) -> None:
+        result = score_and_rank_actions(
             [
-                [self.action("510300.SH", "BUY", 2.0)],
-                [self.action("510300.SH", "SELL", -2.0)],
+                [self.action("510300.SH", "BUY", 2.0, priority=0.8)],
+                [self.action("510300.SH", "SELL", -2.0, priority=0.7)],
             ],
+            constraints={
+                "510300.SH": TradeConstraint(
+                    symbol="510300.SH",
+                    min_trade_unit=0.1,
+                    max_position=30.0,
+                    liquidity_score=0.9,
+                    tradable=True,
+                    reason="test constraint",
+                )
+            },
             timestamp="2026-06-22T23:30:00+08:00",
         )
 
-        self.assertEqual(len(result.actions), 1)
-        self.assertEqual(result.actions[0].action, "HOLD")
-        self.assertEqual(result.actions[0].target_delta, 0)
-        self.assertIn("BUY 与 SELL", result.actions[0].reason)
+        self.assertEqual(len(result.actions), 2)
+        self.assertEqual({item.action for item in result.actions}, {"BUY", "SELL"})
+        self.assertTrue(all(item.symbol == "510300.SH" for item in result.actions))
+        self.assertTrue(all(item.score_breakdown for item in result.actions))
 
-    def test_reduce_risk_dominates_rebalance(self) -> None:
-        result = merge_actions(
+    def test_non_tradable_constraint_scores_zero(self) -> None:
+        action = self.action("UNKNOWN", "BUY", 1.0)
+        constraint = TradeConstraint(
+            symbol="UNKNOWN",
+            min_trade_unit=0.0,
+            max_position=0.0,
+            liquidity_score=0.5,
+            tradable=False,
+            reason="not tradable",
+        )
+
+        self.assertEqual(score_action(action, constraint), 0)
+        self.assertEqual(score_breakdown(action, constraint)["tradability_factor"], 0)
+
+    def test_score_and_rank_orders_by_final_score(self) -> None:
+        result = score_and_rank_actions(
             [
-                [self.action("PORTFOLIO", "REBALANCE", 3.0, priority=0.9)],
-                [self.action("PORTFOLIO", "REDUCE_RISK", -5.0, priority=0.8)],
+                [self.action("A", "BUY", 1.0, priority=0.9, confidence=0.9)],
+                [self.action("B", "BUY", 1.0, priority=0.8, confidence=0.8)],
             ],
+            constraints={
+                "A": TradeConstraint("A", 0, 100, 0.5, True, "lower liquidity"),
+                "B": TradeConstraint("B", 0, 100, 1.0, True, "higher liquidity"),
+            },
             timestamp="2026-06-22T23:30:00+08:00",
         )
 
-        self.assertEqual(result.actions[0].action, "REDUCE_RISK")
-        self.assertLess(result.actions[0].target_delta, 0)
+        self.assertEqual(result.actions[0].symbol, "B")
+        self.assertGreater(result.actions[0].score or 0, result.actions[1].score or 0)
 
     def test_build_decision_set_from_summary(self) -> None:
         summary = {
@@ -84,7 +114,8 @@ class DecisionEngineTests(unittest.TestCase):
         self.assertEqual(result["timestamp"], "2026-06-22T23:30:00+08:00")
         self.assertGreaterEqual(len(result["actions"]), 3)
         self.assertEqual(result["actions"][0]["action"], "REDUCE_RISK")
-        self.assertIn("score", result["actions"][0])
+        self.assertIn("score_breakdown", result["actions"][0])
+        self.assertIn("liquidity", result["actions"][0])
 
 
 if __name__ == "__main__":

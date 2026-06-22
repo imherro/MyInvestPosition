@@ -1,16 +1,38 @@
 from __future__ import annotations
 
-from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from core.decision_schema import ActionType, DecisionAction, DecisionSet, RiskLevel
+from core.signal_scoring import scored_action
+from core.trade_constraints import TradeConstraint, build_trade_constraints, default_trade_constraint
 
 
 CN_TZ = timezone(timedelta(hours=8))
-HIGH_PRIORITY_ACTIONS = {"REDUCE_RISK"}
-POSITIVE_ACTIONS = {"BUY", "INCREASE_RISK"}
-NEGATIVE_ACTIONS = {"SELL", "REDUCE_RISK"}
+
+
+def score_and_rank_actions(
+    action_lists: list[list[DecisionAction]],
+    constraints: dict[str, TradeConstraint] | None = None,
+    timestamp: str | None = None,
+    account_id: str = "masked",
+    top_n: int = 10,
+) -> DecisionSet:
+    constraints = constraints or {}
+    scored: list[DecisionAction] = []
+    for actions in action_lists:
+        for action in actions:
+            constraint = constraints.get(action.symbol) or default_trade_constraint(action.symbol)
+            scored.append(scored_action(action, constraint))
+
+    scored.sort(key=lambda x: (x.score or 0, x.priority, x.confidence, abs(x.target_delta)), reverse=True)
+    if top_n > 0:
+        scored = scored[:top_n]
+    return DecisionSet(
+        timestamp=timestamp or datetime.now(CN_TZ).isoformat(timespec="seconds"),
+        account_id=account_id,
+        actions=scored,
+    )
 
 
 def merge_actions(
@@ -18,21 +40,17 @@ def merge_actions(
     timestamp: str | None = None,
     account_id: str = "masked",
 ) -> DecisionSet:
-    grouped: dict[str, list[DecisionAction]] = defaultdict(list)
-    for actions in action_lists:
-        for action in actions:
-            grouped[action.symbol].append(action)
-
-    merged = [_merge_symbol_actions(symbol, actions) for symbol, actions in grouped.items()]
-    return DecisionSet(
-        timestamp=timestamp or datetime.now(CN_TZ).isoformat(timespec="seconds"),
+    return score_and_rank_actions(
+        action_lists,
+        timestamp=timestamp,
         account_id=account_id,
-        actions=merged,
-    ).sort_by_priority()
+        top_n=10,
+    )
 
 
 def build_decision_set(summary: dict[str, Any]) -> DecisionSet:
-    return merge_actions(
+    constraints = build_trade_constraints(summary)
+    return score_and_rank_actions(
         [
             risk_budget_actions(summary),
             defensive_gap_actions(summary),
@@ -40,8 +58,10 @@ def build_decision_set(summary: dict[str, Any]) -> DecisionSet:
             shadow_exact_gap_actions(summary),
             non_model_satellite_actions(summary),
         ],
+        constraints=constraints,
         timestamp=str(summary.get("generated_at") or datetime.now(CN_TZ).isoformat(timespec="seconds")),
         account_id=str((summary.get("real") or {}).get("account_mask") or "masked"),
+        top_n=10,
     )
 
 
@@ -195,117 +215,6 @@ def recommendations_from_decision_set(decision_set: dict[str, Any] | DecisionSet
     return [_recommendation_from_action(action) for action in actions]
 
 
-def _merge_symbol_actions(symbol: str, actions: list[DecisionAction]) -> DecisionAction:
-    if len(actions) == 1:
-        return actions[0]
-
-    hold = _strongest([a for a in actions if a.action == "HOLD"])
-    non_hold = [a for a in actions if a.action != "HOLD"]
-    strongest_non_hold = _strongest(non_hold)
-    if hold and (not strongest_non_hold or hold.score >= strongest_non_hold.score):
-        return _copy_action(
-            hold,
-            source=_sources(actions),
-            reason=f"HOLD 覆盖低优先级动作：{_reasons(actions)}",
-        )
-
-    reduce_actions = [a for a in actions if a.action == "REDUCE_RISK"]
-    ordinary_actions = [a for a in actions if a.action not in HIGH_PRIORITY_ACTIONS]
-    if reduce_actions and ordinary_actions:
-        base = _strongest(reduce_actions)
-        return _combine_actions(symbol, "REDUCE_RISK", reduce_actions, -abs(_signed_delta(reduce_actions)))
-
-    buy_sell = [a for a in actions if a.action in {"BUY", "SELL"}]
-    if len({a.action for a in buy_sell}) == 2:
-        net_delta = _signed_delta(buy_sell)
-        if abs(net_delta) < 0.01:
-            base = _strongest(buy_sell)
-            return DecisionAction(
-                symbol=symbol,
-                action="HOLD",
-                target_delta=0,
-                priority=base.priority,
-                confidence=base.confidence,
-                source=_sources(buy_sell),
-                risk_level=base.risk_level,
-                reason=f"BUY 与 SELL 信号相互抵消：{_reasons(buy_sell)}",
-            )
-        action: ActionType = "BUY" if net_delta > 0 else "SELL"
-        return _combine_actions(symbol, action, buy_sell, net_delta)
-
-    dominant = _dominant_action(actions)
-    return _combine_actions(symbol, dominant, actions, _signed_delta(actions))
-
-
-def _combine_actions(
-    symbol: str,
-    action: ActionType,
-    actions: list[DecisionAction],
-    target_delta: float,
-) -> DecisionAction:
-    strongest = _strongest(actions)
-    if action in NEGATIVE_ACTIONS:
-        target_delta = -abs(target_delta)
-    elif action in POSITIVE_ACTIONS:
-        target_delta = abs(target_delta)
-    return DecisionAction(
-        symbol=symbol,
-        action=action,
-        target_delta=target_delta,
-        priority=max(a.priority for a in actions),
-        confidence=round(sum(a.confidence for a in actions) / len(actions), 4),
-        source=_sources(actions),
-        risk_level=_max_risk_level(actions),
-        reason=f"{strongest.reason}；合并来源：{_reasons(actions)}",
-    )
-
-
-def _copy_action(action: DecisionAction, source: str, reason: str) -> DecisionAction:
-    return DecisionAction(
-        symbol=action.symbol,
-        action=action.action,
-        target_delta=action.target_delta,
-        priority=action.priority,
-        confidence=action.confidence,
-        source=source,
-        risk_level=action.risk_level,
-        reason=reason,
-    )
-
-
-def _dominant_action(actions: list[DecisionAction]) -> ActionType:
-    if any(a.action == "REDUCE_RISK" for a in actions):
-        return "REDUCE_RISK"
-    return _strongest(actions).action
-
-
-def _strongest(actions: list[DecisionAction]) -> DecisionAction | None:
-    if not actions:
-        return None
-    return max(actions, key=lambda x: (x.priority * x.confidence, x.priority, x.confidence))
-
-
-def _signed_delta(actions: list[DecisionAction]) -> float:
-    total = 0.0
-    for action in actions:
-        magnitude = abs(float(action.target_delta))
-        if action.action in NEGATIVE_ACTIONS:
-            total -= magnitude
-        elif action.action in POSITIVE_ACTIONS:
-            total += magnitude
-        else:
-            total += float(action.target_delta)
-    return round(total, 4)
-
-
-def _sources(actions: list[DecisionAction]) -> str:
-    return "+".join(sorted({a.source for a in actions}))
-
-
-def _reasons(actions: list[DecisionAction]) -> str:
-    return " | ".join(a.reason for a in actions)
-
-
 def _priority_from_gap(gap: float, base: float) -> float:
     return min(1.0, base + min(abs(float(gap)), 30.0) / 100)
 
@@ -324,28 +233,28 @@ def _sleeve_label(sleeve: Any) -> str:
     return labels.get(str(sleeve), str(sleeve or "袖套"))
 
 
-def _max_risk_level(actions: list[DecisionAction]) -> RiskLevel:
-    order = {"low": 0, "medium": 1, "high": 2}
-    return max((a.risk_level for a in actions), key=lambda level: order[level])
-
-
 def _recommendation_from_action(action: dict[str, Any]) -> str:
     symbol = str(action.get("symbol") or "")
     label = _action_label(symbol)
     kind = action.get("action")
     delta = abs(float(action.get("target_delta") or 0))
+    score = float(action.get("score") or 0)
+    liquidity = action.get("liquidity")
     reason = str(action.get("reason") or "")
+    score_text = f"评分 {score:.2f}"
+    if liquidity is not None:
+        score_text += f"，流动性 {float(liquidity):.2f}"
     if kind == "REDUCE_RISK":
-        return f"{label}：优先降低风险暴露约 {delta:.2f} 个百分点。{reason}"
+        return f"{label}：优先降低风险暴露约 {delta:.2f} 个百分点（{score_text}）。{reason}"
     if kind == "INCREASE_RISK":
-        return f"{label}：仅在影子主线继续确认后，分段增加风险暴露约 {delta:.2f} 个百分点。{reason}"
+        return f"{label}：仅在影子主线继续确认后，分段增加风险暴露约 {delta:.2f} 个百分点（{score_text}）。{reason}"
     if kind == "REBALANCE":
-        return f"{label}：按影子偏差做结构再平衡，目标偏移约 {delta:.2f} 个百分点。{reason}"
+        return f"{label}：按影子偏差做结构再平衡，目标偏移约 {delta:.2f} 个百分点（{score_text}）。{reason}"
     if kind == "BUY":
-        return f"{label}：结构化买入候选，目标增加约 {delta:.2f} 个百分点。{reason}"
+        return f"{label}：结构化买入候选，目标增加约 {delta:.2f} 个百分点（{score_text}）。{reason}"
     if kind == "SELL":
-        return f"{label}：结构化卖出候选，目标减少约 {delta:.2f} 个百分点。{reason}"
-    return f"{label}：保持观察。{reason}"
+        return f"{label}：结构化卖出候选，目标减少约 {delta:.2f} 个百分点（{score_text}）。{reason}"
+    return f"{label}：保持观察（{score_text}）。{reason}"
 
 
 def _action_label(symbol: str) -> str:

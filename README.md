@@ -34,11 +34,11 @@
 - `core/decision_schema.py` 定义 `DecisionAction` 和 `DecisionSet`。
 - `DecisionAction` 字段包括 `symbol`、`action`、`target_delta`、`priority`、`confidence`、`source`、`risk_level`、`reason`。
 - `DecisionSet` 字段包括 `timestamp`、`account_id` 和 `actions`，其中 `account_id` 只允许公开脱敏值 `masked`。
-- `core/decision_engine.py` 负责把不同规则的输出合并为一个 `DecisionSet`。
-- 同一 `symbol` 的 `BUY` 和 `SELL` 会抵消或按净偏移合并。
-- `HOLD` 可以覆盖低优先级动作。
-- `REDUCE_RISK` 优先级高于普通再平衡动作。
-- 排序使用 `priority * confidence`。
+- `core/trade_constraints.py` 定义 `TradeConstraint`，包括 `min_trade_unit`、`max_position`、`liquidity_score`、`tradable`、`reason`。
+- `core/signal_scoring.py` 对每条 `DecisionAction` 打分，公式为 `priority * confidence * liquidity_factor * tradability_factor * risk_adjustment`。
+- `core/decision_engine.py` 负责把不同规则输出的 action 送入评分系统，按最终 `score` 排序并取 Top N。
+- 同一 `symbol` 的多条 action 不再直接抵消；不同来源的 `BUY`、`SELL`、`REBALANCE` 会各自保留评分和解释。
+- 报告和首页使用评分后的 action 渲染自然语言，不在展示层做硬优先级覆盖。
 
 公开 API 会同时提供：
 
@@ -55,7 +55,17 @@
       "source": "risk_budget_rule",
       "risk_level": "low",
       "reason": "实盘风险仓 36.84% 高于影子风险预算 35.00%",
-      "score": 0.649792
+      "score": 0.649792,
+      "liquidity": 1.0,
+      "tradable": true,
+      "score_breakdown": {
+        "priority": 0.7384,
+        "confidence": 0.88,
+        "liquidity_factor": 1.0,
+        "tradability_factor": 1.0,
+        "risk_adjustment": 1.0
+      },
+      "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
     }
   ]
 }
@@ -138,5 +148,6 @@ $env:QMT_ACCOUNT_ID='你的资金账号'
 - 检查 `scripts/check_public_privacy.py` 是否覆盖公开文件中的金额、股数、账号等敏感字段。
 - 检查 `app/index_api.py` 是否只消费 `data/public/latest_comparison.json`，没有读取私有目录。
 - 检查仓位分类是否按影子账户当前 `sleeve` 动态识别，而不是写死过期标的。
-- 检查 `core/decision_engine.py` 是否只输出 `DecisionAction`，以及同标的冲突是否可解释。
+- 检查 `core/trade_constraints.py` 和 `core/signal_scoring.py` 是否给每条 action 输出可解释的约束和评分。
+- 检查 `core/decision_engine.py` 是否只输出评分后的 `DecisionAction`，以及同标的多信号是否没有被直接抵消。
 - 检查报告和首页建议是否来自 `DecisionAction`，而不是直接拼接动作字符串。

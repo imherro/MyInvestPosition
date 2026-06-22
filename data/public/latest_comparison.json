@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T23:26:12+08:00",
+  "generated_at": "2026-06-22T23:32:50+08:00",
   "shadow_url_used": "https://shadow.okbbc.com/api/latest",
   "shadow": {
     "run_at": "2026-06-22T23:10:49+08:00",
@@ -76,7 +76,7 @@
   },
   "real": {
     "account_mask": "masked",
-    "collected_at": "2026-06-22T23:26:12+08:00",
+    "collected_at": "2026-06-22T23:32:50+08:00",
     "nav_index": 1.010105,
     "nav_baseline_created": false,
     "nav_baseline_time": "2026-06-18T12:14:06+08:00",
@@ -283,7 +283,7 @@
   ],
   "tiny_positions_weight_pct": 0.7931,
   "decision_set": {
-    "timestamp": "2026-06-22T23:26:12+08:00",
+    "timestamp": "2026-06-22T23:32:50+08:00",
     "account_id": "masked",
     "actions": [
       {
@@ -295,7 +295,17 @@
         "source": "risk_budget_rule",
         "risk_level": "low",
         "reason": "实盘风险仓 36.84% 高于影子风险预算 35.00%",
-        "score": 0.649792
+        "score": 0.649792,
+        "liquidity": 1.0,
+        "tradable": true,
+        "score_breakdown": {
+          "priority": 0.7384,
+          "confidence": 0.88,
+          "liquidity_factor": 1.0,
+          "tradability_factor": 1.0,
+          "risk_adjustment": 1.0
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
       },
       {
         "symbol": "DEFENSIVE_CASH",
@@ -306,7 +316,17 @@
         "source": "defensive_gap_rule",
         "risk_level": "low",
         "reason": "防御/现金仓低于影子目标 1.84 个百分点，目标防御仓 65.00%",
-        "score": 0.572688
+        "score": 0.572688,
+        "liquidity": 1.0,
+        "tradable": true,
+        "score_breakdown": {
+          "priority": 0.6984,
+          "confidence": 0.82,
+          "liquidity_factor": 1.0,
+          "tradability_factor": 1.0,
+          "risk_adjustment": 1.0
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
       },
       {
         "symbol": "NON_MODEL_SATELLITE",
@@ -317,7 +337,17 @@
         "source": "satellite_reduction_rule",
         "risk_level": "low",
         "reason": "非模型行业、个股和零散仓位是降低风险仓的优先腾挪来源",
-        "score": 0.474048
+        "score": 0.474048,
+        "liquidity": 1.0,
+        "tradable": true,
+        "score_breakdown": {
+          "priority": 0.6584,
+          "confidence": 0.72,
+          "liquidity_factor": 1.0,
+          "tradability_factor": 1.0,
+          "risk_adjustment": 1.0
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
       },
       {
         "symbol": "CORE_PROXY",
@@ -328,7 +358,17 @@
         "source": "core_gap_rule",
         "risk_level": "medium",
         "reason": "核心宽基/质量代理低于影子核心目标 16.77 个百分点",
-        "score": 0.46739
+        "score": 0.420651,
+        "liquidity": 1.0,
+        "tradable": true,
+        "score_breakdown": {
+          "priority": 0.6677,
+          "confidence": 0.7,
+          "liquidity_factor": 1.0,
+          "tradability_factor": 1.0,
+          "risk_adjustment": 0.9
+        },
+        "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。"
       },
       {
         "symbol": "588170.SH",
@@ -339,7 +379,17 @@
         "source": "shadow_exact_gap_rule",
         "risk_level": "medium",
         "reason": "影子精确主线目标 3.31%，实盘 0.00%",
-        "score": 0.299522
+        "score": 0.229134,
+        "liquidity": 0.85,
+        "tradable": true,
+        "score_breakdown": {
+          "priority": 0.4831,
+          "confidence": 0.62,
+          "liquidity_factor": 0.85,
+          "tradability_factor": 1.0,
+          "risk_adjustment": 0.9
+        },
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。"
       },
       {
         "symbol": "515880.SH",
@@ -350,7 +400,17 @@
         "source": "shadow_exact_gap_rule",
         "risk_level": "medium",
         "reason": "影子精确主线目标 3.28%，实盘 0.14%",
-        "score": 0.298468
+        "score": 0.228328,
+        "liquidity": 0.85,
+        "tradable": true,
+        "score_breakdown": {
+          "priority": 0.4814,
+          "confidence": 0.62,
+          "liquidity_factor": 0.85,
+          "tradability_factor": 1.0,
+          "risk_adjustment": 0.9
+        },
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。"
       },
       {
         "symbol": "159326.SZ",
@@ -361,7 +421,17 @@
         "source": "shadow_exact_gap_rule",
         "risk_level": "medium",
         "reason": "影子精确主线目标 3.41%，实盘 0.95%",
-        "score": 0.294252
+        "score": 0.225103,
+        "liquidity": 0.85,
+        "tradable": true,
+        "score_breakdown": {
+          "priority": 0.4746,
+          "confidence": 0.62,
+          "liquidity_factor": 0.85,
+          "tradability_factor": 1.0,
+          "risk_adjustment": 0.9
+        },
+        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。"
       }
     ]
   }
