@@ -100,6 +100,7 @@ class IndexApiTests(unittest.TestCase):
         self.assertIn("非模型卫星仓", html)
         self.assertIn("实盘前十大持仓", html)
         self.assertIn("511360.SH", html)
+        self.assertIn('<script src="https://invest.okbbc.com/footer.js" defer></script>', html)
 
 
 if __name__ == "__main__":

