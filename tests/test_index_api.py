@@ -100,7 +100,11 @@ class IndexApiTests(unittest.TestCase):
         self.assertIn("非模型卫星仓", html)
         self.assertIn("实盘前十大持仓", html)
         self.assertIn("511360.SH", html)
+        self.assertIn('<div data-myinvest-header></div>', html)
+        self.assertIn('<div data-myinvest-footer></div>', html)
+        self.assertIn('<script src="https://invest.okbbc.com/header.js" defer></script>', html)
         self.assertIn('<script src="https://invest.okbbc.com/footer.js" defer></script>', html)
+        self.assertIn('<header class="dashboard-header">', html)
 
 
 if __name__ == "__main__":

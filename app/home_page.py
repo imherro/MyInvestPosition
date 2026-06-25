@@ -195,7 +195,7 @@ def render_home_page(payload: dict[str, Any]) -> str:
       margin: 0 auto;
       padding: 28px 20px 44px;
     }}
-    header {{
+    .dashboard-header {{
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 16px;
@@ -377,8 +377,9 @@ def render_home_page(payload: dict[str, Any]) -> str:
   </style>
 </head>
 <body>
+  <div data-myinvest-header></div>
   <main>
-    <header>
+    <header class="dashboard-header">
       <div>
         <h1>{title}</h1>
         <div class="subtitle">{subtitle}</div>
@@ -460,6 +461,8 @@ def render_home_page(payload: dict[str, Any]) -> str:
       </table>
     </section>
   </main>
+  <div data-myinvest-footer></div>
+  <script src="https://invest.okbbc.com/header.js" defer></script>
   <script src="https://invest.okbbc.com/footer.js" defer></script>
 </body>
 </html>
