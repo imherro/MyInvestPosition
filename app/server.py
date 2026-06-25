@@ -6,28 +6,46 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 
+from .api_catalog import build_api_catalog, build_openapi_document, render_api_docs
 from .home_page import render_home_page
 from .index_api import get_index_payload
 
 
 class ApiHandler(BaseHTTPRequestHandler):
-    server_version = "MyInvestPositionAPI/0.1"
+    server_version = "MyInvestPositionAPI/0.2"
 
     def do_GET(self) -> None:
         path = urlparse(self.path).path
         if path in {"/", "/index.html"}:
-            self._send_html(render_home_page(get_index_payload()))
+            self._send_html(render_home_page(get_index_payload(), build_api_catalog(self._base_url())))
             return
         if path == "/health":
             self._send_json({"ok": True})
             return
+        if path == "/api":
+            self._send_json(build_api_catalog(self._base_url()))
+            return
         if path == "/api/index":
             self._send_json(get_index_payload())
+            return
+        if path == "/openapi.json":
+            self._send_json(build_openapi_document(self._base_url()))
+            return
+        if path in {"/docs", "/redoc"}:
+            title = "MyInvestPosition ReDoc" if path == "/redoc" else "MyInvestPosition API Docs"
+            self._send_html(render_api_docs(build_api_catalog(self._base_url()), title=title))
             return
         self._send_json({"detail": "Not Found"}, status=HTTPStatus.NOT_FOUND)
 
     def log_message(self, format: str, *args: object) -> None:
         return
+
+    def _base_url(self) -> str:
+        host = self.headers.get("Host")
+        if host:
+            return f"http://{host}"
+        server_host, server_port = self.server.server_address[:2]
+        return f"http://{server_host}:{server_port}"
 
     def _send_json(self, payload: dict, status: HTTPStatus = HTTPStatus.OK) -> None:
         data = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")

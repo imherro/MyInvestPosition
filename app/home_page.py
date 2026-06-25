@@ -155,12 +155,84 @@ def _bucket_rows(items: list[dict[str, Any]]) -> str:
     return "\n".join(rows)
 
 
-def render_home_page(payload: dict[str, Any]) -> str:
+def _api_entrypoint_items(items: list[dict[str, Any]]) -> str:
+    rows = []
+    for item in items:
+        rows.append(
+            f"""
+            <li>
+              <a href="{_safe(item.get("path"))}">{_safe(item.get("path"))}</a>
+              <span>{_safe(item.get("label"))}：{_safe(item.get("reason"))}</span>
+            </li>
+            """
+        )
+    return "\n".join(rows)
+
+
+def _api_group_items(groups: list[dict[str, Any]]) -> str:
+    rows = []
+    for group in groups:
+        endpoint_count = len(group.get("endpoints") or [])
+        rows.append(
+            f"""
+            <li>
+              <strong>{_safe(group.get("name"))}</strong>
+              <span>{endpoint_count} 个接口</span>
+            </li>
+            """
+        )
+    return "\n".join(rows)
+
+
+def _api_safety_items(items: list[str]) -> str:
+    return "\n".join(f"<li>{_safe(item)}</li>" for item in items)
+
+
+def _api_catalog_section(api_catalog: dict[str, Any] | None) -> str:
+    if not api_catalog:
+        return ""
+    docs = api_catalog.get("docs") or {}
+    safety = api_catalog.get("safety") or {}
+    return f"""
+    <section class="api-docs">
+      <div class="api-docs-head">
+        <div>
+          <h2>接口说明</h2>
+          <p>公开只读接口共 <strong>{_safe(api_catalog.get("total_endpoints"))}</strong> 个。</p>
+        </div>
+        <a class="api-docs-link" href="{_safe(docs.get("api", "/api"))}">查看 JSON 目录</a>
+      </div>
+      <div class="api-docs-grid">
+        <div>
+          <h3>推荐入口</h3>
+          <ul class="api-list">
+            {_api_entrypoint_items(api_catalog.get("recommended_entrypoints", []))}
+          </ul>
+        </div>
+        <div>
+          <h3>功能分组</h3>
+          <ul class="api-groups">
+            {_api_group_items(api_catalog.get("groups", []))}
+          </ul>
+        </div>
+      </div>
+      <div class="api-safety">
+        <h3>安全边界</h3>
+        <ul>
+          {_api_safety_items(safety.get("boundaries", []))}
+        </ul>
+      </div>
+    </section>
+    """
+
+
+def render_home_page(payload: dict[str, Any], api_catalog: dict[str, Any] | None = None) -> str:
     page = payload.get("page", {})
     hero = payload.get("hero", {})
     top_positions = payload.get("real_top_positions", {})
     title = _safe(page.get("title", "MyInvestPosition"))
     subtitle = _safe(page.get("subtitle", "影子账户与 QMT 实盘净值对照"))
+    api_section = _api_catalog_section(api_catalog)
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -347,9 +419,66 @@ def render_home_page(payload: dict[str, Any]) -> str:
     .navs strong {{
       color: var(--text);
     }}
+    .api-docs {{
+      margin-top: 16px;
+    }}
+    .api-docs-head {{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }}
+    .api-docs-head p {{
+      margin: 0;
+      color: var(--muted);
+    }}
+    .api-docs-link {{
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }}
+    .api-docs-grid {{
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, .8fr);
+      gap: 16px;
+    }}
+    .api-docs h3 {{
+      margin: 0 0 8px;
+      font-size: 14px;
+    }}
+    .api-list, .api-groups, .api-safety ul {{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.65;
+    }}
+    .api-list a {{
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+    }}
+    .api-groups li {{
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }}
+    .api-groups strong {{
+      color: var(--text);
+    }}
+    .api-safety {{
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #edf0f4;
+    }}
     @media (max-width: 900px) {{
-      header, .section-grid {{
+      .dashboard-header, .section-grid, .api-docs-grid {{
         grid-template-columns: 1fr;
+      }}
+      .api-docs-head {{
+        flex-direction: column;
       }}
       .meta {{
         text-align: left;
@@ -460,6 +589,7 @@ def render_home_page(payload: dict[str, Any]) -> str:
         </tbody>
       </table>
     </section>
+    {api_section}
   </main>
   <div data-myinvest-footer></div>
   <script src="https://invest.okbbc.com/header.js" defer></script>

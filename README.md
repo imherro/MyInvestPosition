@@ -130,11 +130,23 @@
 
 `app.server` 是本地只读服务，默认端口使用 `8018`。
 
-- `GET /`：HTML 首页，展示净值对照、仓位偏差、影子目标、实盘主要持仓和建议。
+- `GET /`：HTML 首页，展示净值对照、仓位偏差、影子目标、实盘主要持仓、建议和接口说明模块。
+- `GET /api`：统一接口目录，返回系统名称、版本、说明、`base_url`、文档入口、推荐入口、安全边界、功能分组和公开接口总数。
 - `GET /api/index`：首页同源 JSON 数据，字段包括 `timestamp`、`actions`、`decision_set`、`market_state`、`trade_constraints`、`decision_log`、`decision_adjustment`、`hero`、`cards`、`sleeve_deviations`、`comparison`、`recommendations`、`shadow_allocations`、`real_top_positions`。
+- `GET /docs`：轻量 HTML 接口文档。
+- `GET /redoc`：OpenAPI 说明入口。
+- `GET /openapi.json`：OpenAPI 3.1 JSON。
 - `GET /health`：健康检查。
 
-`/api/index` 和 `/` 只读取 `data/public/latest_comparison.json`，不会读取 `data/private/`，也不会连接 QMT。
+`/api` 只返回接口说明，不触发重计算、写入、交易、同步等动作。`/api/index` 和 `/` 只读取 `data/public/latest_comparison.json`，不会读取 `data/private/`，也不会连接 QMT。
+
+`/api` 当前按功能分组：
+
+- 文档入口：`/api`、`/docs`、`/redoc`、`/openapi.json`。
+- 当前数据：`/api/index`。
+- 历史数据：当前暂无公开历史数据 API；历史报告仅以仓库文件形式保存。
+- 分析结果：`/`、`/index.html`。
+- 系统状态：`/health`。
 
 ## 边界
 

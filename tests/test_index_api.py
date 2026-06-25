@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from app.api_catalog import build_api_catalog
 from app.home_page import render_home_page
 from app.index_api import build_index_payload, get_index_payload
 
@@ -105,6 +106,18 @@ class IndexApiTests(unittest.TestCase):
         self.assertIn('<script src="https://invest.okbbc.com/header.js" defer></script>', html)
         self.assertIn('<script src="https://invest.okbbc.com/footer.js" defer></script>', html)
         self.assertIn('<header class="dashboard-header">', html)
+
+    def test_render_home_page_includes_api_catalog_summary(self) -> None:
+        payload = build_index_payload(self.sample_summary())
+
+        html = render_home_page(payload, build_api_catalog())
+
+        self.assertIn("接口说明", html)
+        self.assertIn("公开只读接口共", html)
+        self.assertIn("推荐入口", html)
+        self.assertIn("功能分组", html)
+        self.assertIn("安全边界", html)
+        self.assertIn("/api/index", html)
 
 
 if __name__ == "__main__":
