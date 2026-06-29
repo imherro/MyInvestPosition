@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-06-26T17:31:10+08:00",
+  "generated_at": "2026-06-29T17:31:44+08:00",
   "shadow_url_used": "https://shadow.okbbc.com/api/latest",
   "shadow": {
-    "run_at": "2026-06-25T23:20:25+08:00",
-    "basis_date": "2026-06-25",
+    "run_at": "2026-06-29T11:09:52+08:00",
+    "basis_date": "2026-06-26",
     "market_regime": "防守或弱修复",
-    "nav": 1.006447,
-    "daily_return_pct": 0.0041,
-    "risk_weight_pct": 10.0,
-    "defensive_weight_pct": 90.0,
+    "nav": 0.999647,
+    "daily_return_pct": -0.0068,
+    "risk_weight_pct": 4.5,
+    "defensive_weight_pct": 95.5,
     "sleeve_summary": {
-      "core": 7.5,
-      "mainline": 2.5,
+      "core": 3.5000000000000004,
+      "mainline": 1.0,
       "thematic": 0.0,
-      "defensive": 90.0
+      "defensive": 95.5
     },
     "allocations": [
       {
@@ -21,225 +21,238 @@
         "name": "华泰柏瑞沪深300ETF",
         "sleeve": "core",
         "theme": "核心-沪深300",
-        "target_weight_pct": 4.5,
-        "pct_chg": 1.63
+        "target_weight_pct": 2.1,
+        "pct_chg": -2.79
       },
       {
         "code": "510500.SH",
         "name": "南方中证500ETF",
         "sleeve": "core",
         "theme": "核心-中证500",
-        "target_weight_pct": 2.25,
-        "pct_chg": 1.11
+        "target_weight_pct": 1.05,
+        "pct_chg": -2.47
       },
       {
         "code": "159915.SZ",
         "name": "易方达创业板ETF",
         "sleeve": "core",
         "theme": "核心-创业板",
-        "target_weight_pct": 0.75,
-        "pct_chg": 3.22
+        "target_weight_pct": 0.35,
+        "pct_chg": -4.1
       },
       {
-        "code": "588200.SH",
-        "name": "嘉实上证科创板芯片ETF",
+        "code": "159516.SZ",
+        "name": "国泰中证半导体材料设备主题ETF",
         "sleeve": "mainline",
         "theme": "硬科技电子/半导体",
-        "target_weight_pct": 1.4273,
-        "pct_chg": 3.95
+        "target_weight_pct": 0.5279,
+        "pct_chg": 3.53
       },
       {
-        "code": "515880.SH",
-        "name": "国泰中证全指通信设备ETF",
+        "code": "516970.SH",
+        "name": "广发中证基建工程ETF",
         "sleeve": "mainline",
-        "theme": "AI算力/通信",
-        "target_weight_pct": 1.0727,
-        "pct_chg": 3.07
+        "theme": "建材/稳增长修复",
+        "target_weight_pct": 0.2514,
+        "pct_chg": -1.83
+      },
+      {
+        "code": "159663.SZ",
+        "name": "华夏中证机床ETF",
+        "sleeve": "mainline",
+        "theme": "高端制造/机器人/军工",
+        "target_weight_pct": 0.2207,
+        "pct_chg": -4.0
       },
       {
         "code": "511880.SH",
         "name": "银华货币ETF-A",
         "sleeve": "defensive",
         "theme": "防御仓位",
-        "target_weight_pct": 60.0,
-        "pct_chg": 0.0
+        "target_weight_pct": 88.5,
+        "pct_chg": 0.02
+      },
+      {
+        "code": "159201.SZ",
+        "name": "华夏国证自由现金流ETF",
+        "sleeve": "defensive",
+        "theme": "自由现金流",
+        "target_weight_pct": 3.6837,
+        "pct_chg": -2.21
       },
       {
         "code": "512890.SH",
         "name": "华泰柏瑞中证红利低波动ETF",
         "sleeve": "defensive",
         "theme": "红利低波收益防御",
-        "target_weight_pct": 15.4358,
-        "pct_chg": -1.18
-      },
-      {
-        "code": "159399.SZ",
-        "name": "国泰富时中国A股自由现金流聚焦ETF",
-        "sleeve": "defensive",
-        "theme": "自由现金流收益防御",
-        "target_weight_pct": 14.5642,
-        "pct_chg": -1.38
+        "target_weight_pct": 3.3163,
+        "pct_chg": -0.46
       }
     ]
   },
   "real": {
     "account_mask": "masked",
-    "collected_at": "2026-06-26T17:31:10+08:00",
-    "nav_index": 0.997483,
+    "collected_at": "2026-06-29T17:31:44+08:00",
+    "nav_index": 1.005055,
     "nav_baseline_created": false,
     "nav_baseline_time": "2026-06-18T12:14:06+08:00",
     "positions_count": 31,
-    "defensive_proxy_weight_pct": 62.041,
-    "risk_weight_pct": 37.959,
+    "defensive_proxy_weight_pct": 66.3615,
+    "risk_weight_pct": 33.6385,
     "cash_weight_pct": 0.0,
-    "core_proxy_weight_pct": 9.9543,
-    "shadow_exact_codes_weight_pct": 0.3516,
-    "related_mainline_weight_pct": 1.4759,
+    "core_proxy_weight_pct": 9.9604,
+    "shadow_exact_codes_weight_pct": 0,
+    "related_mainline_weight_pct": 1.589,
     "positions": [
       {
         "code": "511360.SH",
         "name": "短融ETF海富通",
-        "weight_pct": 56.0832
+        "weight_pct": 54.9654
       },
       {
         "code": "511880.SH",
         "name": "银华日利ETF",
-        "weight_pct": 5.9578
-      },
-      {
-        "code": "159992.SZ",
-        "name": "创新药ETF银华",
-        "weight_pct": 4.1916
+        "weight_pct": 5.9125
       },
       {
         "code": "159201.SZ",
         "name": "自由现金流ETF华夏",
-        "weight_pct": 4.0346
+        "weight_pct": 4.5538
       },
       {
-        "code": "510500.SH",
-        "name": "中证500ETF南方",
-        "weight_pct": 3.9482
+        "code": "159992.SZ",
+        "name": "创新药ETF银华",
+        "weight_pct": 4.5191
       },
       {
         "code": "512070.SH",
         "name": "证券保险ETF易方达",
-        "weight_pct": 3.443
-      },
-      {
-        "code": "159842.SZ",
-        "name": "券商ETF银华",
-        "weight_pct": 1.9066
-      },
-      {
-        "code": "159326.SZ",
-        "name": "电网设备ETF华夏",
-        "weight_pct": 1.8983
-      },
-      {
-        "code": "002352.SZ",
-        "name": "顺丰控股",
-        "weight_pct": 1.7879
-      },
-      {
-        "code": "516150.SH",
-        "name": "稀土ETF嘉实",
-        "weight_pct": 1.7277
-      },
-      {
-        "code": "159378.SZ",
-        "name": "通用航空ETF永赢",
-        "weight_pct": 1.6456
-      },
-      {
-        "code": "512710.SH",
-        "name": "军工龙头ETF富国",
-        "weight_pct": 1.4494
-      },
-      {
-        "code": "513180.SH",
-        "name": "恒生科技ETF华夏",
-        "weight_pct": 1.4202
+        "weight_pct": 3.4879
       },
       {
         "code": "510300.SH",
         "name": "沪深300ETF华泰柏瑞",
-        "weight_pct": 1.29
+        "weight_pct": 3.256
+      },
+      {
+        "code": "510500.SH",
+        "name": "中证500ETF南方",
+        "weight_pct": 1.9897
+      },
+      {
+        "code": "159842.SZ",
+        "name": "券商ETF银华",
+        "weight_pct": 1.921
+      },
+      {
+        "code": "159326.SZ",
+        "name": "电网设备ETF华夏",
+        "weight_pct": 1.8614
+      },
+      {
+        "code": "002352.SZ",
+        "name": "顺丰控股",
+        "weight_pct": 1.8038
+      },
+      {
+        "code": "516150.SH",
+        "name": "稀土ETF嘉实",
+        "weight_pct": 1.6884
+      },
+      {
+        "code": "159378.SZ",
+        "name": "通用航空ETF永赢",
+        "weight_pct": 1.62
+      },
+      {
+        "code": "513180.SH",
+        "name": "恒生科技ETF华夏",
+        "weight_pct": 1.4589
+      },
+      {
+        "code": "512710.SH",
+        "name": "军工龙头ETF富国",
+        "weight_pct": 1.4429
       },
       {
         "code": "513120.SH",
         "name": "港股创新药ETF广发",
-        "weight_pct": 1.2504
-      },
-      {
-        "code": "002258.SZ",
-        "name": "利尔化学",
-        "weight_pct": 1.2145
+        "weight_pct": 1.338
       },
       {
         "code": "562500.SH",
         "name": "机器人ETF华夏",
-        "weight_pct": 1.1875
+        "weight_pct": 1.1721
+      },
+      {
+        "code": "002258.SZ",
+        "name": "利尔化学",
+        "weight_pct": 1.1659
       },
       {
         "code": "603087.SH",
         "name": "甘李药业",
-        "weight_pct": 1.0619
+        "weight_pct": 1.1283
       },
       {
         "code": "159869.SZ",
         "name": "游戏ETF华夏",
-        "weight_pct": 1.0578
+        "weight_pct": 1.0745
+      },
+      {
+        "code": "512890.SH",
+        "name": "红利低波ETF华泰柏瑞",
+        "weight_pct": 0.9298
       },
       {
         "code": "562800.SH",
         "name": "稀有金属ETF嘉实",
-        "weight_pct": 0.8984
+        "weight_pct": 0.9021
       },
       {
         "code": "512400.SH",
         "name": "有色金属ETF南方",
-        "weight_pct": 0.7581
-      },
-      {
-        "code": "159915.SZ",
-        "name": "创业板ETF易方达",
-        "weight_pct": 0.6815
+        "weight_pct": 0.7626
       },
       {
         "code": "300760.SZ",
         "name": "迈瑞医疗",
-        "weight_pct": 0.3307
-      },
-      {
-        "code": "159558.SZ",
-        "name": "半导体设备ETF易方达",
-        "weight_pct": 0.2559
+        "weight_pct": 0.3368
       },
       {
         "code": "588200.SH",
         "name": "科创芯片ETF嘉实",
-        "weight_pct": 0.2215
+        "weight_pct": 0.2312
+      },
+      {
+        "code": "159915.SZ",
+        "name": "创业板ETF易方达",
+        "weight_pct": 0.1609
       },
       {
         "code": "515880.SH",
         "name": "通信ETF国泰",
-        "weight_pct": 0.1301
+        "weight_pct": 0.126
       },
       {
         "code": "159206.SZ",
         "name": "卫星ETF永赢",
-        "weight_pct": 0.1032
+        "weight_pct": 0.1013
       },
       {
         "code": "159667.SZ",
         "name": "工业母机ETF国泰",
-        "weight_pct": 0.0325
+        "weight_pct": 0.032
+      },
+      {
+        "code": "159558.SZ",
+        "name": "半导体设备ETF易方达",
+        "weight_pct": 0.0277
       },
       {
         "code": "159819.SZ",
         "name": "人工智能ETF易方达",
-        "weight_pct": 0.0256
+        "weight_pct": 0.0258
       },
       {
         "code": "159301.SZ",
@@ -249,15 +262,15 @@
     ]
   },
   "diff": {
-    "risk_over_shadow_pp": 27.959,
-    "defensive_vs_shadow_pp": -27.959,
-    "core_proxy_vs_shadow_core_pp": 2.4543,
-    "shadow_exact_codes_gap_pp": -2.1484
+    "risk_over_shadow_pp": 29.1385,
+    "defensive_vs_shadow_pp": -29.1385,
+    "core_proxy_vs_shadow_core_pp": 6.4604,
+    "shadow_exact_codes_gap_pp": -1.0
   },
   "reduction_buckets": [
     {
       "bucket": "券商/证券保险",
-      "weight_pct": 5.3496,
+      "weight_pct": 5.4089,
       "codes": [
         "159842.SZ",
         "512070.SH",
@@ -266,7 +279,7 @@
     },
     {
       "bucket": "医药/医疗",
-      "weight_pct": 6.8346,
+      "weight_pct": 7.3222,
       "codes": [
         "159992.SZ",
         "300760.SZ",
@@ -276,7 +289,7 @@
     },
     {
       "bucket": "稀土/有色",
-      "weight_pct": 3.3842,
+      "weight_pct": 3.3531,
       "codes": [
         "512400.SH",
         "516150.SH",
@@ -284,34 +297,24 @@
       ]
     }
   ],
-  "tiny_positions_weight_pct": 0.7723,
+  "tiny_positions_weight_pct": 0.7084,
   "market_state": {
     "volatility": 0.65,
     "liquidity_regime": "normal",
     "trend_regime": "bear",
     "risk_sentiment": 0.35,
-    "timestamp": "2026-06-26T17:31:10+08:00"
+    "timestamp": "2026-06-29T17:31:44+08:00"
   },
   "trade_constraints": {
-    "515880.SH": {
-      "symbol": "515880.SH",
+    "159516.SZ": {
+      "symbol": "159516.SZ",
       "min_trade_unit": 0.1,
       "max_position": 21.675,
       "liquidity_score": 0.765,
       "tradable": true,
       "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-26T17:31:10+08:00",
-      "valid_until": "2026-06-27T17:31:10+08:00"
-    },
-    "588200.SH": {
-      "symbol": "588200.SH",
-      "min_trade_unit": 0.1,
-      "max_position": 21.675,
-      "liquidity_score": 0.765,
-      "tradable": true,
-      "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-26T17:31:10+08:00",
-      "valid_until": "2026-06-27T17:31:10+08:00"
+      "timestamp": "2026-06-29T17:31:44+08:00",
+      "valid_until": "2026-06-30T17:31:44+08:00"
     },
     "DEFENSIVE_CASH": {
       "symbol": "DEFENSIVE_CASH",
@@ -320,8 +323,8 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-26T17:31:10+08:00",
-      "valid_until": "2026-06-27T17:31:10+08:00"
+      "timestamp": "2026-06-29T17:31:44+08:00",
+      "valid_until": "2026-06-30T17:31:44+08:00"
     },
     "NON_MODEL_SATELLITE": {
       "symbol": "NON_MODEL_SATELLITE",
@@ -330,8 +333,8 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-26T17:31:10+08:00",
-      "valid_until": "2026-06-27T17:31:10+08:00"
+      "timestamp": "2026-06-29T17:31:44+08:00",
+      "valid_until": "2026-06-30T17:31:44+08:00"
     },
     "PORTFOLIO": {
       "symbol": "PORTFOLIO",
@@ -340,28 +343,28 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-06-26T17:31:10+08:00",
-      "valid_until": "2026-06-27T17:31:10+08:00"
+      "timestamp": "2026-06-29T17:31:44+08:00",
+      "valid_until": "2026-06-30T17:31:44+08:00"
     }
   },
   "decision_set": {
-    "timestamp": "2026-06-26T17:31:10+08:00",
+    "timestamp": "2026-06-29T17:31:44+08:00",
     "account_id": "masked",
     "actions": [
       {
         "symbol": "PORTFOLIO",
         "action": "REDUCE_RISK",
-        "target_delta": -27.959,
-        "priority": 0.9996,
+        "target_delta": -29.1385,
+        "priority": 1.0,
         "confidence": 0.88,
         "source": "risk_budget_rule",
         "risk_level": "high",
-        "reason": "实盘风险仓 37.96% 高于影子风险预算 10.00%",
-        "score": 0.966097,
+        "reason": "实盘风险仓 33.64% 高于影子风险预算 4.50%",
+        "score": 0.966237,
         "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority_norm": 0.9996,
+          "priority_norm": 1.0,
           "confidence_norm": 0.954349,
           "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
@@ -377,17 +380,17 @@
       {
         "symbol": "NON_MODEL_SATELLITE",
         "action": "REDUCE_RISK",
-        "target_delta": -27.959,
-        "priority": 0.9196,
+        "target_delta": -29.1385,
+        "priority": 0.9314,
         "confidence": 0.72,
         "source": "satellite_reduction_rule",
         "risk_level": "high",
         "reason": "非模型行业、个股和零散仓位是降低风险仓的优先腾挪来源",
-        "score": 0.912665,
+        "score": 0.916807,
         "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority_norm": 0.9196,
+          "priority_norm": 0.9314,
           "confidence_norm": 0.85321,
           "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
@@ -403,17 +406,17 @@
       {
         "symbol": "DEFENSIVE_CASH",
         "action": "REBALANCE",
-        "target_delta": 27.959,
-        "priority": 0.9596,
+        "target_delta": 29.1385,
+        "priority": 0.9714,
         "confidence": 0.82,
         "source": "defensive_gap_rule",
         "risk_level": "high",
-        "reason": "防御/现金仓低于影子目标 27.96 个百分点，目标防御仓 90.00%",
-        "score": 0.752269,
+        "reason": "防御/现金仓低于影子目标 29.14 个百分点，目标防御仓 95.50%",
+        "score": 0.7557,
         "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority_norm": 0.9596,
+          "priority_norm": 0.9714,
           "confidence_norm": 0.928242,
           "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
@@ -427,45 +430,19 @@
         "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
       },
       {
-        "symbol": "588200.SH",
+        "symbol": "159516.SZ",
         "action": "REBALANCE",
-        "target_delta": 1.2058,
-        "priority": 0.4621,
+        "target_delta": 0.5279,
+        "priority": 0.4553,
         "confidence": 0.62,
         "source": "shadow_exact_gap_rule",
         "risk_level": "medium",
-        "reason": "影子精确主线目标 1.43%，实盘 0.22%",
-        "score": 0.53695,
+        "reason": "影子精确主线目标 0.53%，实盘 0.00%",
+        "score": 0.534972,
         "liquidity": 0.765,
         "tradable": true,
         "score_breakdown": {
-          "priority_norm": 0.4621,
-          "confidence_norm": 0.723122,
-          "liquidity_norm": 0.765,
-          "tradability_factor": 1.0,
-          "risk_adjustment_norm": 0.75,
-          "market_state_factor": 0.83085,
-          "weight_priority": 0.35,
-          "weight_confidence": 0.25,
-          "weight_liquidity": 0.25,
-          "weight_risk_adjustment": 0.15
-        },
-        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
-      },
-      {
-        "symbol": "515880.SH",
-        "action": "REBALANCE",
-        "target_delta": 0.9426,
-        "priority": 0.4594,
-        "confidence": 0.62,
-        "source": "shadow_exact_gap_rule",
-        "risk_level": "medium",
-        "reason": "影子精确主线目标 1.07%，实盘 0.13%",
-        "score": 0.536165,
-        "liquidity": 0.765,
-        "tradable": true,
-        "score_breakdown": {
-          "priority_norm": 0.4594,
+          "priority_norm": 0.4553,
           "confidence_norm": 0.723122,
           "liquidity_norm": 0.765,
           "tradability_factor": 1.0,
@@ -481,30 +458,30 @@
     ]
   },
   "decision_log": {
-    "timestamp": "2026-06-26T17:31:10+08:00",
+    "timestamp": "2026-06-29T17:31:44+08:00",
     "account_id": "masked",
     "market_state": {
       "volatility": 0.65,
       "liquidity_regime": "normal",
       "trend_regime": "bear",
       "risk_sentiment": 0.35,
-      "timestamp": "2026-06-26T17:31:10+08:00"
+      "timestamp": "2026-06-29T17:31:44+08:00"
     },
     "actions": [
       {
         "symbol": "PORTFOLIO",
         "action": "REDUCE_RISK",
-        "target_delta": -27.959,
-        "priority": 0.9996,
+        "target_delta": -29.1385,
+        "priority": 1.0,
         "confidence": 0.88,
         "source": "risk_budget_rule",
         "risk_level": "high",
-        "reason": "实盘风险仓 37.96% 高于影子风险预算 10.00%",
-        "score": 0.966097,
+        "reason": "实盘风险仓 33.64% 高于影子风险预算 4.50%",
+        "score": 0.966237,
         "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority_norm": 0.9996,
+          "priority_norm": 1.0,
           "confidence_norm": 0.954349,
           "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
@@ -520,17 +497,17 @@
       {
         "symbol": "NON_MODEL_SATELLITE",
         "action": "REDUCE_RISK",
-        "target_delta": -27.959,
-        "priority": 0.9196,
+        "target_delta": -29.1385,
+        "priority": 0.9314,
         "confidence": 0.72,
         "source": "satellite_reduction_rule",
         "risk_level": "high",
         "reason": "非模型行业、个股和零散仓位是降低风险仓的优先腾挪来源",
-        "score": 0.912665,
+        "score": 0.916807,
         "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority_norm": 0.9196,
+          "priority_norm": 0.9314,
           "confidence_norm": 0.85321,
           "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
@@ -546,17 +523,17 @@
       {
         "symbol": "DEFENSIVE_CASH",
         "action": "REBALANCE",
-        "target_delta": 27.959,
-        "priority": 0.9596,
+        "target_delta": 29.1385,
+        "priority": 0.9714,
         "confidence": 0.82,
         "source": "defensive_gap_rule",
         "risk_level": "high",
-        "reason": "防御/现金仓低于影子目标 27.96 个百分点，目标防御仓 90.00%",
-        "score": 0.752269,
+        "reason": "防御/现金仓低于影子目标 29.14 个百分点，目标防御仓 95.50%",
+        "score": 0.7557,
         "liquidity": 0.9,
         "tradable": true,
         "score_breakdown": {
-          "priority_norm": 0.9596,
+          "priority_norm": 0.9714,
           "confidence_norm": 0.928242,
           "liquidity_norm": 0.9,
           "tradability_factor": 1.0,
@@ -570,45 +547,19 @@
         "constraint_reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
       },
       {
-        "symbol": "588200.SH",
+        "symbol": "159516.SZ",
         "action": "REBALANCE",
-        "target_delta": 1.2058,
-        "priority": 0.4621,
+        "target_delta": 0.5279,
+        "priority": 0.4553,
         "confidence": 0.62,
         "source": "shadow_exact_gap_rule",
         "risk_level": "medium",
-        "reason": "影子精确主线目标 1.43%，实盘 0.22%",
-        "score": 0.53695,
+        "reason": "影子精确主线目标 0.53%，实盘 0.00%",
+        "score": 0.534972,
         "liquidity": 0.765,
         "tradable": true,
         "score_breakdown": {
-          "priority_norm": 0.4621,
-          "confidence_norm": 0.723122,
-          "liquidity_norm": 0.765,
-          "tradability_factor": 1.0,
-          "risk_adjustment_norm": 0.75,
-          "market_state_factor": 0.83085,
-          "weight_priority": 0.35,
-          "weight_confidence": 0.25,
-          "weight_liquidity": 0.25,
-          "weight_risk_adjustment": 0.15
-        },
-        "constraint_reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。"
-      },
-      {
-        "symbol": "515880.SH",
-        "action": "REBALANCE",
-        "target_delta": 0.9426,
-        "priority": 0.4594,
-        "confidence": 0.62,
-        "source": "shadow_exact_gap_rule",
-        "risk_level": "medium",
-        "reason": "影子精确主线目标 1.07%，实盘 0.13%",
-        "score": 0.536165,
-        "liquidity": 0.765,
-        "tradable": true,
-        "score_breakdown": {
-          "priority_norm": 0.4594,
+          "priority_norm": 0.4553,
           "confidence_norm": 0.723122,
           "liquidity_norm": 0.765,
           "tradability_factor": 1.0,
@@ -623,25 +574,15 @@
       }
     ],
     "constraints": {
-      "515880.SH": {
-        "symbol": "515880.SH",
+      "159516.SZ": {
+        "symbol": "159516.SZ",
         "min_trade_unit": 0.1,
         "max_position": 21.675,
         "liquidity_score": 0.765,
         "tradable": true,
         "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-26T17:31:10+08:00",
-        "valid_until": "2026-06-27T17:31:10+08:00"
-      },
-      "588200.SH": {
-        "symbol": "588200.SH",
-        "min_trade_unit": 0.1,
-        "max_position": 21.675,
-        "liquidity_score": 0.765,
-        "tradable": true,
-        "reason": "ETF 默认按较高流动性处理；后续可接入真实成交额约束。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-26T17:31:10+08:00",
-        "valid_until": "2026-06-27T17:31:10+08:00"
+        "timestamp": "2026-06-29T17:31:44+08:00",
+        "valid_until": "2026-06-30T17:31:44+08:00"
       },
       "DEFENSIVE_CASH": {
         "symbol": "DEFENSIVE_CASH",
@@ -650,8 +591,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-26T17:31:10+08:00",
-        "valid_until": "2026-06-27T17:31:10+08:00"
+        "timestamp": "2026-06-29T17:31:44+08:00",
+        "valid_until": "2026-06-30T17:31:44+08:00"
       },
       "NON_MODEL_SATELLITE": {
         "symbol": "NON_MODEL_SATELLITE",
@@ -660,8 +601,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-26T17:31:10+08:00",
-        "valid_until": "2026-06-27T17:31:10+08:00"
+        "timestamp": "2026-06-29T17:31:44+08:00",
+        "valid_until": "2026-06-30T17:31:44+08:00"
       },
       "PORTFOLIO": {
         "symbol": "PORTFOLIO",
@@ -670,8 +611,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-06-26T17:31:10+08:00",
-        "valid_until": "2026-06-27T17:31:10+08:00"
+        "timestamp": "2026-06-29T17:31:44+08:00",
+        "valid_until": "2026-06-30T17:31:44+08:00"
       }
     }
   },
@@ -682,21 +623,21 @@
       "outcome",
       "calibration"
     ],
-    "drift_score": 0.189788,
+    "drift_score": 0.202456,
     "drift_vector": [
-      0.27959,
-      0.151302,
-      0.023013,
-      0.27959
+      0.291385,
+      0.164344,
+      0.037302,
+      0.291385
     ],
     "drift_breakdown": {
-      "risk_drift": 0.27959,
-      "weight_drift": 0.151302,
-      "sector_drift": 0.023013,
-      "liquidity_drift": 0.27959,
-      "defensive_drift": 0.27959,
-      "core_drift": 0.024543,
-      "shadow_exact_drift": 0.021484
+      "risk_drift": 0.291385,
+      "weight_drift": 0.164344,
+      "sector_drift": 0.037302,
+      "liquidity_drift": 0.291385,
+      "defensive_drift": 0.291385,
+      "core_drift": 0.064604,
+      "shadow_exact_drift": 0.01
     },
     "signal_registry": {
       "shadow_gap": {
@@ -726,50 +667,40 @@
         "action_id": "PORTFOLIO|REDUCE_RISK|risk_budget_rule",
         "symbol": "PORTFOLIO",
         "action": "REDUCE_RISK",
-        "expected_score": 0.966097,
+        "expected_score": 0.966237,
         "realized_return": 0.0,
         "status": "pending",
-        "drift_contribution": 0.27959
+        "drift_contribution": 0.291385
       },
       {
         "signal_source": "risk_engine",
         "action_id": "NON_MODEL_SATELLITE|REDUCE_RISK|satellite_reduction_rule",
         "symbol": "NON_MODEL_SATELLITE",
         "action": "REDUCE_RISK",
-        "expected_score": 0.912665,
+        "expected_score": 0.916807,
         "realized_return": 0.0,
         "status": "pending",
-        "drift_contribution": 0.27959
+        "drift_contribution": 0.291385
       },
       {
         "signal_source": "defensive_filter",
         "action_id": "DEFENSIVE_CASH|REBALANCE|defensive_gap_rule",
         "symbol": "DEFENSIVE_CASH",
         "action": "REBALANCE",
-        "expected_score": 0.752269,
+        "expected_score": 0.7557,
         "realized_return": 0.0,
         "status": "pending",
-        "drift_contribution": 0.27959
+        "drift_contribution": 0.291385
       },
       {
         "signal_source": "shadow_gap",
-        "action_id": "588200.SH|REBALANCE|shadow_exact_gap_rule",
-        "symbol": "588200.SH",
+        "action_id": "159516.SZ|REBALANCE|shadow_exact_gap_rule",
+        "symbol": "159516.SZ",
         "action": "REBALANCE",
-        "expected_score": 0.53695,
+        "expected_score": 0.534972,
         "realized_return": 0.0,
         "status": "pending",
-        "drift_contribution": 0.151302
-      },
-      {
-        "signal_source": "shadow_gap",
-        "action_id": "515880.SH|REBALANCE|shadow_exact_gap_rule",
-        "symbol": "515880.SH",
-        "action": "REBALANCE",
-        "expected_score": 0.536165,
-        "realized_return": 0.0,
-        "status": "pending",
-        "drift_contribution": 0.151302
+        "drift_contribution": 0.164344
       }
     ],
     "signal_isolation": {
@@ -777,62 +708,55 @@
         "signal_source": "defensive_filter",
         "action_count": 1,
         "realized_count": 0,
-        "expected_score": 0.752269,
+        "expected_score": 0.7557,
         "realized_return": 0,
-        "drift_contribution": 0.27959,
+        "drift_contribution": 0.291385,
         "active": true
       },
       "risk_engine": {
         "signal_source": "risk_engine",
         "action_count": 2,
         "realized_count": 0,
-        "expected_score": 1.878762,
+        "expected_score": 1.883044,
         "realized_return": 0,
-        "drift_contribution": 0.27959,
+        "drift_contribution": 0.291385,
         "active": true
       },
       "shadow_gap": {
         "signal_source": "shadow_gap",
-        "action_count": 2,
+        "action_count": 1,
         "realized_count": 0,
-        "expected_score": 1.073115,
+        "expected_score": 0.534972,
         "realized_return": 0,
-        "drift_contribution": 0.151302,
+        "drift_contribution": 0.164344,
         "active": true
       }
     },
     "outcomes": [
       {
         "action_id": "PORTFOLIO|REDUCE_RISK|risk_budget_rule",
-        "expected_score": 0.966097,
+        "expected_score": 0.966237,
         "realized_return": 0.0,
         "error": 0.0,
         "status": "pending"
       },
       {
         "action_id": "NON_MODEL_SATELLITE|REDUCE_RISK|satellite_reduction_rule",
-        "expected_score": 0.912665,
+        "expected_score": 0.916807,
         "realized_return": 0.0,
         "error": 0.0,
         "status": "pending"
       },
       {
         "action_id": "DEFENSIVE_CASH|REBALANCE|defensive_gap_rule",
-        "expected_score": 0.752269,
+        "expected_score": 0.7557,
         "realized_return": 0.0,
         "error": 0.0,
         "status": "pending"
       },
       {
-        "action_id": "588200.SH|REBALANCE|shadow_exact_gap_rule",
-        "expected_score": 0.53695,
-        "realized_return": 0.0,
-        "error": 0.0,
-        "status": "pending"
-      },
-      {
-        "action_id": "515880.SH|REBALANCE|shadow_exact_gap_rule",
-        "expected_score": 0.536165,
+        "action_id": "159516.SZ|REBALANCE|shadow_exact_gap_rule",
+        "expected_score": 0.534972,
         "realized_return": 0.0,
         "error": 0.0,
         "status": "pending"
@@ -919,23 +843,23 @@
       {
         "source": "defensive_filter",
         "target": "risk_engine",
-        "dependency_weight": 0.594419,
+        "dependency_weight": 0.596451,
         "influence_direction": "amplify",
-        "reason": "learned correlation=0.59, lag=0.00, conditional=0.00"
+        "reason": "learned correlation=0.60, lag=0.00, conditional=0.00"
       },
       {
         "source": "risk_engine",
         "target": "shadow_gap",
-        "dependency_weight": 0.527986,
+        "dependency_weight": 0.465552,
         "influence_direction": "suppress",
-        "reason": "风险控制占优时，影子缺口补齐信号需要降权。 learned_update=0.71"
+        "reason": "风险控制占优时，影子缺口补齐信号需要降权。 learned_update=0.50"
       },
       {
         "source": "defensive_filter",
         "target": "shadow_gap",
-        "dependency_weight": 0.189886,
+        "dependency_weight": 0.170187,
         "influence_direction": "suppress",
-        "reason": "防御过滤增强时，主线补齐动作需要更谨慎。 learned_update=0.45"
+        "reason": "防御过滤增强时，主线补齐动作需要更谨慎。 learned_update=0.32"
       },
       {
         "source": "market_alignment",
@@ -979,23 +903,23 @@
       {
         "source": "defensive_filter",
         "target": "risk_engine",
-        "dependency_weight": 0.594419,
+        "dependency_weight": 0.596451,
         "influence_direction": "amplify",
-        "reason": "learned correlation=0.59, lag=0.00, conditional=0.00"
+        "reason": "learned correlation=0.60, lag=0.00, conditional=0.00"
       },
       {
         "source": "defensive_filter",
         "target": "shadow_gap",
-        "dependency_weight": 0.449241,
+        "dependency_weight": 0.317914,
         "influence_direction": "amplify",
-        "reason": "learned correlation=0.45, lag=0.26, conditional=0.00"
+        "reason": "learned correlation=0.32, lag=0.25, conditional=0.00"
       },
       {
         "source": "risk_engine",
         "target": "shadow_gap",
-        "dependency_weight": 0.709952,
+        "dependency_weight": 0.501841,
         "influence_direction": "amplify",
-        "reason": "learned correlation=0.71, lag=0.26, conditional=0.00"
+        "reason": "learned correlation=0.50, lag=0.25, conditional=0.00"
       }
     ],
     "graph_feedback_loop": {
@@ -1011,23 +935,23 @@
         {
           "source": "defensive_filter",
           "target": "risk_engine",
-          "dependency_weight": 0.594419,
+          "dependency_weight": 0.596451,
           "influence_direction": "amplify",
-          "reason": "learned correlation=0.59, lag=0.00, conditional=0.00"
+          "reason": "learned correlation=0.60, lag=0.00, conditional=0.00"
         },
         {
           "source": "defensive_filter",
           "target": "shadow_gap",
-          "dependency_weight": 0.449241,
+          "dependency_weight": 0.317914,
           "influence_direction": "amplify",
-          "reason": "learned correlation=0.45, lag=0.26, conditional=0.00"
+          "reason": "learned correlation=0.32, lag=0.25, conditional=0.00"
         },
         {
           "source": "risk_engine",
           "target": "shadow_gap",
-          "dependency_weight": 0.709952,
+          "dependency_weight": 0.501841,
           "influence_direction": "amplify",
-          "reason": "learned correlation=0.71, lag=0.26, conditional=0.00"
+          "reason": "learned correlation=0.50, lag=0.25, conditional=0.00"
         }
       ],
       "active_graph": [
@@ -1041,9 +965,9 @@
         {
           "source": "risk_engine",
           "target": "shadow_gap",
-          "dependency_weight": 0.527986,
+          "dependency_weight": 0.465552,
           "influence_direction": "suppress",
-          "reason": "风险控制占优时，影子缺口补齐信号需要降权。 learned_update=0.71"
+          "reason": "风险控制占优时，影子缺口补齐信号需要降权。 learned_update=0.50"
         },
         {
           "source": "market_alignment",
@@ -1055,16 +979,16 @@
         {
           "source": "defensive_filter",
           "target": "shadow_gap",
-          "dependency_weight": 0.379772,
+          "dependency_weight": 0.340374,
           "influence_direction": "suppress",
-          "reason": "防御过滤增强时，主线补齐动作需要更谨慎。 learned_update=0.45"
+          "reason": "防御过滤增强时，主线补齐动作需要更谨慎。 learned_update=0.32"
         },
         {
           "source": "defensive_filter",
           "target": "risk_engine",
-          "dependency_weight": 0.594419,
+          "dependency_weight": 0.596451,
           "influence_direction": "amplify",
-          "reason": "learned correlation=0.59, lag=0.00, conditional=0.00"
+          "reason": "learned correlation=0.60, lag=0.00, conditional=0.00"
         }
       ],
       "learned_edge_count": 3,
@@ -1073,7 +997,7 @@
     "graph_truth_scores": {
       "risk_engine->defensive_filter": {
         "edge": "risk_engine->defensive_filter",
-        "truth_score": 0.421865,
+        "truth_score": 0.422003,
         "validation": {
           "true_positive_rate": 0.5,
           "false_positive_rate": 0.5,
@@ -1082,13 +1006,13 @@
         "counterfactual": {
           "edge": "risk_engine->defensive_filter",
           "removed": true,
-          "performance_change": 0.187461,
-          "predictive_gain": 0.187461
+          "performance_change": 0.188011,
+          "predictive_gain": 0.188011
         }
       },
       "risk_engine->shadow_gap": {
         "edge": "risk_engine->shadow_gap",
-        "truth_score": 0.413964,
+        "truth_score": 0.403143,
         "validation": {
           "true_positive_rate": 0.5,
           "false_positive_rate": 0.5,
@@ -1097,13 +1021,13 @@
         "counterfactual": {
           "edge": "risk_engine->shadow_gap",
           "removed": true,
-          "performance_change": 0.155855,
-          "predictive_gain": 0.155855
+          "performance_change": 0.112571,
+          "predictive_gain": 0.112571
         }
       },
       "market_alignment->shadow_gap": {
         "edge": "market_alignment->shadow_gap",
-        "truth_score": 0.389018,
+        "truth_score": 0.381988,
         "validation": {
           "true_positive_rate": 0.5,
           "false_positive_rate": 0.5,
@@ -1112,13 +1036,13 @@
         "counterfactual": {
           "edge": "market_alignment->shadow_gap",
           "removed": true,
-          "performance_change": 0.05607,
-          "predictive_gain": 0.05607
+          "performance_change": 0.027952,
+          "predictive_gain": 0.027952
         }
       },
       "defensive_filter->shadow_gap": {
         "edge": "defensive_filter->shadow_gap",
-        "truth_score": 0.392331,
+        "truth_score": 0.385983,
         "validation": {
           "true_positive_rate": 0.5,
           "false_positive_rate": 0.5,
@@ -1127,13 +1051,13 @@
         "counterfactual": {
           "edge": "defensive_filter->shadow_gap",
           "removed": true,
-          "performance_change": 0.069323,
-          "predictive_gain": 0.069323
+          "performance_change": 0.043931,
+          "predictive_gain": 0.043931
         }
       },
       "defensive_filter->risk_engine": {
         "edge": "defensive_filter->risk_engine",
-        "truth_score": 0.414098,
+        "truth_score": 0.414347,
         "validation": {
           "true_positive_rate": 0.5,
           "false_positive_rate": 0.5,
@@ -1142,8 +1066,8 @@
         "counterfactual": {
           "edge": "defensive_filter->risk_engine",
           "removed": true,
-          "performance_change": 0.156393,
-          "predictive_gain": 0.156393
+          "performance_change": 0.157388,
+          "predictive_gain": 0.157388
         }
       }
     },
@@ -1159,23 +1083,23 @@
         {
           "source": "defensive_filter",
           "target": "risk_engine",
-          "dependency_weight": 0.594419,
+          "dependency_weight": 0.596451,
           "influence_direction": "amplify",
-          "reason": "learned correlation=0.59, lag=0.00, conditional=0.00"
+          "reason": "learned correlation=0.60, lag=0.00, conditional=0.00"
         },
         {
           "source": "risk_engine",
           "target": "shadow_gap",
-          "dependency_weight": 0.527986,
+          "dependency_weight": 0.465552,
           "influence_direction": "suppress",
-          "reason": "风险控制占优时，影子缺口补齐信号需要降权。 learned_update=0.71"
+          "reason": "风险控制占优时，影子缺口补齐信号需要降权。 learned_update=0.50"
         },
         {
           "source": "defensive_filter",
           "target": "shadow_gap",
-          "dependency_weight": 0.189886,
+          "dependency_weight": 0.170187,
           "influence_direction": "suppress",
-          "reason": "防御过滤增强时，主线补齐动作需要更谨慎。 learned_update=0.45"
+          "reason": "防御过滤增强时，主线补齐动作需要更谨慎。 learned_update=0.32"
         },
         {
           "source": "market_alignment",
@@ -1189,12 +1113,12 @@
       "reset_edges": [
         {
           "edge": "market_alignment->shadow_gap",
-          "truth_score": 0.389018,
+          "truth_score": 0.381988,
           "reason": "uncertain edge reset"
         },
         {
           "edge": "defensive_filter->shadow_gap",
-          "truth_score": 0.392331,
+          "truth_score": 0.385983,
           "reason": "uncertain edge reset"
         }
       ],
@@ -1208,8 +1132,8 @@
         "market_factor": 0.765,
         "final_weight": 0.765,
         "reasons": [
-          "risk_engine->shadow_gap: suppress, weight=0.53",
-          "defensive_filter->shadow_gap: suppress, weight=0.19",
+          "risk_engine->shadow_gap: suppress, weight=0.47",
+          "defensive_filter->shadow_gap: suppress, weight=0.17",
           "market_alignment->shadow_gap: amplify, weight=0.26",
           "market trend=bear",
           "volatility=0.65",
@@ -1223,7 +1147,7 @@
         "market_factor": 1.176,
         "final_weight": 1.176,
         "reasons": [
-          "defensive_filter->risk_engine: amplify, weight=0.59",
+          "defensive_filter->risk_engine: amplify, weight=0.60",
           "market trend=bear",
           "volatility=0.65",
           "source=risk_engine"
@@ -1288,7 +1212,7 @@
           "defensive_filter->risk_engine:amplify",
           "risk_engine->shadow_gap:suppress"
         ],
-        "reason": "defensive_filter->risk_engine: amplify, weight=0.59; market trend=bear; volatility=0.65; source=risk_engine"
+        "reason": "defensive_filter->risk_engine: amplify, weight=0.60; market trend=bear; volatility=0.65; source=risk_engine"
       },
       {
         "signal_source": "shadow_gap",
@@ -1300,7 +1224,7 @@
           "defensive_filter->shadow_gap:suppress",
           "market_alignment->shadow_gap:amplify"
         ],
-        "reason": "risk_engine->shadow_gap: suppress, weight=0.53; defensive_filter->shadow_gap: suppress, weight=0.19; market_alignment->shadow_gap: amplify, weight=0.26; market trend=bear; volatility=0.65; source=shadow_gap"
+        "reason": "risk_engine->shadow_gap: suppress, weight=0.47; defensive_filter->shadow_gap: suppress, weight=0.17; market_alignment->shadow_gap: amplify, weight=0.26; market trend=bear; volatility=0.65; source=shadow_gap"
       }
     ],
     "self_correction": {
