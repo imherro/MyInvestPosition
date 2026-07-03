@@ -1,19 +1,19 @@
 {
-  "generated_at": "2026-07-01T21:32:42+08:00",
+  "generated_at": "2026-07-03T21:30:58+08:00",
   "shadow_url_used": "https://shadow.okbbc.com/api/latest",
   "shadow": {
-    "run_at": "2026-07-01T21:15:07+08:00",
-    "basis_date": "2026-07-01",
+    "run_at": "2026-07-03T13:42:23+08:00",
+    "basis_date": "2026-07-02",
     "market_regime": "防守或弱修复",
-    "nav": 1.003301,
-    "daily_return_pct": 0.0017,
-    "risk_weight_pct": 12.0,
-    "defensive_weight_pct": 88.0,
+    "nav": 0.999619,
+    "daily_return_pct": -0.0037,
+    "risk_weight_pct": 3.0,
+    "defensive_weight_pct": 97.0,
     "sleeve_summary": {
-      "core": 12.0,
+      "core": 3.0,
       "mainline": 0.0,
       "thematic": 0.0,
-      "defensive": 88.0
+      "defensive": 97.0
     },
     "allocations": [
       {
@@ -21,227 +21,222 @@
         "name": "华泰柏瑞沪深300ETF",
         "sleeve": "core",
         "theme": "核心-沪深300",
-        "target_weight_pct": 7.2,
-        "pct_chg": -0.42
+        "target_weight_pct": 1.8,
+        "pct_chg": -2.96
       },
       {
         "code": "510500.SH",
         "name": "南方中证500ETF",
         "sleeve": "core",
         "theme": "核心-中证500",
-        "target_weight_pct": 3.6,
-        "pct_chg": -0.15
+        "target_weight_pct": 0.9,
+        "pct_chg": -3.61
       },
       {
         "code": "159915.SZ",
         "name": "易方达创业板ETF",
         "sleeve": "core",
         "theme": "核心-创业板",
-        "target_weight_pct": 1.2,
-        "pct_chg": -2.06
+        "target_weight_pct": 0.3,
+        "pct_chg": -5.57
       },
       {
         "code": "511880.SH",
         "name": "银华货币ETF-A",
         "sleeve": "defensive",
         "theme": "防御仓位",
-        "target_weight_pct": 73.5,
-        "pct_chg": 0.01
-      },
-      {
-        "code": "512890.SH",
-        "name": "华泰柏瑞中证红利低波动ETF",
-        "sleeve": "defensive",
-        "theme": "红利低波",
-        "target_weight_pct": 7.3776,
-        "pct_chg": 1.13
+        "target_weight_pct": 90.0,
+        "pct_chg": 0.02
       },
       {
         "code": "159399.SZ",
         "name": "国泰富时中国A股自由现金流聚焦ETF",
         "sleeve": "defensive",
         "theme": "自由现金流",
-        "target_weight_pct": 7.1224,
-        "pct_chg": 1.43
+        "target_weight_pct": 3.5138,
+        "pct_chg": 0.33
+      },
+      {
+        "code": "512890.SH",
+        "name": "华泰柏瑞中证红利低波动ETF",
+        "sleeve": "defensive",
+        "theme": "红利低波收益防御",
+        "target_weight_pct": 3.4862,
+        "pct_chg": 0.74
       }
     ]
   },
   "real": {
     "account_mask": "masked",
-    "collected_at": "2026-07-01T21:32:42+08:00",
-    "nav_index": 1.015768,
+    "collected_at": "2026-07-03T21:30:58+08:00",
+    "nav_index": 1.021995,
     "nav_baseline_created": false,
     "nav_baseline_time": "2026-06-18T12:14:06+08:00",
-    "positions_count": 30,
-    "defensive_proxy_weight_pct": 42.236,
-    "risk_weight_pct": 57.764,
-    "cash_weight_pct": 0.0011,
-    "core_proxy_weight_pct": 31.0425,
+    "positions_count": 29,
+    "defensive_proxy_weight_pct": 31.1801,
+    "risk_weight_pct": 68.8199,
+    "cash_weight_pct": 0.0,
+    "core_proxy_weight_pct": 41.4303,
     "shadow_exact_codes_weight_pct": 0,
-    "related_mainline_weight_pct": 1.6439,
+    "related_mainline_weight_pct": 2.4191,
     "positions": [
-      {
-        "code": "511360.SH",
-        "name": "短融ETF海富通",
-        "weight_pct": 40.3482
-      },
       {
         "code": "159201.SZ",
         "name": "自由现金流ETF华夏",
-        "weight_pct": 28.2459
+        "weight_pct": 39.9992
+      },
+      {
+        "code": "511360.SH",
+        "name": "短融ETF海富通",
+        "weight_pct": 29.2952
       },
       {
         "code": "159992.SZ",
         "name": "创新药ETF银华",
-        "weight_pct": 4.5863
+        "weight_pct": 4.6833
       },
       {
         "code": "512070.SH",
         "name": "证券保险ETF易方达",
-        "weight_pct": 3.5827
+        "weight_pct": 3.5217
       },
       {
         "code": "159842.SZ",
         "name": "券商ETF银华",
-        "weight_pct": 1.9932
-      },
-      {
-        "code": "002352.SZ",
-        "name": "顺丰控股",
-        "weight_pct": 1.8343
-      },
-      {
-        "code": "159326.SZ",
-        "name": "电网设备ETF华夏",
-        "weight_pct": 1.8105
-      },
-      {
-        "code": "516150.SH",
-        "name": "稀土ETF嘉实",
-        "weight_pct": 1.721
-      },
-      {
-        "code": "159378.SZ",
-        "name": "通用航空ETF永赢",
-        "weight_pct": 1.6727
-      },
-      {
-        "code": "510300.SH",
-        "name": "沪深300ETF华泰柏瑞",
-        "weight_pct": 1.6235
-      },
-      {
-        "code": "512710.SH",
-        "name": "军工龙头ETF富国",
-        "weight_pct": 1.4903
-      },
-      {
-        "code": "513180.SH",
-        "name": "恒生科技ETF华夏",
-        "weight_pct": 1.459
-      },
-      {
-        "code": "513120.SH",
-        "name": "港股创新药ETF广发",
-        "weight_pct": 1.3421
+        "weight_pct": 1.9422
       },
       {
         "code": "562500.SH",
         "name": "机器人ETF华夏",
-        "weight_pct": 1.2245
+        "weight_pct": 1.9231
+      },
+      {
+        "code": "002352.SZ",
+        "name": "顺丰控股",
+        "weight_pct": 1.8384
+      },
+      {
+        "code": "159326.SZ",
+        "name": "电网设备ETF华夏",
+        "weight_pct": 1.7381
+      },
+      {
+        "code": "516150.SH",
+        "name": "稀土ETF嘉实",
+        "weight_pct": 1.713
+      },
+      {
+        "code": "159378.SZ",
+        "name": "通用航空ETF永赢",
+        "weight_pct": 1.6856
+      },
+      {
+        "code": "512710.SH",
+        "name": "军工龙头ETF富国",
+        "weight_pct": 1.4855
+      },
+      {
+        "code": "513180.SH",
+        "name": "恒生科技ETF华夏",
+        "weight_pct": 1.4578
+      },
+      {
+        "code": "513120.SH",
+        "name": "港股创新药ETF广发",
+        "weight_pct": 1.4028
       },
       {
         "code": "603087.SH",
         "name": "甘李药业",
-        "weight_pct": 1.1259
+        "weight_pct": 1.1756
       },
       {
         "code": "159869.SZ",
         "name": "游戏ETF华夏",
-        "weight_pct": 1.0749
-      },
-      {
-        "code": "510500.SH",
-        "name": "中证500ETF南方",
-        "weight_pct": 1.0125
+        "weight_pct": 1.0606
       },
       {
         "code": "511880.SH",
         "name": "银华日利ETF",
-        "weight_pct": 0.9752
+        "weight_pct": 0.9697
       },
       {
         "code": "512890.SH",
         "name": "红利低波ETF华泰柏瑞",
-        "weight_pct": 0.9115
+        "weight_pct": 0.9152
       },
       {
         "code": "562800.SH",
         "name": "稀有金属ETF嘉实",
-        "weight_pct": 0.9037
+        "weight_pct": 0.8753
+      },
+      {
+        "code": "510300.SH",
+        "name": "沪深300ETF华泰柏瑞",
+        "weight_pct": 0.7871
+      },
+      {
+        "code": "510500.SH",
+        "name": "中证500ETF南方",
+        "weight_pct": 0.4932
       },
       {
         "code": "300760.SZ",
         "name": "迈瑞医疗",
-        "weight_pct": 0.3435
-      },
-      {
-        "code": "588200.SH",
-        "name": "科创芯片ETF嘉实",
-        "weight_pct": 0.2333
-      },
-      {
-        "code": "159915.SZ",
-        "name": "创业板ETF易方达",
-        "weight_pct": 0.1606
+        "weight_pct": 0.3374
       },
       {
         "code": "515880.SH",
         "name": "通信ETF国泰",
-        "weight_pct": 0.1249
+        "weight_pct": 0.2283
+      },
+      {
+        "code": "588200.SH",
+        "name": "科创芯片ETF嘉实",
+        "weight_pct": 0.2107
+      },
+      {
+        "code": "159915.SZ",
+        "name": "创业板ETF易方达",
+        "weight_pct": 0.1508
       },
       {
         "code": "159206.SZ",
         "name": "卫星ETF永赢",
-        "weight_pct": 0.1076
+        "weight_pct": 0.1081
       },
       {
         "code": "159667.SZ",
         "name": "工业母机ETF国泰",
-        "weight_pct": 0.0328
+        "weight_pct": 0.0322
       },
       {
         "code": "159558.SZ",
         "name": "半导体设备ETF易方达",
-        "weight_pct": 0.0284
+        "weight_pct": 0.0248
       },
       {
         "code": "159819.SZ",
         "name": "人工智能ETF易方达",
-        "weight_pct": 0.0264
+        "weight_pct": 0.0246
       },
       {
         "code": "159301.SZ",
         "name": "公用事业ETF华夏",
-        "weight_pct": 0.0035
-      },
-      {
-        "code": "CASH",
-        "name": "现金",
-        "weight_pct": 0.0011
+        "weight_pct": 0.0034
       }
     ]
   },
   "diff": {
-    "risk_over_shadow_pp": 45.764,
-    "defensive_vs_shadow_pp": -45.764,
-    "core_proxy_vs_shadow_core_pp": 19.0425,
+    "risk_over_shadow_pp": 65.8199,
+    "defensive_vs_shadow_pp": -65.8199,
+    "core_proxy_vs_shadow_core_pp": 38.4303,
     "shadow_exact_codes_gap_pp": 0
   },
   "reduction_buckets": [
     {
       "bucket": "券商/证券保险",
-      "weight_pct": 5.5759,
+      "weight_pct": 5.4639,
       "codes": [
         "159842.SZ",
         "512070.SH",
@@ -250,7 +245,7 @@
     },
     {
       "bucket": "医药/医疗",
-      "weight_pct": 7.3978,
+      "weight_pct": 7.5991,
       "codes": [
         "159992.SZ",
         "300760.SZ",
@@ -260,7 +255,7 @@
     },
     {
       "bucket": "稀土/有色",
-      "weight_pct": 2.6247,
+      "weight_pct": 2.5883,
       "codes": [
         "512400.SH",
         "516150.SH",
@@ -268,13 +263,13 @@
       ]
     }
   ],
-  "tiny_positions_weight_pct": 0.7186,
+  "tiny_positions_weight_pct": 0.7829,
   "market_state": {
     "volatility": 0.65,
     "liquidity_regime": "normal",
     "trend_regime": "bear",
     "risk_sentiment": 0.35,
-    "timestamp": "2026-07-01T21:32:42+08:00"
+    "timestamp": "2026-07-03T21:30:58+08:00"
   },
   "trade_constraints": {
     "DEFENSIVE_CASH": {
@@ -284,8 +279,8 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-07-01T21:32:42+08:00",
-      "valid_until": "2026-07-02T21:32:42+08:00"
+      "timestamp": "2026-07-03T21:30:58+08:00",
+      "valid_until": "2026-07-04T21:30:58+08:00"
     },
     "NON_MODEL_SATELLITE": {
       "symbol": "NON_MODEL_SATELLITE",
@@ -294,8 +289,8 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-07-01T21:32:42+08:00",
-      "valid_until": "2026-07-02T21:32:42+08:00"
+      "timestamp": "2026-07-03T21:30:58+08:00",
+      "valid_until": "2026-07-04T21:30:58+08:00"
     },
     "PORTFOLIO": {
       "symbol": "PORTFOLIO",
@@ -304,23 +299,23 @@
       "liquidity_score": 0.9,
       "tradable": true,
       "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-      "timestamp": "2026-07-01T21:32:42+08:00",
-      "valid_until": "2026-07-02T21:32:42+08:00"
+      "timestamp": "2026-07-03T21:30:58+08:00",
+      "valid_until": "2026-07-04T21:30:58+08:00"
     }
   },
   "decision_set": {
-    "timestamp": "2026-07-01T21:32:42+08:00",
+    "timestamp": "2026-07-03T21:30:58+08:00",
     "account_id": "masked",
     "actions": [
       {
         "symbol": "PORTFOLIO",
         "action": "REDUCE_RISK",
-        "target_delta": -45.764,
+        "target_delta": -65.8199,
         "priority": 1.0,
         "confidence": 0.88,
         "source": "risk_budget_rule",
         "risk_level": "high",
-        "reason": "实盘风险仓 57.76% 高于影子风险预算 12.00%",
+        "reason": "实盘风险仓 68.82% 高于影子风险预算 3.00%",
         "score": 0.966237,
         "liquidity": 0.9,
         "tradable": true,
@@ -341,7 +336,7 @@
       {
         "symbol": "NON_MODEL_SATELLITE",
         "action": "REDUCE_RISK",
-        "target_delta": -45.764,
+        "target_delta": -65.8199,
         "priority": 0.94,
         "confidence": 0.72,
         "source": "satellite_reduction_rule",
@@ -367,12 +362,12 @@
       {
         "symbol": "DEFENSIVE_CASH",
         "action": "REBALANCE",
-        "target_delta": 45.764,
+        "target_delta": 65.8199,
         "priority": 0.98,
         "confidence": 0.82,
         "source": "defensive_gap_rule",
         "risk_level": "high",
-        "reason": "防御/现金仓低于影子目标 45.76 个百分点，目标防御仓 88.00%",
+        "reason": "防御/现金仓低于影子目标 65.82 个百分点，目标防御仓 97.00%",
         "score": 0.758201,
         "liquidity": 0.9,
         "tradable": true,
@@ -393,25 +388,25 @@
     ]
   },
   "decision_log": {
-    "timestamp": "2026-07-01T21:32:42+08:00",
+    "timestamp": "2026-07-03T21:30:58+08:00",
     "account_id": "masked",
     "market_state": {
       "volatility": 0.65,
       "liquidity_regime": "normal",
       "trend_regime": "bear",
       "risk_sentiment": 0.35,
-      "timestamp": "2026-07-01T21:32:42+08:00"
+      "timestamp": "2026-07-03T21:30:58+08:00"
     },
     "actions": [
       {
         "symbol": "PORTFOLIO",
         "action": "REDUCE_RISK",
-        "target_delta": -45.764,
+        "target_delta": -65.8199,
         "priority": 1.0,
         "confidence": 0.88,
         "source": "risk_budget_rule",
         "risk_level": "high",
-        "reason": "实盘风险仓 57.76% 高于影子风险预算 12.00%",
+        "reason": "实盘风险仓 68.82% 高于影子风险预算 3.00%",
         "score": 0.966237,
         "liquidity": 0.9,
         "tradable": true,
@@ -432,7 +427,7 @@
       {
         "symbol": "NON_MODEL_SATELLITE",
         "action": "REDUCE_RISK",
-        "target_delta": -45.764,
+        "target_delta": -65.8199,
         "priority": 0.94,
         "confidence": 0.72,
         "source": "satellite_reduction_rule",
@@ -458,12 +453,12 @@
       {
         "symbol": "DEFENSIVE_CASH",
         "action": "REBALANCE",
-        "target_delta": 45.764,
+        "target_delta": 65.8199,
         "priority": 0.98,
         "confidence": 0.82,
         "source": "defensive_gap_rule",
         "risk_level": "high",
-        "reason": "防御/现金仓低于影子目标 45.76 个百分点，目标防御仓 88.00%",
+        "reason": "防御/现金仓低于影子目标 65.82 个百分点，目标防御仓 97.00%",
         "score": 0.758201,
         "liquidity": 0.9,
         "tradable": true,
@@ -490,8 +485,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-07-01T21:32:42+08:00",
-        "valid_until": "2026-07-02T21:32:42+08:00"
+        "timestamp": "2026-07-03T21:30:58+08:00",
+        "valid_until": "2026-07-04T21:30:58+08:00"
       },
       "NON_MODEL_SATELLITE": {
         "symbol": "NON_MODEL_SATELLITE",
@@ -500,8 +495,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-07-01T21:32:42+08:00",
-        "valid_until": "2026-07-02T21:32:42+08:00"
+        "timestamp": "2026-07-03T21:30:58+08:00",
+        "valid_until": "2026-07-04T21:30:58+08:00"
       },
       "PORTFOLIO": {
         "symbol": "PORTFOLIO",
@@ -510,8 +505,8 @@
         "liquidity_score": 0.9,
         "tradable": true,
         "reason": "组合层或袖套层动作，不绑定单一证券交易单位。 波动偏高，下调单标的最高仓位。 偏防守/弱势状态，下调风险资产约束。",
-        "timestamp": "2026-07-01T21:32:42+08:00",
-        "valid_until": "2026-07-02T21:32:42+08:00"
+        "timestamp": "2026-07-03T21:30:58+08:00",
+        "valid_until": "2026-07-04T21:30:58+08:00"
       }
     }
   },
@@ -522,20 +517,20 @@
       "outcome",
       "calibration"
     ],
-    "drift_score": 0.33079,
+    "drift_score": 0.495082,
     "drift_vector": [
-      0.45764,
-      0.276426,
-      0.095213,
-      0.45764
+      0.658199,
+      0.425175,
+      0.192152,
+      0.658199
     ],
     "drift_breakdown": {
-      "risk_drift": 0.45764,
-      "weight_drift": 0.276426,
-      "sector_drift": 0.095213,
-      "liquidity_drift": 0.45764,
-      "defensive_drift": 0.45764,
-      "core_drift": 0.190425,
+      "risk_drift": 0.658199,
+      "weight_drift": 0.425175,
+      "sector_drift": 0.192152,
+      "liquidity_drift": 0.658199,
+      "defensive_drift": 0.658199,
+      "core_drift": 0.384303,
       "shadow_exact_drift": 0.0
     },
     "signal_registry": {
@@ -569,7 +564,7 @@
         "expected_score": 0.966237,
         "realized_return": 0.0,
         "status": "pending",
-        "drift_contribution": 0.45764
+        "drift_contribution": 0.658199
       },
       {
         "signal_source": "risk_engine",
@@ -579,7 +574,7 @@
         "expected_score": 0.919825,
         "realized_return": 0.0,
         "status": "pending",
-        "drift_contribution": 0.45764
+        "drift_contribution": 0.658199
       },
       {
         "signal_source": "defensive_filter",
@@ -589,7 +584,7 @@
         "expected_score": 0.758201,
         "realized_return": 0.0,
         "status": "pending",
-        "drift_contribution": 0.45764
+        "drift_contribution": 0.658199
       }
     ],
     "signal_isolation": {
@@ -599,7 +594,7 @@
         "realized_count": 0,
         "expected_score": 0.758201,
         "realized_return": 0,
-        "drift_contribution": 0.45764,
+        "drift_contribution": 0.658199,
         "active": true
       },
       "risk_engine": {
@@ -608,7 +603,7 @@
         "realized_count": 0,
         "expected_score": 1.886062,
         "realized_return": 0,
-        "drift_contribution": 0.45764,
+        "drift_contribution": 0.658199,
         "active": true
       }
     },
